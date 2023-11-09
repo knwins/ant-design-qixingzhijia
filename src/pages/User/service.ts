@@ -2,9 +2,8 @@
 /* eslint-disable */
 import { request } from '@umijs/max';
 import host from '../../host';
-import type { UserItem, UserRegisterParams } from './data';
+import type { UserItem, UserLogItem } from './data';
 
-/** 获取列表 GET /api/users/list */
 export async function queryUserList(
   params: {
     // query
@@ -17,11 +16,10 @@ export async function queryUserList(
 ) {
   return request<{
     data: UserItem[];
-    /** 列表的内容总数 */
     total?: number;
-    status?: boolean;
-  }>(host.api+'api/users/list', {
-    method: 'GET',
+    success?: boolean;
+  }>(host.api+'api/admin/user/list', {
+    method: 'POST',
     params: {
       ...params,
     },
@@ -29,24 +27,21 @@ export async function queryUserList(
   });
 }
 
-/** 新建 GET /api/users/list */
 export async function getUser(data: { [id: string]: any }, options?: { [id: string]: any }) {
-  return request<{
-    status?: boolean;
-    info?: string;
-  }>(host.api+'api/users/get', {
+  return request<UserItem>(host.api+'api/admin/user/get', {
     data,
     method: 'GET',
     ...(options || {}),
   });
 }
 
-/** 更新PUT /api/users/update */
+/** 更新PUT /api/admin/user/update */
 export async function updateUser(data: { [id: string]: any }, options?: { [id: string]: any }) {
   return request<{
-    info?: string;
-    status?: boolean;
-  }>(host.api+'api/users/update', {
+    data: UserItem;
+    errorMessage?: string;
+    success?: boolean;
+  }>(host.api+'api/admin/user/update', {
     data,
     method: 'PUT',
     headers: {
@@ -56,87 +51,40 @@ export async function updateUser(data: { [id: string]: any }, options?: { [id: s
   });
 }
 
-/** 删除 DELETE /api/users/delete */
+/** 删除 DELETE /api/admin/user/delete */
 export async function removeUser(data: { [id: string]: any }, options?: { [id: string]: any }) {
   return request<{
-    status?: boolean;
-    info?: string;
-  }>(host.api+'api/users/delete', {
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api+'api/admin/user/delete', {
     data,
     method: 'DELETE',
     ...(options || {}),
   });
 }
 
-/** */
 
-/**注册用户 */
-export async function registerUser(params: UserRegisterParams) {
+
+
+export async function queryUserLogList(
+  params: {
+    // query
+    /** 当前的页码 */
+    current?: number;
+    /** 页面的容量 */
+    pageSize?: number;
+  },
+  options?: { [key: string]: any },
+) {
   return request<{
-    status?: boolean;
-    info?: string;
-  }>(host.api+'api/users/register', {
+    data: UserLogItem[];
+    total?: number;
+    success?: boolean;
+  }>(host.api+'api/admin/userlog/list', {
     method: 'POST',
-    data: params,
-  });
-}
-
-/** 发送验证码 注册用 POST /api/users/captcha */
-export async function getFakeCaptcha(
-  data: { [username: string]: any },
-  options?: { [id: string]: any },
-) {
-  return request<{ status?: boolean; info?: string }>(host.api+'api/users/captcha', {
-    method: 'POST',
-    data,
+    params: {
+      ...params,
+    },
     ...(options || {}),
   });
 }
-
-/** 发送验证码 找回密码 POST /api/users/captcha_user */
-export async function getFakeCaptchaUser(
-  data: { [username: string]: any },
-  options?: { [id: string]: any },
-) {
-  return request<{ status?: boolean; info?: string }>(host.api+'api/users/captcha_user', {
-    method: 'POST',
-    data,
-    ...(options || {}),
-  });
-}
-
-/**找回密码 */
-export async function forgotPassword(
-  data: { [username: string]: any },
-  options?: { [id: string]: any },
-) {
-  return request<{ status?: boolean; info?: string }>(host.api+'api/users/forgotpassword', {
-    method: 'POST',
-    data,
-    ...(options || {}),
-  });
-}
-
-/**修改密码 */
-export async function modifyPassword(
-  data: { [username: string]: any },
-  options?: { [id: string]: any },
-) {
-  return request<{ status?: boolean; info?: string }>(host.api+'api/users/modifypassword', {
-    method: 'POST',
-    data,
-    ...(options || {}),
-  });
-}
-/**支付绑定 */
-export async function payBinding(
-  data: { [username: string]: any },
-  options?: { [id: string]: any },
-) {
-  return request<{ status?: boolean; info?: string }>(host.api+'api/users/paybinding', {
-    method: 'POST',
-    data,
-    ...(options || {}),
-  });
-}
-

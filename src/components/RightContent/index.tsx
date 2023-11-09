@@ -25,8 +25,8 @@ const GlobalHeaderRight: React.FC = () => {
       <HeaderSearch
         className={`${styles.action} ${styles.search}`}
         placeholder="站内搜索"
-        defaultValue="Fans365"
-        options={[{ label: <a href="https://www.fans365.net">Fans365</a>, value: 'Fans365' }]}
+        defaultValue="FastBull"
+        options={[{ label: <a href="https://www.fastbull.io">FastBull.IO</a>, value: 'FastBull' }]}
       />
       <NoticeIconView />
       <Avatar />

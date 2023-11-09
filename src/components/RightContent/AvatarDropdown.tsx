@@ -1,4 +1,3 @@
-import { outLogin } from '@/services/ant-design-pro/api';
 import { LogoutOutlined, SettingOutlined } from '@ant-design/icons';
 import { history, useIntl, useModel } from '@umijs/max';
 import { Avatar, Menu, Spin } from 'antd';
@@ -17,15 +16,16 @@ export type GlobalHeaderRightProps = {
  * 退出登录，并且将当前的 url 保存
  */
 const loginOut = async () => {
-  await outLogin();
+  //删除
+  localStorage.setItem('token', '');
   const { search, pathname } = window.location;
   const urlParams = new URL(window.location.href).searchParams;
   /** 此方法会跳转到 redirect 参数所在的位置 */
   const redirect = urlParams.get('redirect');
   // Note: There may be security issues, please note
-  if (window.location.pathname !== '/user/login' && !redirect) {
+  if (window.location.pathname !== '/adminUser/login' && !redirect) {
     history.replace({
-      pathname: '/user/login',
+      pathname: '/adminUser/login',
       search: stringify({
         redirect: pathname + search,
       }),
@@ -35,7 +35,6 @@ const loginOut = async () => {
 
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   const { initialState, setInitialState } = useModel('@@initialState');
-
    //国际化
    const intl = useIntl();
 
@@ -101,8 +100,8 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   return (
     <HeaderDropdown overlay={menuHeaderDropdown}>
       <span className={`${styles.action} ${styles.account}`}>
-        <Avatar size="small" className={styles.avatar} src={currentUser.avatar} alt="avatar" />
-        <span className={`${styles.name} anticon`}>{currentUser.username}({currentUser.group})</span>
+        <Avatar size="small" className={styles.avatar} src={currentUser.username} alt="avatar" />
+        <span className={`${styles.name} anticon`}>{currentUser.username}</span>
       </span>
     </HeaderDropdown>
   );

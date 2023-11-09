@@ -24,48 +24,6 @@ export default {
   'pages.login.loginWith': 'Login with :',
   'pages.login.registerAccount': 'Register Account',
 
-  /**register */
-  'pages.register': 'Register',
-  'pages.register.username.label': 'Email',
-  'pages.register.username.placeholder': 'Please enter email',
-  'pages.register.please.username.required': 'Please enter email!',
-  'pages.register.please.email.required': 'Please enter email!',
-
-  'pages.register.password.label': 'Password ',
-  'pages.register.password.placeholder': 'Please enter password',
-  'pages.register.confirm.password.label': 'Confirm passowrd',
-  'pages.register.confirm.password.placeholder': 'Please enter confirm password',
-  'pages.password.confirm.password.required': 'Two times to enter the password does not match',
-  'pages.register.captcha.placeholder': 'Please enter vCode',
-  'pages.register.accountLogin': 'Existing Account Login',
-  'pages.register.registerAccount': 'Register Account',
-  'pages.register.success': 'Register success',
-  'pages.register.failure': 'Register fial',
-  'pages.register.captcha.get': 'Get Code',
-  'pages.register.captcha.get.success': 'Get code success',
-  'pages.register.please.username': 'Please enter email!',
-  'pages.register.captcha.required': 'Please enter vCode!',
-  'pages.register.password.required': 'Please enter password!',
-  'pages.register.username.lable': 'Email',
-  'pages.register.password.lable': 'Password',
-  'pages.register.confirm.password.lable': 'Confirm password',
-  'pages.password.strength.weak': 'Password security: Weak',
-  'pages.password.strength.medium': 'Password security: Medium',
-  'pages.password.strength.strong': 'Password security: Strong',
-
-  'pages.password.tip':
-    'Please enter at least 6 characters. Please do not use a password that can be easily guessed.',
-
-  'pages.forgotpassword': 'Forgot Password',
-  'pages.forgotpassword.title': 'Forgot Password',
-  'pages.forgotpassword.username': 'Username',
-  'pages.forgotpassword.username.placeholder': 'Please enter email',
-  'pages.forgotpassword.username.required': 'Please enter email!',
-  'pages.forgotpassword.captcha.placeholder': 'Please enter verification code',
-  'pages.forgotpassword.captcha.required': 'Please enter verification code!',
-  'pages.forgotpassword.captcha.get': 'GetCode',
-  'pages.forgotpassword.subimt': 'Subimt',
-
   'pages.welcome.link': 'Welcome',
   'pages.welcome.alertMessage': 'Faster and stronger heavy-duty components have been released.',
   'pages.admin.subPage.title': 'This page can only be viewed by amin',
@@ -190,7 +148,6 @@ export default {
   'pages.goods.type.level.label': 'Level',
   'pages.goods.type.level.required': 'Please select level!',
 
-
   /**account type Manage */
   'pages.account.type.icon': 'ICON',
   'pages.account.type.icon.label': 'ICON',
@@ -206,10 +163,6 @@ export default {
   'pages.account.type.link.label': 'Link',
   'pages.account.type.link.placeholder': 'Please enter link',
   'pages.account.type.link.required': 'Please enter link!',
-
-
-
-
 
   /**account Manage */
   'pages.accounts.username': 'Username',
@@ -227,18 +180,15 @@ export default {
   'pages.accounts.telephone.placeholder': 'Please enter Telephone',
   'pages.accounts.telephone.required': 'Please enter Telephone!',
 
-
   'pages.accounts.status': 'Status',
   'pages.accounts.status.label': 'Status',
   'pages.accounts.status.placeholder': 'Please select Status',
   'pages.accounts.status.required': 'Please select Status!',
 
-
   'pages.accounts.email': 'EMail',
   'pages.accounts.email.label': 'EMail',
   'pages.accounts.email.placeholder': 'Please enter EMail',
   'pages.accounts.email.required': 'Please enter EMail!',
-
 
   'pages.accounts.typeName': 'Type',
   'pages.accounts.typeName.label': 'Please select type',
@@ -248,9 +198,6 @@ export default {
   'pages.accounts.status.abnormality': 'Abnormality',
   'pages.accounts.status.use': 'Use',
   'pages.accounts.status.lock': 'Lock',
-
-
-
 
   /**Proxy Manage */
 
@@ -274,7 +221,6 @@ export default {
   'pages.wallet.privatekey.placeholder': 'Please enter Private key',
   'pages.wallet.privatekey.required': 'Please enter Private key!',
 
-
   'pages.wallet.autotx': 'Auto TX',
   'pages.wallet.autotx.label': 'Auto TX',
   'pages.wallet.autotx.placeholder': 'Please enter auto TX',
@@ -282,19 +228,19 @@ export default {
 
   'pages.wallet.publickey': 'Publickey key',
   'pages.wallet.password': 'Password',
+  'pages.wallet.gasfee.total': 'Gasfee Total',
+  'pages.wallet.tx.total': 'HashTX Total',
 
-  'pages.wallet.network': 'Network',
-  'pages.wallet.network.label': 'Network',
-  'pages.wallet.network.placeholder': 'Please enter Network',
-  'pages.wallet.network.required': 'Please enter Network!',
+  'pages.wallet.addressformat': 'AddressFormat',
+  'pages.wallet.addressformat.label': 'AddressFormat',
+  'pages.wallet.addressformat.placeholder': 'Please enter AddressFormat',
+  'pages.wallet.addressformat.required': 'Please enter AddressFormat!',
 
   'pages.wallet.environment': 'Environment',
   'pages.wallet.environment.label': 'Environment',
 
-
   'pages.wallet.createTime': 'Create Time',
   'pages.wallet.createTime.label': 'Create Time',
-
 
   /**Wallet Token Manage */
   'pages.wallet.token.title': 'Token balance',
@@ -319,48 +265,15 @@ export default {
   'pages.wallet.token.balance': 'Balance',
   'pages.wallet.token.balance.label': 'Balance',
 
-
-
-  /**Wnvironment Manage */
-
-  'pages.environment.name': 'Name',
-  'pages.environment.name.label': 'Name',
-  'pages.environment.name.placeholder': 'Please enter Name',
-  'pages.environment.name.required': 'Please enter Name!',
-
-  'pages.environment.runsoft': 'Run Soft',
-  'pages.environment.runsoft.label': 'Run Soft',
-  'pages.environment.runsoft.placeholder': 'Please select Run Soft',
-  'pages.environment.runsoft.required': 'Please select Run Soft地址!',
-
-  'pages.environment.accounts': 'Account list',
-  'pages.environment.accounts.label': 'Account list',
-
-  'pages.environment.wallets': 'Wallet list',
-  'pages.environment.wallets.label': 'Wallet list',
-
-  'pages.environment.status': 'Status',
-  'pages.environment.status.label': 'Status',
-  'pages.environment.status.placeholder': 'Please select Status',
-  'pages.environment.status.required': 'Please select Status!',
-
-  'pages.environment.status.normal': 'Normal',
-  'pages.environment.status.abnormality': 'Abnormality',
-
-  'pages.environment.createTime': 'Create Time',
-  'pages.environment.createTime.label': 'Create Time',
-
-
-  'pages.environment.proxy': 'Proxy',
-  'pages.environment.proxy.label': 'Proxy',
-  'pages.environment.proxy.placeholder': 'ip:post:username:password',
-  'pages.environment.proxy.required': 'Please enter proxy!',
-  'pages.add.accounts': 'Account',
-  'pages.add.wallet': 'Wallet',
-  'pages.add.logs': 'Log',
-
-  'pages.environment.accounts.title': 'Account option',
-  'pages.environment.wallet.title': 'Wallet option',
+  /*future */
+  'pages.future.coin.title': 'Coin Manage',
+  'pages.future.coin.name': 'Name',
+  'pages.future.coin.symbol': 'Symbol',
+  'pages.future.coin.status': 'Status',
+  'pages.future.coin.runEnvironment': 'Run Environment',
+  'pages.future.coin.capital': 'Capital',
+  'pages.future.coin.balance': 'Balance',
+  'pages.future.coin.leverage': 'Leverage',
 
   /**environment Log Manage */
 
@@ -368,17 +281,12 @@ export default {
   'pages.environment.log.content': 'Content',
   'pages.environment.log.createTime': 'Create Time',
 
-
-  
   /**wallet Log Manage */
-
 
   'pages.wallet.log.title': 'Wallet Logs',
   'pages.wallet.log.content': 'Content',
   'pages.wallet.log.type': 'Type',
   'pages.wallet.log.createTime': 'Create Time',
-
-
 
   /**goods Manage */
 
@@ -508,53 +416,14 @@ export default {
   'pages.bill.username.required': 'please select username!',
   'pages.bill.blance.label': 'Blance',
 
-  /* account */
-  'pages.account.base': 'Base Information',
-  'pages.account.security': 'Security Setting',
-  'pages.account.binding': 'Account Binding',
-  'pages.account.notification': 'Notification',
-
-  'pages.account.signature.label': 'Signature',
-  'pages.account.signature.placeholder': 'Please enter signature',
-  'pages.account.signature.required': 'Please enter signature!',
-
-  'pages.account.description.label': 'Description',
-  'pages.account.description.placeholder': 'Please enter description',
-  'pages.account.description.required': 'Please enter description!',
-
-  'pages.account.phones.label': 'Phone',
-  'pages.account.phones.placeholder': 'Please enter phone',
-  'pages.account.phones.required': 'Please enter phone!',
-
-  'pages.account.header.image': 'Header image',
-  'pages.account.header.image.modify': ' Modify image',
-  'pages.account.payimage.upload': ' Pay upload',
-
-  'pages.account.password.title': 'Account password',
-  'pages.account.password.description':
-    'For account security please change your password regularly, please use a password of 6 or more digits + letters + special characters.',
-
-  'pages.account.password.old': 'Account Strong:',
-
-  'pages.account.modify.password': 'Modify Password',
-  'pages.account.password.label': 'Account password',
-  'pages.account.password.placeholder': 'Please enter passowrd',
-  'pages.account.password.required': 'Please enter passowrd!',
-
-  'pages.account.newpassword.label': 'New password',
-  'pages.account.newpassword.placeholder': 'Please enter new password',
-  'pages.account.newpassword.required': 'Please enter new password!',
-
-  'pages.account.paybinding': 'Pay Binding',
-  'pages.account.binding.trcusdt': 'TRC-USDT binding',
-  'pages.account.binding.trcusdt.description':
-    'Tether (often referred to by one of its currency codes, USD₮), is an asset-backed cryptocurrency stablecoin. It was launched by the company Tether Limited Inc. in 2014.[4] Tether Limited is owned by the Hong Kong-based company iFinex Inc., which also owns the Bitfinex cryptocurrency exchange.[5] As of July 2022, Tether Limited has minted the USDT stablecoin on ten protocols and blockchains.[1] Tether is described as a stablecoin because it was originally designed to be valued at USD $1.00, with Tether Limited maintaining USD $1.00 of asset reserves for each USDT issued.',
-  'pages.account.binding.alipay': 'Alipay binding',
-  'pages.account.binding.alipay.description':
-    'Alipay is a super app designed to offer a bouquet of services to bring convenience into your everyday life. Trusted by 450 million users, Alipay’s offerings span from allowing its users to make payments (send, receive, and spend money with ease), manage finances, choose a suitable insurance scheme, hail a cab or even order in from a favorite restaurant.',
-  'pages.account.binding.wechatpay': 'WeChatPay binding',
-  'pages.account.binding.wechatpay.description':
-    'WeChat Pay is a payment feature integrated into the WeChat app, users can complete payment quickly with smartphones. WeChat has Quick Pay, QR Code Payments, In-App Web-Based Payments, and Native In-App Payments, all to fulfill the full range of scenarios your customers expect to fulfill different payment situation. Combined with WeChat official accounts, WeChat Pay service explores and optimizes o2o consumption experience, provides professional internet solutions for physical business. It is the best choice of mobile payments.',
+   /* user */
+   'pages.user.title': 'User List',
+   'pages.user.name': 'Name',
+   'pages.user.portrait': 'Avatar',
+   'pages.user.state': 'State',
+   'pages.user.nickName': 'Nick',
+   'pages.user.signature': 'Signature',
+   'pages.user.parent': 'Parent',
 
   'pages.bind.regtime': 'Reg Time',
   'pages.bind.runtime': 'Run Time',
@@ -563,7 +432,6 @@ export default {
   'pages.bind.username.placeholder': 'Please enter username',
   'pages.bind.username.required': 'Please enter username!',
 
-
   'pages.bind.telephone': 'Telephone',
   'pages.bind.telephone.label': 'Telephone',
   'pages.bind.telephone.placeholder': 'Please enter telephone',
@@ -571,7 +439,6 @@ export default {
   'pages.bind.email': 'EMail',
   'pages.bind.email.label': 'EMail',
   'pages.bind.email.placeholder': 'Please enter EMail',
-
 
   'pages.bind.password.label': 'Password',
   'pages.bind.password.placeholder': 'Please enter password!',
@@ -598,29 +465,30 @@ export default {
   'pages.bind.invest.trcusdt.tip2': 'Wallet Address',
   'pages.bind.invest.tip1': 'Please contact customer service after payment',
 
-  'pages.tstask.info': 'Info',
-  'pages.tstask.username': 'Username',
-  'pages.tstask.link': 'Link',
-  'pages.tstask.createTime': 'Create Time',
-  'pages.tstask.status': 'Status',
+  /* task */
+  'pages.task.title': 'Take',
+  'pages.task.name': 'Name',
+  'pages.task.state': 'State',
+  'pages.task.lastUpdateTime': 'Update Time',
+  'pages.task.description': 'Description',
+  'pages.task.taketime': 'Take Time',
+  'pages.task.number': 'Number',
 
-  'pages.tweet.content': 'Content',
-  'pages.tweet.content.required': 'Content required!',
-  'pages.tweet.model.title': 'Comment or Quote',
-  'pages.tweet.useCount': 'Availability',
-  'pages.tweet.useCount.required': 'Availability required!',
-  'pages.tweet.buy': ' Buy ',
-  'pages.tweet.useCount.tip1':
-    'Please calculate if the sum of all users is greater than the number of purchasers, and if it is 0, the content will not be used.',
-  'pages.tweet.useCount.tip2':
-    'If the order is never completed, please check if the number of people is used up.',
+  /* adminuser */
+  'pages.adminuser.title': 'AdminUser',
+  'pages.adminuser.username': 'UserName',
+  'pages.adminuser.nick': 'Nick',
+  'pages.adminuser.phone': 'Phone',
+  'pages.adminuser.email': 'EMail',
+  'pages.adminuser.description': 'Description',
 
-  'pages.result.success.twitter.title': 'Twitter authorization success',
-  'pages.result.success.twitter.subTitle':
-    'Please go to My Account to view authorized Twitter users.',
-  'pages.result.fail.twitter.title': 'Twitter authorization fail',
-  'pages.result.fail.twitter.subTitle':
-    'Please check whether it is a network problem, such as the basis of the problem please contact customer service.',
+  /* coinprice */
+  'pages.coinprice.title': 'Coin Price',
+  'pages.coinprice.symbol': 'Symbol',
+  'pages.coinprice.symbolType': 'Future/Spot',
+  'pages.coinprice.exchange': 'Exchange',
+  'pages.coinprice.buyPrice': 'Buy Price',
+  'pages.coinprice.sellPrice': 'Sell Price',
 
   'pages.notice.notification': 'Notification',
   'pages.notice.notification.required': 'Notification not allowed to be deleted.',
@@ -639,8 +507,6 @@ export default {
   'pages.notice.description.label': 'Content',
   'pages.notice.description.placeholder': 'Please enter content',
   'pages.notice.description.required': 'Please enter content!',
-
-
 
   'pages.user.avatar': 'Avatar',
   'pages.user.username': 'Username',

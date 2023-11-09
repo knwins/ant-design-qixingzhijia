@@ -17,7 +17,7 @@ interface ResponseStructure {
   data: any;
   errorCode?: number;
   errorMessage?: string;
-  showType?: ErrorShowType;
+  errorShowType?: ErrorShowType;
 }
 
 /**
@@ -30,12 +30,12 @@ export const errorConfig: RequestConfig = {
   errorConfig: {
     // 错误抛出
     errorThrower: (res) => {
-      const { success, data, errorCode, errorMessage, showType } =
+      const { success, data, errorCode, errorMessage, errorShowType } =
         res as unknown as ResponseStructure;
       if (!success) {
         const error: any = new Error(errorMessage);
         error.name = 'BizError';
-        error.info = { errorCode, errorMessage, showType, data };
+        error.info = { errorCode, errorMessage, errorShowType, data };
         throw error; // 抛出自制的错误
       }
     },
@@ -47,7 +47,7 @@ export const errorConfig: RequestConfig = {
         const errorInfo: ResponseStructure | undefined = error.info;
         if (errorInfo) {
           const { errorMessage, errorCode } = errorInfo;
-          switch (errorInfo.showType) {
+          switch (errorInfo.errorShowType) {
             case ErrorShowType.SILENT:
               // do nothing
               break;
@@ -55,7 +55,7 @@ export const errorConfig: RequestConfig = {
               message.warn(errorMessage);
               break;
             case ErrorShowType.ERROR_MESSAGE:
-              message.error(errorMessage);
+              //message.error(errorMessage);
               break;
             case ErrorShowType.NOTIFICATION:
               notification.open({
@@ -103,8 +103,8 @@ export const errorConfig: RequestConfig = {
     (response) => {
       // 拦截响应数据，进行个性化处理
       const { data } = response as unknown as ResponseStructure;
-      if (!data.status) {
-        message.error(data.info);
+      if (!data.success) {
+        message.error(data.errorMessage);
       }
       return response;
     },

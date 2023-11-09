@@ -1,9 +1,11 @@
+import { ArticleItem } from '@/pages/Information/data';
 import { Modal } from 'antd';
 import React from 'react';
+
 export type NoticeFormProps = {
   done: boolean;
   visible: boolean;
-  current: Partial<API.NoticeItem>;
+  current: Partial<ArticleItem>;
   onCancel: () => void;
   onDone: () => void;
 };
@@ -24,7 +26,7 @@ const NoticeForm: React.FC<NoticeFormProps> = (props) => {
       onCancel={onCancel}
       onOk={onDone}
     >
-      <div dangerouslySetInnerHTML={{ __html: current.description}} key="sadfsdf"></div>
+      <div dangerouslySetInnerHTML={{__html: current.title}} key=""></div>
     </Modal>
   );
 };

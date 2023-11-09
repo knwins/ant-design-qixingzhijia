@@ -1,4 +1,4 @@
-import { getNoticeList, removeNotice, updateNotice } from '@/services/ant-design-pro/api';
+import { queryArticleList, removeArticle, updateArticle } from '@/pages/Information/service';
 import { useIntl, useRequest } from '@umijs/max';
 import { message, Tag } from 'antd';
 import { groupBy } from 'lodash';
@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import styles from './index.less';
 import NoticeIcon from './NoticeIcon';
 import NoticeForm from './NoticeModel';
+import { ArticleItem } from '@/pages/Information/data';
 
 export type GlobalHeaderRightProps = {
   fetchingNotices?: boolean;
@@ -14,7 +15,7 @@ export type GlobalHeaderRightProps = {
   onNoticeClear?: (tabName?: string) => void;
 };
 
-const getNoticeData = (notices: API.NoticeItem[]): Record<string, API.NoticeItem[]> => {
+const getNoticeData = (notices: ArticleItem[]): Record<string, ArticleItem[]> => {
   if (!notices || notices.length === 0 || !Array.isArray(notices)) {
     return {};
   }
@@ -22,39 +23,39 @@ const getNoticeData = (notices: API.NoticeItem[]): Record<string, API.NoticeItem
   const newNotices = notices.map((notice) => {
     const newNotice = { ...notice };
 
-    if (newNotice.createTime) {
-      newNotice.createTime = moment(notice.createTime as string).fromNow();
-    }
+    // if (newNotice.pubDate) {
+    //   newNotice.pubDate = moment(notice.pubDate as string).fromNow();
+    // }
 
     if (newNotice.id) {
-      newNotice.key = newNotice.id;
+      newNotice.keywords = newNotice.id;
     }
 
-    if (newNotice.extra && newNotice.status) {
-      const color = {
-        todo: '',
-        processing: 'blue',
-        urgent: 'red',
-        doing: 'gold',
-      }[newNotice.status];
-      newNotice.extra = (
-        <Tag
-          color={color}
-          style={{
-            marginRight: 0,
-          }}
-        >
-          {newNotice.extra}
-        </Tag>
-      ) as any;
-    }
+    // if (newNotice.extra && newNotice.status) {
+    //   const color = {
+    //     todo: '',
+    //     processing: 'blue',
+    //     urgent: 'red',
+    //     doing: 'gold',
+    //   }[newNotice.status];
+    //   newNotice.extra = (
+    //     <Tag
+    //       color={color}
+    //       style={{
+    //         marginRight: 0,
+    //       }}
+    //     >
+    //       {newNotice.extra}
+    //     </Tag>
+    //   ) as any;
+    // }
 
     return newNotice;
   });
   return groupBy(newNotices, 'type');
 };
 
-const getUnreadData = (noticeData: Record<string, API.NoticeItem[]>) => {
+const getUnreadData = (noticeData: Record<string, ArticleItem[]>) => {
   const unreadMsg: Record<string, number> = {};
   Object.keys(noticeData).forEach((key) => {
     const value = noticeData[key];
@@ -64,18 +65,18 @@ const getUnreadData = (noticeData: Record<string, API.NoticeItem[]>) => {
     }
 
     if (Array.isArray(value)) {
-      unreadMsg[key] = value.filter((item) => !item.read).length;
+      unreadMsg[key] = value.filter((item) => !item.status).length;
     }
   });
   return unreadMsg;
 };
 
 const NoticeIconView: React.FC = () => {
-  const [notices, setNotices] = useState<API.NoticeItem[]>([]);
+  const [notices, setNotices] = useState<ArticleItem[]>([]);
 
   const [iVisible, setiVisible] = useState<boolean>(false);
   const [done, setDone] = useState<boolean>(false);
-  const [currentRow, setCurrentRow] = useState<Partial<API.NoticeItem> | undefined>(undefined);
+  const [currentRow, setCurrentRow] = useState<Partial<ArticleItem> | undefined>(undefined);
 
 
   const handleDone = () => {
@@ -85,7 +86,7 @@ const NoticeIconView: React.FC = () => {
 
   /** 国际化配置 */
   const intl = useIntl();
-  const { data } = useRequest(getNoticeList);
+  const { data } = useRequest(queryArticleList);
   useEffect(() => {
     setNotices(data || []);
   }, [data]);
@@ -101,14 +102,13 @@ const NoticeIconView: React.FC = () => {
         notices.map((item) => {
           const notice = { ...item };
           if (notice.id === id) {
-            if (item.type == 'notification') {
+            if (item.ArticleTypeId == '1') {
               setiVisible(true);
               setCurrentRow(notice);
               return notice;
             }
-            notice.read = true;
             //更新服务器数据
-            updateNotice(notice);
+            updateArticle(notice);
           }
 
           return notice;
@@ -138,10 +138,9 @@ const NoticeIconView: React.FC = () => {
       }
       notices.map((item) => {
         const notice = { ...item };
-        if (notice.type === key) {
-          notice.read = true;
+        if (notice.ArticleTypeId === key) {
           //更新服务器数据
-          removeNotice(notice);
+          removeArticle(notice);
         }
       });
       setNotices([]);
@@ -175,7 +174,7 @@ const NoticeIconView: React.FC = () => {
         clearClose
       >
         <NoticeIcon.Tab
-          tabKey="notification"
+          tabKey="1"
           count={unreadMsg.notification}
           list={noticeData.notification}
           title={intl.formatMessage({
@@ -188,7 +187,7 @@ const NoticeIconView: React.FC = () => {
         />
 
         <NoticeIcon.Tab
-          tabKey="message"
+          tabKey="2"
           count={unreadMsg.message}
           list={noticeData.message}
           title={intl.formatMessage({

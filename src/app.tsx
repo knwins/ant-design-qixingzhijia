@@ -7,10 +7,10 @@ import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history } from '@umijs/max';
 import defaultSettings from '../config/defaultSettings';
 import { errorConfig } from './requestErrorConfig';
-import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
+import { currentUser as queryCurrentUser } from './services/api';
 
 const isDev = process.env.NODE_ENV === 'development';
-const loginPath = '/user/login';
+const loginPath = '/adminUser/login';
 
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
@@ -34,6 +34,7 @@ export async function getInitialState(): Promise<{
   };
   // 如果不是登录页面，执行
   if (window.location.pathname !== loginPath) {
+    console.log(loginPath+".....");
     const currentUser = await fetchUserInfo();
     return {
       fetchUserInfo,
@@ -48,6 +49,7 @@ export async function getInitialState(): Promise<{
 }
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
+
 export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
   return {
     rightContentRender: () => <RightContent />,
@@ -60,6 +62,8 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
       const { location } = history;
       // 如果没有登录，重定向到 login
       if (!initialState?.currentUser && location.pathname !== loginPath) {
+
+        console.log(initialState?.currentUser+"...");
         history.push(loginPath);
       }
     },

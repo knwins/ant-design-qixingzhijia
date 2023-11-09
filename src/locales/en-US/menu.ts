@@ -2,7 +2,7 @@ export default {
   'menu.welcome': 'Welcome',
   'pages.welcome.title': 'Welcome to Fans365,Fans365.Net is at your service 365 days a year!',
   'pages.welcome.title5': 'Cheap, fast and rich social media marketing services.',
-  'menu.user': 'User List',
+  'menu.user': 'User Manage',
   'menu.home': 'Home',
 
   'menu.login': 'Login',
@@ -14,16 +14,43 @@ export default {
   'menu.dashboard.monitor': 'Monitor',
   'menu.dashboard.workplace': 'Workplace',
 
-  /** goods type */
-  'menu.dashboard.goodsManage': 'Goods Manage',
-  'menu.dashboard.goodsShow': 'Goods Show',
-  'menu.dashboard.goodsTypeManage': 'Goods Type Manage',
-  /*訂單 */
-  'menu.dashboard.ordersManage': 'Order Manage',
-  'menu.dashboard.myOrders': 'My Order',
-  'menu.dashboard.rushOrders': 'Rush Order',
-  /** users */
-  'menu.dashboard.usersManage': 'User Manage',
+  /* finance */
+  'menu.finance': 'Finance',
+  'menu.finance.bill': 'Bill',
+  'menu.finance.bill.type': 'Bill Type',
+  'menu.finance.withdraw': 'Withdraw',
+  'menu.finance.invest': 'Invest',
+
+  /* future */
+  'menu.future': 'Future',
+  'menu.future.coin': 'Coin',
+  'menu.future.trade': 'Trade',
+  'menu.future.strategy': 'Strategy',
+  'menu.future.order': 'Order',
+
+  /* spot */
+  'menu.spot': 'Spot',
+  'menu.spot.coin': 'Coin',
+  'menu.spot.trade': 'Trade',
+  'menu.spot.strategy': 'Strategy',
+  'menu.spot.order': 'Order',
+
+  /* exchange */
+  'menu.exchange': 'Exchange',
+  'menu.exchange.api': 'API',
+  'menu.exchange.thrend': 'Thrend',
+  'menu.exchange.price': 'Price',
+
+  /* setting */
+  'menu.setting': 'System Setting',
+  'menu.setting.adminuser': 'AdminUser',
+  'menu.setting.cofing': 'Config',
+  'menu.setting.task': 'Task',
+
+  /* user */
+  'menu.user.list': 'User List',
+  'menu.user.log': 'Log List',
+
   /** bill */
   'menu.dashboard.billManage': 'Bill Manage',
   'menu.dashboard.myBill': 'My Bill',
@@ -34,15 +61,14 @@ export default {
   'menu.dashboard.tstaskManage': 'TSTask Manage',
   'menu.dashboard.myTSTask': 'My TSTask',
 
-    /*noticeManage */
-    'menu.dashboard.noticeManage': 'Notice Manage',
+  /*noticeManage */
+  'menu.dashboard.noticeManage': 'Notice Manage',
 
-     /*noticeManage */
-   'menu.environment': 'Environment',
-   'menu.environment.environmentManage': 'My Environment',
-   'menu.environment.accountTypeManage': 'Accont Type',
-   'menu.environment.proxyManage': 'My Proxy',
-
+  /*noticeManage */
+  'menu.environment': 'Environment',
+  'menu.environment.environmentManage': 'My Environment',
+  'menu.environment.accountTypeManage': 'Accont Type',
+  'menu.environment.proxyManage': 'My Proxy',
 
   'menu.exception.403': '403',
   'menu.exception.404': '404',

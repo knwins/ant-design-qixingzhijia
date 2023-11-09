@@ -5,12 +5,12 @@ import host from '../../host';
 //console.log(host.api);
 
 
-/** 获取当前的用户 GET /api/currentUser */
+/** 获取当前的用户 POST /api/currentUser */
 export async function currentUser(options?: { [key: string]: any }) {
   return request<{
     data: API.CurrentUser;
-  }>(host.api+'api/users/current', {
-    method: 'GET',
+  }>(host.api+'api/admin/current', {
+    method: 'POST',
     ...(options || {}),
   });
 }
@@ -23,9 +23,9 @@ export async function outLogin(options?: { [key: string]: any }) {
   });
 }
 
-/** 登录接口 POST /api/login/account */
+/** 登录接口 POST /api/admin/login */
 export async function login(body: API.LoginParams, options?: { [key: string]: any }) {
-  return request<API.LoginResult>(host.api+'api/login/account', {
+  return request<API.LoginResult>(host.api+'api/admin/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

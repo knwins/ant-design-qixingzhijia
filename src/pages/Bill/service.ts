@@ -2,15 +2,11 @@
 /* eslint-disable */
 import { request } from 'umi';
 import host from '../../host';
-import { BillItem } from './data';
+import { BillItem ,BillTypeItem, WalletItem} from './data';
 
-/** 获取列表 GET /api/bill_list */
 export async function queryBillList(
   params: {
-    // query
-    /** 当前的页码 */
     current?: number;
-    /** 页面的容量 */
     pageSize?: number;
   },
   options?: { [key: string]: any },
@@ -19,9 +15,9 @@ export async function queryBillList(
     data: BillItem[];
     /** 列表的内容总数 */
     total?: number;
-    status?: boolean;
-  }>(host.api+'api/bill/list', {
-    method: 'GET',
+    success?: boolean;
+  }>(host.api + 'api/admin/bill/list', {
+    method: 'POST',
     params: {
       ...params,
     },
@@ -29,87 +25,154 @@ export async function queryBillList(
   });
 }
 
-/** 获取列表 GET /api/bill/mylist */
-export async function queryBillMyList(
-  params: {
-    // query
-    /** 当前的页码 */
-    current?: number;
-    /** 页面的容量 */
-    pageSize?: number;
-  },
-  options?: { [key: string]: any },
-) {
+export async function addBill(data: { [id: string]: any }, options?: { [id: string]: any }) {
   return request<{
-    data: BillItem[];
-    /** 列表的内容总数 */
-    total?: number;
-    status?: boolean;
-  }>(host.api+'api/bill/mylist', {
-    method: 'GET',
-    params: {
-      ...params,
-    },
-    ...(options || {}),
-  });
-}
-
-/**  /api/bill/latest */
-export async function latestBill() {
-  return request<{
-    data: BillItem;
-    status?: boolean;
-    info?: number;
-  }>(host.api+'api/bill/latest', {
-    method: 'GET',
-  });
-}
-
-/**  /api/bill/get */
-export async function getBill(data: { [id: string]: any }, options?: { [id: string]: any }) {
-  return request<{
-    data: BillItem;
-    status?: boolean;
-    info?: number;
-  }>(host.api+'api/bill/get', {
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/admin/bill/add', {
     data,
     method: 'POST',
     ...(options || {}),
   });
 }
 
-/**  /api/bill/update */
-export async function updateBill(data: { [id: string]: any }, options?: { [id: string]: any }) {
+export async function updateBill(data: { [key: string]: any }, options?: { [key: string]: any }) {
   return request<{
-    status?: boolean;
-    info?: number;
-  }>(host.api+'api/bill/update', {
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/admin/bill/update', {
     data,
     method: 'PUT',
     ...(options || {}),
   });
 }
 
-/** 新建POST /api/bill/add */
-export async function addBill(data: { [id: string]: any }, options?: { [id: string]: any }) {
+export async function removeBill(data: { [id: string]: any }, options?: { [id: string]: any }) {
   return request<{
-    status?: boolean;
-    info?: string;
-  }>(host.api+'api/bill/add', {
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/admin/bill/delete', {
+    data,
+    method: 'DELETE',
+    ...(options || {}),
+  });
+}
+
+//-----------------------BillType---------------------
+export async function queryBillTypeList(
+  params: {
+    current?: number;
+    pageSize?: number;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{
+    data: BillTypeItem[];
+    /** 列表的内容总数 */
+    total?: number;
+    success?: boolean;
+  }>(host.api + 'api/admin/bill/type/list', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+export async function addBillType(data: { [id: string]: any }, options?: { [id: string]: any }) {
+  return request<{
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/admin/bill/type/add', {
     data,
     method: 'POST',
     ...(options || {}),
   });
 }
 
-/** 删除DELETE /api/bill/delete */
-export async function removeBill(data: { [id: string]: any }, options?: { [id: string]: any }) {
+export async function updateBillType(data: { [key: string]: any }, options?: { [key: string]: any }) {
   return request<{
-    status?: boolean;
-    info?: string;
-  }>(host.api+'api/bill/delete', {
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/admin/bill/type/update', {
+    data,
+    method: 'PUT',
+    ...(options || {}),
+  });
+}
+
+export async function removeBillType(data: { [id: string]: any }, options?: { [id: string]: any }) {
+  return request<{
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/admin/bill/type/delete', {
     data,
     method: 'DELETE',
     ...(options || {}),
   });
 }
+
+
+
+//-----------------------BillWithdraw---------------------
+export async function queryBillWithdrawList(
+  params: {
+    current?: number;
+    pageSize?: number;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{
+    data: BillTypeItem[];
+    /** 列表的内容总数 */
+    total?: number;
+    success?: boolean;
+  }>(host.api + 'api/admin/bill/withdraw/list', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+
+//-----------------------BillInvest---------------------
+export async function queryBillInvestList(
+  params: {
+    current?: number;
+    pageSize?: number;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{
+    data: BillTypeItem[];
+    /** 列表的内容总数 */
+    total?: number;
+    success?: boolean;
+  }>(host.api + 'api/admin/bill/invest/list', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+//------------------------getWallet------------------
+
+
+export async function getWalletByAddress(params: { [key: string]: any }, options?: { [key: string]: any }) {
+  return request<{
+    data: WalletItem;
+    success?: boolean;
+  }>(host.api+'api/admin/wallet/get', {
+    params: {
+      ...params,
+    },
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+

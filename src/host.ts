@@ -1,4 +1,5 @@
+
 export default {
-    api:"http://192.168.1.6:8081/",name:"Fans365.net" 
+    api:"http://localhost:8081/",name:"FastBull" 
   };
   

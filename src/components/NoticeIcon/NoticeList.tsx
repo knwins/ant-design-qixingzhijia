@@ -1,7 +1,9 @@
-import { Avatar, List } from 'antd';
+import {List } from 'antd';
 import classNames from 'classnames';
 import React from 'react';
 import styles from './NoticeList.less';
+import { ArticleTypeItem } from '@/pages/ArticleType/data';
+import { ArticleItem } from '@/pages/Information/data';
 
 export type NoticeIconTabProps = {
   count?: number;
@@ -9,13 +11,13 @@ export type NoticeIconTabProps = {
   showViewMore?: boolean;
   style?: React.CSSProperties;
   title: string;
-  tabKey: API.NoticeItemType;
-  onClick?: (item: API.NoticeItem) => void;
+  tabKey: ArticleTypeItem;
+  onClick?: (item: ArticleItem) => void;
   onClear?: () => void;
   emptyText?: string;
   clearText?: string;
   viewMoreText?: string;
-  list: API.NoticeItem[];
+  list: ArticleItem[];
   onViewMore?: (e: any) => void;
 };
 const NoticeList: React.FC<NoticeIconTabProps> = ({
@@ -43,21 +45,21 @@ const NoticeList: React.FC<NoticeIconTabProps> = ({
   }
   return (
     <div>
-      <List<API.NoticeItem>
+      <List<ArticleItem>
         className={styles.list}
         dataSource={list}
         renderItem={(item, i) => {
           const itemCls = classNames(styles.item, {
-            [styles.read]: item.read,
+            [styles.read]: item.status,
           });
           // eslint-disable-next-line no-nested-ternary
-          const leftIcon = item.avatar ? (
-            typeof item.avatar === 'string' ? (
-              <Avatar className={styles.avatar} src={item.avatar} />
-            ) : (
-              <span className={styles.iconElement}>{item.avatar}</span>
-            )
-          ) : null;
+          // const leftIcon = item.avatar ? (
+          //   typeof item.avatar === 'string' ? (
+          //     <Avatar className={styles.avatar} src={item.avatar} />
+          //   ) : (
+          //     <span className={styles.iconElement}>{item.avatar}</span>
+          //   )
+          // ) : null;
 
           return (
             <div
@@ -65,20 +67,20 @@ const NoticeList: React.FC<NoticeIconTabProps> = ({
                 onClick?.(item);
               }}
             >
-              <List.Item className={itemCls} key={item.key || i}>
+              <List.Item className={itemCls} key={item.keywords || i}>
                 <List.Item.Meta
                   className={styles.meta}
-                  avatar={leftIcon}
+                  // avatar={leftIcon}
                   title={
                     <div className={styles.title}>
                       {item.title}
-                      <div className={styles.extra}>{item.extra}</div>
+                      <div className={styles.title}>{item.title}</div>
                     </div>
                   }
                   description={
                     <div>
              
-                      <div className={styles.createTime}>{item.createTime}</div>
+                      <div className={styles.createTime}>{item.pubDate}</div>
                     </div>
                   }
                 />
