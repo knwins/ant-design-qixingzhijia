@@ -2,6 +2,8 @@ import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { PageContainer } from '@ant-design/pro-layout';
 import { FormattedMessage, useIntl } from '@umijs/max';
+import {Typography } from 'antd';
+const { Paragraph } = Typography;
 import React, { useRef } from 'react';
 import type { TaskItem } from './data';
 import { queryTaskList } from './service';
@@ -15,7 +17,6 @@ const Task: React.FC = () => {
   const paginationProps = {
     showSizeChanger: true,
     showQuickJumper: true,
-    current: 1,
   };
 
   const columns: ProColumns<TaskItem>[] = [
@@ -33,6 +34,32 @@ const Task: React.FC = () => {
       hideInSearch: true,
       valueType: 'text',
       width: '280px',
+    },
+    
+ 
+
+    {
+      title: "执行URL",
+      dataIndex: 'httpurl',
+      valueType: 'text',
+      hideInSearch: true,
+      fieldProps: { size: 'small' },
+      hideInForm: true,
+      width: '160px',
+      render: (text, record, _, action) => {
+        if (record.httpurl) {
+          return [
+            <Paragraph
+              copyable
+              title={record.httpurl}
+              ellipsis={{ rows: 1, expandable: true }}
+            >
+              {record.httpurl}
+            </Paragraph>,
+          ];
+        }
+        return '-';
+      },
     },
 
     {

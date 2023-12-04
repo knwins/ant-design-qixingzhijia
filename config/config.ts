@@ -4,9 +4,6 @@ import proxy from './proxy';
 import routes from './routes';
 
 const { REACT_APP_ENV } = process.env;
-
-
- 
 export default defineConfig({
   /**
    * @name 开启 hash 模式
@@ -21,6 +18,8 @@ export default defineConfig({
    */
   // umi routes: https://umijs.org/docs/routing
   routes,
+
+  
   /**
    * @name 主题的配置
    * @description 虽然叫主题，但是其实只是 less 的变量设置
@@ -104,5 +103,17 @@ export default defineConfig({
   access: {},
   //================ pro 插件配置 =================
   presets: ['umi-presets-pro'],
+  scripts: [
+    'https://unpkg.com/react@17/umd/react.production.min.js',
+    'https://unpkg.com/react-dom@17/umd/react-dom.production.min.js',
+    'https://unpkg.com/@ant-design/charts@1.0.5/dist/charts.min.js',
+    //使用 组织架构图、流程图、资金流向图、缩进树图 才需要使用
+    'https://unpkg.com/@ant-design/charts@1.0.5/dist/charts_g6.min.js',
+  ],
+  externals: {
+    react: 'React',
+    'react-dom': 'ReactDOM',
+    "@ant-design/charts": "charts"
+   },
 
 });

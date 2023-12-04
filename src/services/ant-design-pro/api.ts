@@ -9,7 +9,7 @@ import host from '../../host';
 export async function currentUser(options?: { [key: string]: any }) {
   return request<{
     data: API.CurrentUser;
-  }>(host.api+'api/admin/current', {
+  }>(host.api+'api/systemuser/current', {
     method: 'POST',
     ...(options || {}),
   });
@@ -25,7 +25,7 @@ export async function outLogin(options?: { [key: string]: any }) {
 
 /** 登录接口 POST /api/admin/login */
 export async function login(body: API.LoginParams, options?: { [key: string]: any }) {
-  return request<API.LoginResult>(host.api+'api/admin/login', {
+  return request<API.LoginResult>(host.api+'api/system/user/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

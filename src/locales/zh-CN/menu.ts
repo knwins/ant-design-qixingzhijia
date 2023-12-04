@@ -44,9 +44,11 @@ export default {
 
   /* setting */
   'menu.setting': '系统设置',
-  'menu.setting.adminuser': '管理员',
+  'menu.setting.systemuser': '管理员',
   'menu.setting.config': '全局配置',
   'menu.setting.task': '定时任务',
+  'menu.setting.privilege': '权限列表',
+  'menu.setting.role':'角色列表',
 
   /* 用户 */
   'menu.user.list': '用户列表',
@@ -57,4 +59,6 @@ export default {
   'menu.information.article': '文章列表',
   'menu.information.articleType': '文章分类列表',
   'menu.information.express': '快讯列表',
+  'menu.account.logout':'退出',
+  'menu.account.settings':'设置',
 };

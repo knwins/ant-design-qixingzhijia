@@ -63,6 +63,8 @@ export default {
   'pages.tip.cancel': '取消',
   'pages.tip.ok': '确定',
   'pages.tip.content': '确定要删除吗?',
+  'pages.tip.content.delete': '确定要删除吗?',
+  'pages.tip.content.initPassword': '确定要初始化密码为[123456]吗?',
   'pages.tip.loading': '正在执行',
   'pages.tip.success': '操作成功',
   'pages.tip.error': '请求有误',
@@ -109,6 +111,7 @@ export default {
   'pages.update.time': '更新时间',
   'pages.end.time': '截止时间',
   'pages.copy.private.key': '复制私钥',
+  'pages.repassword': '初始化密码',
 
   /**单位 */
   'pages.people': '人',
@@ -208,7 +211,7 @@ export default {
   'pages.spot.trade.rUnitQty': 'U数量',
   'pages.spot.trade.lUnitQty': '币数量',
   'pages.spot.trade.fee': '交易费',
-   'pages.spot.trade.profit': '利润',
+  'pages.spot.trade.profit': '利润',
   'pages.spot.trade.runEnvironment': '环境',
   'pages.spot.trade.state': '状态',
   'pages.spot.trade.username': '所属用户',
@@ -362,14 +365,12 @@ export default {
   'pages.bill.invest.ukey.search': '关键词搜索',
   'pages.bill.invest.ukey.search.placeholder': '请输入用户名、地址或交易Hash',
 
-
   /**article */
 
   'pages.article.title': '标题',
-  'pages.article.title.placeholder':'请输入标题',
+  'pages.article.title.placeholder': '请输入标题',
   'pages.article.content': '内容',
-  'pages.article.content.placeholder':'请输入内容',
-
+  'pages.article.content.placeholder': '请输入内容',
 
   /**article.type */
   'pages.article.type': '分类',
@@ -423,13 +424,22 @@ export default {
   'pages.task.taketime': '耗时',
   'pages.task.number': '执行次数',
 
-  /* adminuser */
-  'pages.adminuser.title': '管理员',
-  'pages.adminuser.username': '用户名',
-  'pages.adminuser.nick': '昵名',
-  'pages.adminuser.phone': '电话',
-  'pages.adminuser.email': '邮件',
-  'pages.adminuser.description': '备注',
+  /* system.user */
+  'pages.system.user.title': '管理员',
+  'pages.system.user.username': '用户名',
+  'pages.system.user.username.placeholder':'请输入用户名',
+  'pages.system.user.password': '密码',
+  'pages.system.user.password.placeholder':'请输入6位密码',
+  'pages.system.user.nick': '昵名',
+  'pages.system.user.nick.placeholder':'请输入昵名',
+  'pages.system.user.phone': '电话',
+  'pages.system.user.phone.placeholder':'请输入电话',
+  'pages.system.user.email': '邮件',
+  'pages.system.user.email.placeholder':'请输入邮件',
+  'pages.system.user.description': '备注',
+  'pages.system.user.description.placeholder':'请输入备注',
+  'pages.system.user.role.name':'角色',
+  'pages.system.user.role.name.placeholder':'请选择角色',
 
   /* coin */
   'pages.coin.title': '实时价格',
@@ -489,7 +499,40 @@ export default {
   'pages.result.fail.twitter.title': '特推授权失败',
   'pages.result.fail.twitter.subTitle': '请检查是否是网络问题，如问题依据请联系客服.',
 
- 
+  /** 权限菜单 */
+  'pages.privilege.name': '名称',
+  'pages.privilege.name.required': '请输入名称',
+  'pages.privilege.name.placeholder': '请输入名称',
+
+  'pages.privilege.icon': '图标',
+  'pages.privilege.icon.required': '请选择图标',
+  'pages.privilege.icon.placeholder': '请选择图标',
+
+  'pages.privilege.route': '路由',
+  'pages.privilege.route.required': '请输入路由',
+  'pages.privilege.route.placeholder': '请输入路由',
+
+  'pages.privilege.component': '路径',
+  'pages.privilege.component.required': '请输入路径',
+  'pages.privilege.component.placeholder': '请输入路径',
+
+  'pages.privilege.permission': '权限字符',
+  'pages.privilege.permission.required': '请输入权限字符',
+  'pages.privilege.permission.placeholder': '请输入权限字符',
+
+  'pages.privilege.parent': '父级',
+  'pages.privilege.parent.required': '请选择父级',
+  'pages.privilege.parent.placeholder': '请选择父级',
+
+  'pages.privilege.type': '类型',
+
+  /**role */
+  'pages.role.name': '名称',
+  'pages.role.name.required': '请输入名称',
+  'pages.role.name.placeholder': '请输入名称',
+  'pages.role.description': '简介',
+  'pages.role.description.required': '请输入简介',
+  'pages.role.description.placeholder': '请输入简介',
 
   'pages.user.avatar': '头像',
   'pages.user.username': '用户名称',
@@ -504,4 +547,8 @@ export default {
   'pages.user.phone': '电话',
   'pages.user.description': '简介',
   'pages.user.description.label': '简介',
+
+  'pages.notice.message': '公告信息',
+  'pages.notice.clear': '清空',
+  'pages.notice.notification': '标题',
 };

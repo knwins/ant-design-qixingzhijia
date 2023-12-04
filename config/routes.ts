@@ -1,34 +1,11 @@
-﻿export default [
-  // {
-  //   path: '/welcome',
-  //   name: 'welcome',
-  //   icon: 'smile',
-  //   component: './Welcome',
-  // },
-
+export default [
   {
-    path: '/',
-    redirect: '/dashboard',
+    path: '/welcome',
+    name: 'welcome',
+    icon: 'smile',
+    component: './Welcome',
   },
-
-  {
-    path: '/dashboard',
-    name: 'dashboard',
-    icon: 'dashboard',
-    routes: [
-      {
-        path: '/dashboard',
-        redirect: '/dashboard/analysis',
-      },
-      {
-        name: 'analysis',
-        icon: 'smile',
-        path: '/dashboard/analysis',
-        component: './dashboard/analysis',
-      },
-    ],
-  },
-
+  
   {
     path: '/user',
     name: 'user',
@@ -43,6 +20,12 @@
         icon: 'smile',
         path: '/user/list',
         component: './User/list',
+      },
+      {
+        name: 'log',
+        icon: 'smile',
+        path: '/user/log',
+        component: './User/log',
       },
     ],
   },
@@ -83,7 +66,7 @@
   {
     path: '/finance',
     name: 'finance',
-    icon: 'smile',
+    icon: 'dollar',
     routes: [
       {
         path: '/finance',
@@ -161,7 +144,7 @@
   {
     path: '/spot',
     name: 'spot',
-    icon: 'smile',
+    icon: 'deploymentUnit',
     routes: [
       {
         path: '/spot',
@@ -188,7 +171,6 @@
         path: '/spot/strategy',
         component: './Spot/strategy',
       },
-     
     ],
   },
 
@@ -237,13 +219,19 @@
     routes: [
       {
         path: '/setting',
-        redirect: '/setting/adminuser',
+        redirect: '/setting/systemuser',
       },
       {
-        name: 'adminuser',
+        name: 'systemuser',
         icon: 'smile',
-        path: '/setting/adminuser',
-        component: './AdminUser/list',
+        path: '/setting/systemuser',
+        component: './Setting/systemuser',
+      },
+      {
+        name: 'role',
+        icon: 'smile',
+        path: '/setting/role',
+        component: './Setting/role',
       },
       {
         name: 'config',
@@ -251,6 +239,13 @@
         path: '/setting/config',
         component: './Setting/config',
       },
+      {
+        name: 'privilege',
+        icon: 'smile',
+        path: '/setting/privilege',
+        component: './Setting/privilege',
+      },
+
       {
         name: 'task',
         icon: 'smile',
@@ -261,19 +256,18 @@
   },
 
   {
-    path: '/adminUser/',
+    path: '/system/user/',
     layout: false,
     routes: [
       {
-        path: '/adminUser/login',
+        path: '/system/user/login',
         layout: false,
         name: 'login',
-        component: './AdminUser/login',
+        component: './SystemUser/login',
       },
     ],
   },
 
- 
   {
     path: '*',
     layout: false,

@@ -127,7 +127,7 @@ const Spot: React.FC = () => {
   return (
     <ProTable<SpotItem>
       headerTitle={intl.formatMessage({
-        id: 'pages.adminuser.title',
+        id: 'pages.systemuser.title',
       })}
       actionRef={actionRef}
       rowKey={(record) => record.id}

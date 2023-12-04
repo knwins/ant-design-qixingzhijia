@@ -8,7 +8,6 @@ const Settings: LayoutSettings & {
   logo?: string;
 } = {
   navTheme: 'light',
-  // 拂晓蓝
   primaryColor: '#1890ff',
   layout: 'mix',
   contentWidth: 'Fluid',
@@ -18,7 +17,7 @@ const Settings: LayoutSettings & {
   title: 'FastBull.IO',
   pwa: true,
   logo: '/logo.svg',
-  "headerHeight": 68,
+  headerHeight: 68,
   iconfontUrl: '//at.alicdn.com/t/font_1039637_btcrd5co4w.js',
 };
 

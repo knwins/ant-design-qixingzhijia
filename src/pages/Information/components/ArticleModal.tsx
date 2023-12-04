@@ -37,7 +37,7 @@ const OperationModal: FC<OperationModalProps> = (props) => {
   });
 
   const dataListOptions = {};
-
+  dataListOptions[0] = { text: '请选择分类',value:'0'};
   const listData = data || [];
   if (listData) {
     listData.map((item) => {
@@ -98,7 +98,7 @@ const OperationModal: FC<OperationModalProps> = (props) => {
             id: 'pages.article.type.name.label',
           })}
           valueEnum={dataListOptions} 
-          initialValue={current?.articleType?.id+ ''}
+          initialValue={current?current?.articleType?.id+ '':'0'}
         />
         <ProFormText
           name="title"

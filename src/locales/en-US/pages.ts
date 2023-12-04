@@ -474,13 +474,13 @@ export default {
   'pages.task.taketime': 'Take Time',
   'pages.task.number': 'Number',
 
-  /* adminuser */
-  'pages.adminuser.title': 'AdminUser',
-  'pages.adminuser.username': 'UserName',
-  'pages.adminuser.nick': 'Nick',
-  'pages.adminuser.phone': 'Phone',
-  'pages.adminuser.email': 'EMail',
-  'pages.adminuser.description': 'Description',
+  /* systemuser */
+  'pages.systemuser.title': 'systemuser',
+  'pages.systemuser.username': 'UserName',
+  'pages.systemuser.nick': 'Nick',
+  'pages.systemuser.phone': 'Phone',
+  'pages.systemuser.email': 'EMail',
+  'pages.systemuser.description': 'Description',
 
   /* coinprice */
   'pages.coinprice.title': 'Coin Price',
