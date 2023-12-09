@@ -1,7 +1,10 @@
+import { StoreParams } from '@/pages/Asset/data';
+import { queryStoreSelect } from '@/pages/Asset/service';
+import { ProFormRadio } from '@ant-design/pro-components';
 import { ModalForm, ProFormDigit, ProFormSelect, ProFormText } from '@ant-design/pro-form';
 import { useIntl, useRequest } from '@umijs/max';
 import type { FC } from 'react';
-import { SystemUserItem } from '../data';
+import { pagination, SystemUserItem } from '../data';
 import { queryRoleList } from '../service';
 import styles from '../style.less';
 
@@ -39,6 +42,40 @@ const SystemUserModel: FC<SystemUserModelProps> = (props) => {
       };
     });
   }
+
+  const handleStoreSelect = async (key?: any) => {
+    if (key === '') {
+      return;
+    }
+    const pagination: pagination = {
+      current: 1,
+      pageSize: 10,
+      total: 100,
+    };
+    const options: StoreParams = {
+      type: key,
+    };
+    //读取仓库数据
+    const { data: store } = await queryStoreSelect({
+      ...pagination,
+      ...options,
+    });
+    const storeListOptions = [];
+    const storeData = store || [];
+    if (storeData) {
+      for (let i = 0; i < storeData.length; i += 1) {
+        const item = storeData[i];
+        if (item) {
+          storeListOptions.push({
+            text: item.name,
+            value: item.id,
+          });
+        }
+      }
+    }
+    return storeListOptions;
+  };
+
   //end
 
   return (
@@ -97,7 +134,7 @@ const SystemUserModel: FC<SystemUserModelProps> = (props) => {
 
         <ProFormSelect
           name="roleId"
-          initialValue={current?current?.role?.id+'':'undefined'}
+          initialValue={current ? current?.role?.id + '' : 'undefined'}
           label={intl.formatMessage({
             id: 'pages.system.user.role.name',
           })}
@@ -155,6 +192,36 @@ const SystemUserModel: FC<SystemUserModelProps> = (props) => {
           placeholder={intl.formatMessage({
             id: 'pages.system.user.email.placeholder',
           })}
+        />
+
+        <ProFormRadio.Group
+          name="type"
+          initialValue="Store"
+          options={[
+            {
+              label: '站点',
+              value: 'Site',
+            },
+            {
+              label: '仓库',
+              value: 'Store',
+            },
+          ]}
+        />
+
+        <ProFormSelect
+          name="store"
+          width="lg"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          label="默认位置"
+          dependencies={['type']}
+          request={async (params) => {
+            return handleStoreSelect(params.type);
+          }}
         />
 
         <ProFormText

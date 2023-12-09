@@ -1,0 +1,264 @@
+import { querySytemUserList } from '@/pages/Setting/service';
+import ProForm, {
+  ModalForm,
+  ProFormDependency,
+  ProFormDigit,
+  ProFormSelect,
+  ProFormText,
+} from '@ant-design/pro-form';
+import { useIntl } from '@umijs/max';
+import type { FC } from 'react';
+import { useRequest } from 'umi';
+import { StoreItem } from '../data';
+import { queryPCDList } from '../service';
+
+type StoreModelProps = {
+  done: boolean;
+  visible: boolean;
+  current: Partial<StoreItem> | undefined;
+  onDone: () => void;
+  onSubmit: (values: StoreItem) => void;
+};
+
+const StoreModel: FC<StoreModelProps> = (props) => {
+  const { done, visible, current, onDone, onSubmit, children } = props;
+  const intl = useIntl();
+
+  //读取分类数据
+  const { data } = useRequest(() => {
+    return querySytemUserList({
+      current: 1,
+      pageSize: 100,
+    });
+  });
+
+  const dataListOptions = {};
+  const listData = data || [];
+  if (listData) {
+    listData.map((item) => {
+      dataListOptions[item.id] = {
+        text: item.username + '-' + item.nick,
+        value: item.id,
+      };
+    });
+  }
+  //end
+
+  if (!visible) {
+    return null;
+  }
+
+  return (
+    <ModalForm<StoreItem>
+      visible={visible}
+      title={
+        done
+          ? null
+          : `${
+              current?.id
+                ? intl.formatMessage({
+                    id: 'pages.edit',
+                  })
+                : intl.formatMessage({
+                    id: 'pages.new',
+                  })
+            }`
+      }
+      width={640}
+      onFinish={async (values) => {
+        onSubmit(values);
+      }}
+      initialValues={current}
+      submitter={{
+        render: (_, dom) => (done ? null : dom),
+      }}
+      trigger={<>{children}</>}
+      modalProps={{
+        onCancel: () => onDone(),
+        destroyOnClose: true,
+        bodyStyle: done ? { padding: '72px 0' } : {},
+      }}
+    >
+      <>
+        <ProFormDigit name="id" hidden />
+
+        <ProFormText
+          name="name"
+          label={intl.formatMessage({
+            id: 'pages.store.name',
+          })}
+          width="md"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          placeholder={intl.formatMessage({
+            id: 'pages.store.name.placeholder',
+          })}
+        />
+        <ProFormSelect
+          name="type"
+          initialValue="Store"
+          label={intl.formatMessage({
+            id: 'pages.store.type',
+          })}
+          width="xs"
+          placeholder={intl.formatMessage({
+            id: 'pages.store.type.placeholder',
+          })}
+          options={[
+            { label: '仓库', value: 'Store' },
+            { label: '站点', value: 'Site' },
+          ]}
+        />
+
+        <ProFormSelect
+          name="systemUserId"
+          label={intl.formatMessage({
+            id: 'pages.store.system.user.name',
+          })}
+          width="md"
+          initialValue={current?.systemUser?.id + ''}
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          placeholder={intl.formatMessage({
+            id: 'pages.store.system.user.name.placeholder',
+          })}
+          valueEnum={dataListOptions}
+        />
+
+        <ProForm.Group title="所在省市区" size={8}>
+          <ProFormSelect
+            rules={[
+              {
+                required: true,
+                message: '请输入您的所在省!',
+              },
+            ]}
+            width="xs"
+            fieldProps={{
+              labelInValue: true,
+            }}
+            name="province"
+            request={async () => {
+              return queryPCDList({ parentId: '0', current: 1, pageSize: 1000 }).then(
+                ({ data }) => {
+                  return data.map((item) => {
+                    return {
+                      label: item.name,
+                      value: item.id+'',
+                    };
+                  });
+                },
+              );
+            }}
+          />
+          
+          <ProFormDependency name={['province']}>
+            {({ province }) => {
+              return (
+                <ProFormSelect
+                  params={{
+                    key: province,
+                  }}
+                  fieldProps={{
+                    labelInValue: true,
+                  }}
+                  name="city"
+                  width="xs"
+                  rules={[
+                    {
+                      required: true,
+                      message: '请输入您的所在城市!',
+                    },
+                  ]}
+                  disabled={!province}
+                  request={async () => {
+                    if (!province?.key) {
+                      return [];
+                    }
+                    return queryPCDList({
+                      parentId: province.key,
+                      current: 1,
+                      pageSize: 1000,
+                    }).then(({ data }) => {
+                      return data.map((item) => {
+                        return {
+                          label: item.name,
+                          value: item.id+'',
+                        };
+                      });
+                    });
+                  }}
+                />
+              );
+            }}
+          </ProFormDependency>
+
+          <ProFormDependency name={['city']}>
+            {({ city }) => {
+              return (
+                <ProFormSelect
+                  params={{
+                    key: city,
+                  }}
+                  fieldProps={{
+                    labelInValue: true,
+                  }}
+                  name="district"
+                  width="xs"
+                  rules={[
+                    {
+                      required: true,
+                      message: '请输入您的所在区县!',
+                    },
+                  ]}
+                  disabled={!city}
+                  request={async () => {
+                    if (!city?.key) {
+                      return [];
+                    }
+                    return queryPCDList({ parentId: city.key, current: 1, pageSize: 1000 }).then(
+                      ({ data }) => {
+                        return data.map((item) => {
+                          return {
+                            label: item.name,
+                            value: item.id+'',
+                          };
+                        });
+                      },
+                    );
+                  }}
+                />
+              );
+            }}
+          </ProFormDependency>
+        </ProForm.Group>
+
+        <ProFormText
+          name="address"
+          label={intl.formatMessage({
+            id: 'pages.store.address',
+          })}
+          width="md"
+          rules={[
+            {
+              required: true,
+              message: intl.formatMessage({
+                id: 'pages.store.address.required',
+              }),
+            },
+          ]}
+          placeholder={intl.formatMessage({
+            id: 'pages.store.address.placeholder',
+          })}
+        />
+      </>
+    </ModalForm>
+  );
+};
+export default StoreModel;

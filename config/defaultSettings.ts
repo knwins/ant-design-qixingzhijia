@@ -14,9 +14,9 @@ const Settings: LayoutSettings & {
   fixedHeader: true,
   fixSiderbar: true,
   colorWeak: false,
-  title: 'FastBull.IO',
+  title: '骑行之家',
   pwa: true,
-  logo: '/logo.svg',
+  logo: '/logo.png',
   headerHeight: 68,
   iconfontUrl: '//at.alicdn.com/t/font_1039637_btcrd5co4w.js',
 };

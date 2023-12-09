@@ -1,0 +1,207 @@
+import {
+  ModalForm,
+  ProFormDigit,
+  ProFormRadio,
+  ProFormSelect,
+  ProFormText,
+} from '@ant-design/pro-form';
+import { useIntl } from '@umijs/max';
+import type { FC } from 'react';
+import { ProductItem, Pagination, StoreParams } from '../data';
+import { queryStoreSelect } from '../service';
+
+type ProductLogModelProps = {
+  done: boolean;
+  visible: boolean;
+  current: Partial<ProductItem> | undefined;
+  onDone: () => void;
+  onSubmit: (values: ProductItem) => void;
+};
+
+const ProductLogModel: FC<ProductLogModelProps> = (props) => {
+  const { done, visible, current, onDone, onSubmit, children } = props;
+  const intl = useIntl();
+
+  const handleStoreSelect = async (key?: any,keywords?:any) => {
+    if (key === '') {
+      return;
+    }
+    const pagination: Pagination = {
+      current: 1,
+      pageSize: 20,
+    };
+    const options: StoreParams = {
+      type: key,
+    };
+    //读取仓库数据
+    const { data: store } = await queryStoreSelect({
+      ...pagination,
+      ...options,
+    });
+    const storeListOptions = [];
+    const storeData = store || [];
+    if (storeData) {
+      for (let i = 0; i < storeData.length; i += 1) {
+        const item = storeData[i];
+        if (item) {
+          storeListOptions.push({
+            label: item.name,
+            value: item.id,
+          });
+        }
+      }
+    }
+    return storeListOptions;
+  };
+
+  const handleStoreType = async (key?: any) => {
+    console.log('key:' + key);
+    const storeTypeListOptions = [];
+
+    if (key == 'Store') {
+      storeTypeListOptions.push({
+        label: '调拨',
+        value: 'StoreToStore',
+      });
+      storeTypeListOptions.push({
+        label: '出库',
+        value: 'OutStore',
+      });
+      return storeTypeListOptions;
+    } else {
+      //if (key == 'Site')
+      storeTypeListOptions.push({
+        label: '入库',
+        value: 'InStore',
+      });
+      storeTypeListOptions.push({
+        label: '调拨',
+        value: 'StoreToStore',
+      });
+      return storeTypeListOptions;
+    }
+  };
+  //end
+
+  if (!visible) {
+    return null;
+  }
+
+  return (
+    <ModalForm<ProductItem>
+      visible={visible}
+      title={
+        done
+          ? null
+          : `${
+              current?.id
+                ? intl.formatMessage({
+                    id: 'pages.edit',
+                  })
+                : intl.formatMessage({
+                    id: 'pages.new',
+                  })
+            }`
+      }
+      width={640}
+      onFinish={async (values) => {
+        onSubmit(values);
+      }}
+      initialValues={current}
+      submitter={{
+        render: (_, dom) => (done ? null : dom),
+      }}
+      trigger={<>{children}</>}
+      modalProps={{
+        onCancel: () => onDone(),
+        destroyOnClose: true,
+        bodyStyle: done ? { padding: '72px 0' } : {},
+      }}
+    >
+      <>
+        <ProFormDigit name="id" hidden />
+        <ProFormText name="action" initialValue="createProductLog" hidden />
+        <ProFormText
+          name="number"
+          label={intl.formatMessage({
+            id: 'pages.product.number',
+          })}
+          width="md"
+          disabled
+        />
+
+        <ProFormRadio.Group
+          name="type"
+          initialValue="StoreToStore"
+          label={intl.formatMessage({
+            id: 'pages.product.log.type',
+          })}
+          request={async () => {
+            return handleStoreType(current?.store?.type);
+          }}
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+        />
+        <ProFormText
+          name="beforeStoreId"
+          label={intl.formatMessage({
+            id: 'pages.product.log.out.store',
+          })}
+          width="md"
+          initialValue={current ? current?.store?.name : ''}
+          disabled
+        />
+
+        <ProFormSelect
+          name="storeId"
+          width="md"
+          showSearch
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          label={intl.formatMessage({
+            id: 'pages.product.log.int.store',
+          })}
+          dependencies={['type']}
+          request={async (params) => {
+            let key = '';
+            //当前为仓库时
+            if (current?.store?.type == 'Store') {
+              if (params.type === 'StoreToStore') {
+                key = 'Store';
+              } else if (params.type === 'OutStore') {
+                key = 'Site';
+              }
+            }
+            //当前为站点时
+            if (current?.store?.type == 'Site') {
+              if (params.type === 'StoreToStore') {
+                key = 'Site';
+              } else if (params.type === 'InStore') {
+                key = 'Store';
+              }
+            }
+            return handleStoreSelect(key,params.keyWords);
+          }}
+        />
+
+        <ProFormText
+          name="inro"
+          label={intl.formatMessage({
+            id: 'pages.product.log.inro',
+          })}
+          width="md"
+          placeholder={intl.formatMessage({
+            id: 'pages.product.log.inro.placeholder',
+          })}
+        />
+      </>
+    </ModalForm>
+  );
+};
+export default ProductLogModel;

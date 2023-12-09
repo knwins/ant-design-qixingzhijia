@@ -5,23 +5,26 @@ import ProTable from '@ant-design/pro-table';
 import { FormattedMessage, useIntl } from '@umijs/max';
 import { Button, message, Modal } from 'antd';
 import React, { useRef, useState } from 'react';
+import CustomOptionModel from './components/CustomOptionModel';
+import { CustomOptionItem, CustomOptionParams } from './data';
+import {
+  addCustomOption,
+  queryCustomOptionList,
+  removeCustomOption,
+  updateCustomOption,
+} from './service';
 
-import PrivilegeModel from './components/PrivilegeModel';
-import type { PrivilegeItem, PrivilegeParams } from './data';
-import { addPrivilege, queryPrivilegeList, removePrivilege, updatePrivilege } from './service';
-
-const PrivilegeList: React.FC = () => {
+const Spot: React.FC = () => {
   const actionRef = useRef<ActionType>();
-  const [params, setParams] = useState<Partial<PrivilegeParams> | undefined>(undefined);
   const [done, setDone] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
-  const [currentRow, setCurrentRow] = useState<PrivilegeItem>();
-  const [parentId, setParentId] = useState<string>();
+  const [currentRow, setCurrentRow] = useState<CustomOptionItem>();
+  const [params, setParams] = useState<Partial<CustomOptionParams> | undefined>(undefined);
 
-  /** 国际化配置 */
+  //国际化
   const intl = useIntl();
 
-  const handleAction = async (fields: PrivilegeItem) => {
+  const handleAction = async (fields: CustomOptionItem) => {
     const loadingHidde = message.loading(
       intl.formatMessage({
         id: 'pages.tip.loading',
@@ -30,7 +33,7 @@ const PrivilegeList: React.FC = () => {
     loadingHidde();
     try {
       if (fields.id != null) {
-        const { success } = await updatePrivilege({
+        const { success } = await updateCustomOption({
           ...fields,
         });
 
@@ -43,7 +46,7 @@ const PrivilegeList: React.FC = () => {
           return true;
         }
       } else {
-        const { success } = await addPrivilege({
+        const { success } = await addCustomOption({
           ...fields,
         });
         if (success) {
@@ -66,13 +69,7 @@ const PrivilegeList: React.FC = () => {
     }
   };
 
-  /**
-   * 删除节点
-   *
-   * @param selectedRows
-   */
-
-  const handleRemove = (selectedRows: PrivilegeItem) => {
+  const handleRemove = (selectedRows: CustomOptionItem) => {
     Modal.confirm({
       title: intl.formatMessage({
         id: 'pages.tip.title',
@@ -94,8 +91,7 @@ const PrivilegeList: React.FC = () => {
               id: 'pages.tip.loading',
             }),
           );
-
-          const { success, errorMessage } = await removePrivilege({
+          const { success, errorMessage } = await removeCustomOption({
             id: selectedRows.id,
           });
 
@@ -131,63 +127,33 @@ const PrivilegeList: React.FC = () => {
     showQuickJumper: true,
   };
 
-  const columns: ProColumns<PrivilegeItem>[] = [
+  const columns: ProColumns<CustomOptionItem>[] = [
     {
-      title: <FormattedMessage id="pages.privilege.name" />,
+      title: <FormattedMessage id="pages.customoption.name" />,
       dataIndex: 'name',
-      valueType: 'text',
-      hideInSearch: true,
       hideInForm: true,
-      fieldProps: { precision: 6 },
-      render: (dom, entity) => {
-        return (
-          <a
-            onClick={() => {
-              const params: PrivilegeParams = {
-                parentId: entity.id,
-              };
-              setParams(params);
-              actionRef.current?.reloadAndRest?.();
-            }}
-          >
-            {dom}
-          </a>
-        );
+      hideInSearch: true,
+      valueType: 'text',
+    },
+
+    {
+      title: <FormattedMessage id="pages.customoption.mark" />,
+      dataIndex: 'mark',
+      valueType: 'select',
+      valueEnum: {
+        CellBrand: {
+          text: '电池品牌',
+          mark: 'CellBrand',
+        },
+        CellBusiness: {
+          text: '电池运营商',
+          mark: 'CellBusiness',
+        },
+        CellSpec: {
+          text: '电池规格',
+          mark: 'CellSpec',
+        },
       },
-    },
-    {
-      title: <FormattedMessage id="pages.privilege.icon" />,
-      dataIndex: 'icon',
-      hideInSearch: true,
-      hideInForm: true,
-      valueType: 'text',
-      fieldProps: { precision: 6 },
-    },
-    {
-      title: <FormattedMessage id="pages.privilege.route" />,
-      dataIndex: 'route',
-      hideInSearch: true,
-      hideInForm: true,
-      valueType: 'text',
-      fieldProps: { precision: 6 },
-    },
-
-    {
-      title: <FormattedMessage id="pages.privilege.component" />,
-      dataIndex: 'component',
-      hideInSearch: true,
-      hideInForm: true,
-      valueType: 'text',
-      fieldProps: { precision: 6 },
-    },
-
-    {
-      title: <FormattedMessage id="pages.privilege.permission" />,
-      dataIndex: 'permission',
-      hideInSearch: true,
-      hideInForm: true,
-      valueType: 'text',
-      fieldProps: { precision: 6 },
     },
 
     {
@@ -197,7 +163,6 @@ const PrivilegeList: React.FC = () => {
       hideInDescriptions: true,
       render: (_, record) => {
         return [
-          
           <a
             key="edit"
             onClick={() => {
@@ -219,51 +184,40 @@ const PrivilegeList: React.FC = () => {
       },
     },
   ];
-
   return (
     <div>
       <PageContainer>
-        <ProTable<PrivilegeItem, PrivilegeParams>
-          headerTitle=""
+        <ProTable<CustomOptionItem>
+          headerTitle={intl.formatMessage({
+            id: 'pages.customoption.title',
+          })}
           actionRef={actionRef}
-          pagination={paginationProps}
           rowKey={(record) => record.id}
+          search={{ labelWidth: 80 }}
+          pagination={paginationProps}
           params={params}
-          search={false}
+          request={queryCustomOptionList}
+          columns={columns}
           toolBarRender={() => [
             <Button
               type="primary"
               key="primary"
               onClick={() => {
-                setParentId('0');
                 setVisible(true);
               }}
             >
               <PlusOutlined /> <FormattedMessage id="pages.new" />
             </Button>,
           ]}
-          request={queryPrivilegeList}
-          columns={columns}
-          onChange={(pagination, filters: any, sorter: any) => {
-            if (sorter) {
-              sorter.order = sorter.order === 'descend' ? 'DESC' : 'ASC';
-              const privilegeParams: PrivilegeParams = {
-                sorter: sorter.order,
-                filter: sorter.field,
-              };
-              setParams(privilegeParams);
-            }
-          }}
         />
 
-        <PrivilegeModel
+        <CustomOptionModel
           done={done}
           visible={visible}
           current={currentRow || {}}
-          parentId={parentId || '0'}
           onDone={handleDone}
           onSubmit={async (value) => {
-            const success = await handleAction(value as PrivilegeItem);
+            const success = await handleAction(value as CustomOptionItem);
             if (success) {
               setVisible(false);
               setCurrentRow(undefined);
@@ -277,5 +231,4 @@ const PrivilegeList: React.FC = () => {
     </div>
   );
 };
-
-export default PrivilegeList;
+export default Spot;

@@ -22,12 +22,7 @@ const GlobalHeaderRight: React.FC = () => {
   }
   return (
     <Space className={className}>
-      <HeaderSearch
-        className={`${styles.action} ${styles.search}`}
-        placeholder="站内搜索"
-        defaultValue="FastBull"
-        options={[{ label: <a href="https://www.fastbull.io">FastBull.IO</a>, value: 'FastBull' }]}
-      />
+      
       <NoticeIconView />
       <Avatar />
       <SelectLang className={styles.action} />

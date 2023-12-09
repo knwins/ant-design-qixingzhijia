@@ -5,6 +5,39 @@ export default [
     icon: 'smile',
     component: './Welcome',
   },
+
+
+  {
+    path: '/asset',
+    name: 'asset',
+    icon: 'user',
+    routes: [
+      {
+        path: '/asset',
+        redirect: '/asset/list',
+      },
+      
+      {
+        name: 'cell',
+        icon: 'smile',
+        path: '/asset/cell',
+        component: './Asset/cell',
+      },
+      {
+        name: 'store',
+        icon: 'smile',
+        path: '/asset/store',
+        component: './Asset/store',
+      },
+
+      {
+        name: 'option',
+        icon: 'smile',
+        path: '/asset/option',
+        component: './Asset/option',
+      },
+    ],
+  },
   
   {
     path: '/user',

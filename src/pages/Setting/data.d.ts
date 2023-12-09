@@ -1,3 +1,5 @@
+import { StoreItem } from "../Asset/data";
+
 export type SiteConfigItem = {
   id: string;
   name: string;
@@ -77,6 +79,7 @@ export type SystemUserItem = {
   email?: string;
   description?: string;
   role?:RoleItem;
+  store?:StoreItem;
 };
 
 export type SystemUserParams = {

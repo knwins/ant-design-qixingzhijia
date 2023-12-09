@@ -112,14 +112,6 @@ const PrivilegeModel: FC<PrivilegeModelProps> = (props) => {
             id: 'pages.privilege.icon',
           })}
           width="lg"
-          rules={[
-            {
-              required: true,
-              message: intl.formatMessage({
-                id: 'pages.privilege.icon.required',
-              }),
-            },
-          ]}
           placeholder={intl.formatMessage({
             id: 'pages.privilege.icon.placeholder',
           })}
@@ -131,14 +123,6 @@ const PrivilegeModel: FC<PrivilegeModelProps> = (props) => {
             id: 'pages.privilege.route',
           })}
           width="lg"
-          rules={[
-            {
-              required: true,
-              message: intl.formatMessage({
-                id: 'pages.privilege.route.required',
-              }),
-            },
-          ]}
           placeholder={intl.formatMessage({
             id: 'pages.privilege.route.placeholder',
           })}
@@ -150,14 +134,6 @@ const PrivilegeModel: FC<PrivilegeModelProps> = (props) => {
             id: 'pages.privilege.component',
           })}
           width="lg"
-          rules={[
-            {
-              required: true,
-              message: intl.formatMessage({
-                id: 'pages.privilege.component.required',
-              }),
-            },
-          ]}
           placeholder={intl.formatMessage({
             id: 'pages.privilege.component.placeholder',
           })}
@@ -169,14 +145,6 @@ const PrivilegeModel: FC<PrivilegeModelProps> = (props) => {
             id: 'pages.privilege.permission',
           })}
           width="lg"
-          rules={[
-            {
-              required: true,
-              message: intl.formatMessage({
-                id: 'pages.privilege.permission.required',
-              }),
-            },
-          ]}
           placeholder={intl.formatMessage({
             id: 'pages.privilege.permission.placeholder',
           })}
@@ -207,14 +175,6 @@ const PrivilegeModel: FC<PrivilegeModelProps> = (props) => {
             id: 'pages.sort',
           })}
           width="xs"
-          rules={[
-            {
-              required: true,
-              message: intl.formatMessage({
-                id: 'pages.sort.required',
-              }),
-            },
-          ]}
           placeholder={intl.formatMessage({
             id: 'pages.sort.placeholder',
           })}

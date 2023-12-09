@@ -57,8 +57,8 @@ const Login: React.FC = () => {
       </div>
       <div className={styles.content}>
         <LoginForm
-          logo={<img alt="logo" src="/logo.svg" />}
-          title="FastBull.IO"
+          logo={<img alt="logo" src="/logo_login.png" />}
+          title="库存管理"
           submitter={{
             searchConfig: {
               submitText: intl.formatMessage({

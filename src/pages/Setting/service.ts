@@ -224,7 +224,7 @@ export async function querySytemUserList(
     /** 列表的内容总数 */
     total?: number;
     status?: boolean;
-  }>(host.api + 'api/system/user/list', {
+  }>(host.api + 'api/system/system_user/list', {
     method: 'POST',
     params: {
       ...params,
@@ -237,7 +237,7 @@ export async function getSytemUser(params: { [id: string]: any }, options?: { [i
   return request<{
     data: RoleItem;
     success?: boolean;
-  }>(host.api + 'api/system/user/get', {
+  }>(host.api + 'api/system/system_user/get', {
     params: {
       ...params,
     },
@@ -250,7 +250,7 @@ export async function addSystemUser(data: { [id: string]: any }, options?: { [id
   return request<{
     success?: boolean;
     errorMessage?: string;
-  }>(host.api + 'api/system/user/add', {
+  }>(host.api + 'api/system/system_user/add', {
     data,
     method: 'POST',
     ...(options || {}),
@@ -264,7 +264,7 @@ export async function updateSystemUser(
   return request<{
     success?: boolean;
     errorMessage?: string;
-  }>(host.api + 'api/system/user/update', {
+  }>(host.api + 'api/system/system_user/update', {
     data,
     method: 'PUT',
     ...(options || {}),
@@ -278,7 +278,7 @@ export async function removeSystemUser(
   return request<{
     success?: boolean;
     errorMessage?: string;
-  }>(host.api + 'api/system/user/delete', {
+  }>(host.api + 'api/system/system_user/delete', {
     data,
     method: 'DELETE',
     ...(options || {}),

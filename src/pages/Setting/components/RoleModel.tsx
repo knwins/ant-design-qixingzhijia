@@ -124,7 +124,26 @@ const RoleModel: FC<RoleModelProps> = (props) => {
             id: 'pages.role.name.placeholder',
           })}
         />
-        <label style={{padding: '10px 0'}}> 权限配置</label>
+
+        <ProFormText
+          name="mark"
+          label={intl.formatMessage({
+            id: 'pages.role.mark',
+          })}
+          width="lg"
+          rules={[
+            {
+              required: true,
+              message: intl.formatMessage({
+                id: 'pages.role.mark.required',
+              }),
+            },
+          ]}
+          placeholder={intl.formatMessage({
+            id: 'pages.role.mark.placeholder',
+          })}
+        />
+        <label style={{ padding: '10px 0' }}> 权限配置</label>
 
         <Tree
           checkable

@@ -1,6 +1,5 @@
 import Footer from '@/components/Footer';
 import RightContent from '@/components/RightContent';
-import { CommentOutlined, TwitterOutlined } from '@ant-design/icons';
 import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
 import { SettingDrawer } from '@ant-design/pro-layout';
 import type { RunTimeLayoutConfig } from '@umijs/max';
@@ -8,6 +7,8 @@ import { history } from '@umijs/max';
 import defaultSettings from '../config/defaultSettings';
 import { errorConfig } from './requestErrorConfig';
 import { currentUser as queryCurrentUser, privilegeMenus } from './services/api';
+import { DollarOutlined, HeartOutlined, SettingOutlined, SmileOutlined, UserOutlined } from '@ant-design/icons';
+import type { MenuDataItem } from '@ant-design/pro-layout';
 
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/system/user/login';
@@ -50,6 +51,20 @@ export async function getInitialState(): Promise<{
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
+
+  const IconMap = {
+    smile: <SmileOutlined />,
+    dollar: <DollarOutlined />,
+    setting:<SettingOutlined/>,
+    user:<UserOutlined/>,
+  };
+  const loopMenuItem = (menus: any[]): MenuDataItem[] =>
+    menus.map(({ icon, routes, ...item }) => ({
+      ...item,
+      icon: icon && IconMap[icon as string],
+      children: routes && loopMenuItem(routes),
+    }));
+
   return {
     rightContentRender: () => <RightContent />,
     disableContentMargin: false,
@@ -57,9 +72,10 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
       content: initialState?.currentUser?.username,
     },
     menu: {
+      locale: false, //我们自己匹配语言
       request: async () => {
         const { data } = await privilegeMenus();
-        return data;
+        return loopMenuItem(data);
       },
     },
     footerRender: () => <Footer />,
@@ -91,37 +107,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
         width: '331px',
       },
     ],
-    links: isDev
-      ? [
-          <a href="https://t.me/adong8848" target="_blank" rel="noopener noreferrer" key="Telegram">
-            <CommentOutlined />
-            <span>Telegram</span>
-          </a>,
-          <a
-            href="https://twitter.com/Fans365Net"
-            target="_blank"
-            rel="noopener noreferrer"
-            key="Fans365"
-          >
-            <TwitterOutlined />
-            <span> @Fans365</span>
-          </a>,
-        ]
-      : [
-          <a href="https://t.me/adong8848" target="_blank" rel="noopener noreferrer" key="Telegram">
-            <CommentOutlined />
-            <span>Telegram</span>
-          </a>,
-          <a
-            href="https://twitter.com/Fans365Net"
-            target="_blank"
-            rel="noopener noreferrer"
-            key="Fans365"
-          >
-            <TwitterOutlined />
-            <span> @Fans365</span>
-          </a>,
-        ],
+    links: isDev ? [<span>Telephone:13800000000</span>] : [<span>Telephone:13800000000</span>],
     menuHeaderRender: undefined,
     // 自定义 403 页面
     // unAccessible: <div>unAccessible</div>,
