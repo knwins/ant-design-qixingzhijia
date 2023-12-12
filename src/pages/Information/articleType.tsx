@@ -91,12 +91,16 @@ const ArticleType: React.FC = () => {
               id: 'pages.tip.loading',
             }),
           );
-          const { success, errorMessage } = await removeArticleType({
+          const { success } = await removeArticleType({
             id: selectedRows.id,
           });
           if (success) {
             loadingHidde();
-            message.success(errorMessage);
+            message.success(
+          intl.formatMessage({
+            id: 'pages.tip.success',
+          }),
+        );
             if (actionRef.current) {
               actionRef.current.reload();
             }

@@ -1,12 +1,10 @@
-// @ts-ignore
-/* eslint-disable */
 import { PrivilegeItem } from '@/pages/Setting/data';
 import { request } from '@umijs/max';
 import host from '../host';
 
-export async function currentUser(options?: { [key: string]: any }) {
+export async function currentSystemUser(options?: { [key: string]: any }) {
   return request<{
-    data: API.CurrentUser;
+    data: API.CurrentSystemUser;
   }>(host.api + 'api/system/user/current', {
     method: 'POST',
     ...(options || {}),

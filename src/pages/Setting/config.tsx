@@ -1,15 +1,20 @@
-import { PageContainer, ProForm, ProFormText, ProFormTextArea } from '@ant-design/pro-components';
+import {
+  ActionType,
+  PageContainer,
+  ProForm,
+  ProFormText,
+  ProFormTextArea,
+} from '@ant-design/pro-components';
 import { useIntl } from '@umijs/max';
 import { Card, Col, message, Row } from 'antd';
-import React from 'react';
+import React, { useRef } from 'react';
 import { useRequest } from 'umi';
 import { SiteConfigParams } from './data';
 import { getSiteConfig, updateSiteConfig } from './service';
 import styles from './style.less';
 
 const SiteConfigForm: React.FC = () => {
-
-
+  const actionRef = useRef<ActionType>();
   //国际化
   const intl = useIntl();
 
@@ -26,14 +31,20 @@ const SiteConfigForm: React.FC = () => {
         }),
         0,
       );
-      const { success, errorMessage } = await updateSiteConfig({
+      const { success } = await updateSiteConfig({
         ...currentRow,
         ...fields,
       });
       loadingHiddle();
       if (success) {
-        message.success(errorMessage);
-        
+        message.success(
+          intl.formatMessage({
+            id: 'pages.tip.success',
+          }),
+        );
+        if (actionRef.current) {
+          actionRef.current.reload();
+        }
         return true;
       }
       return false;
@@ -59,7 +70,7 @@ const SiteConfigForm: React.FC = () => {
               layout="vertical"
               onFinish={handleFinish}
               initialValues={{
-                ...currentSiteConfig
+                ...currentSiteConfig,
               }}
             >
               <ProFormText name="id" hidden={true} />
@@ -149,23 +160,23 @@ const SiteConfigForm: React.FC = () => {
                   <Col lg={24} md={24} sm={24}>
                     <ProFormTextArea
                       width="lg"
-                      label="推送关键词"
-                      name="arrPush"
-                      tooltip="快讯标题包含此关键词时自动推荐APP端"
+                      label="标识参数配置"
+                      tooltip="标识参数为系统配置请勿修改"
+                      name="arrMark"
                       rules={[
                         {
                           required: true,
-                          message: '请输入推送关键词，逗号分隔',
+                          message: '请输入标识参数',
                         },
                       ]}
-                      placeholder="请输入推送关键词，逗号分隔"
+                      placeholder="请输入标识参数"
                     />
                   </Col>
                 </Row>
               </Card>
 
               <Card title="其他信息" bordered={false} className={styles.card}>
-                <ProFormText
+                {/* <ProFormText
                   width="sm"
                   label="区块高度"
                   name="blockNubmer"
@@ -176,7 +187,7 @@ const SiteConfigForm: React.FC = () => {
                     },
                   ]}
                   placeholder="区块高度"
-                />
+                /> */}
 
                 <ProFormText
                   width="lg"
@@ -191,7 +202,7 @@ const SiteConfigForm: React.FC = () => {
                   placeholder="文件上传ServerURL"
                 />
 
-                <ProFormText
+                {/* <ProFormText
                   width="sm"
                   label="Android version"
                   name="appAndroidVersion"
@@ -251,7 +262,7 @@ const SiteConfigForm: React.FC = () => {
                     },
                   ]}
                   placeholder="合约监测交易对,默认值为0"
-                />
+                /> */}
               </Card>
             </ProForm>
           </PageContainer>

@@ -8,7 +8,7 @@ export type HeaderDropdownProps = {
   overlayClassName?: string;
   overlay: React.ReactNode | (() => React.ReactNode) | any;
   placement?: 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topCenter' | 'topRight' | 'bottomCenter';
-} & Omit<DropDownProps, 'overlay'>;
+} & Omit<DropDownProps, 'menu'>;
 
 const HeaderDropdown: React.FC<HeaderDropdownProps> = ({ overlayClassName: cls, ...restProps }) => (
   <Dropdown overlayClassName={classNames(styles.container, cls)} {...restProps} />

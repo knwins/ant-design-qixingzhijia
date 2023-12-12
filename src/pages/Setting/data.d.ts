@@ -8,7 +8,7 @@ export type SiteConfigItem = {
   description: string;
   keywords: string;
   uploadFileServer: string;
-  arrPush: string;
+  arrMark: string;
   quoteStartTime: string;
   tempTime: Date;
   blockNubmer: string;
@@ -77,6 +77,7 @@ export type SystemUserItem = {
   nick?: string;
   phone?: string;
   email?: string;
+  avatar?:string;
   description?: string;
   role?:RoleItem;
   store?:StoreItem;
@@ -86,3 +87,32 @@ export type SystemUserParams = {
   filter?: Record<string, any[]>;
   sorter?: Record<string, any>;
 } & Partial<SystemUserItem>;
+
+
+export type OptionItem = {
+  id: string;
+  name?: string;
+  mark?: string;
+  key?:string;
+  label?:string;
+};
+
+export type OptionData = {
+  id: string;
+  business: OptionItem[];
+  brand: OptionItem[];
+  spec: OptionItem[];
+};
+
+export type OptionMarkItem = {
+  key: string;
+  value: string;
+  label: string;
+  type: string;
+};
+
+export type OptionParams = {
+  mark?: string;
+  filter?: Record<string, any[]>;
+  sorter?: Record<string, any>;
+} & Partial<OptionItem>;

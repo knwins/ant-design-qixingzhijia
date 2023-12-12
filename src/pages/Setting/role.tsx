@@ -93,13 +93,17 @@ const RoleList: React.FC = () => {
             }),
           );
 
-          const { success, errorMessage } = await removeRole({
+          const { success } = await removeRole({
             id: selectedRows.id,
           });
 
           if (success) {
             loadingHidde();
-            message.success(errorMessage);
+            message.success(
+              intl.formatMessage({
+                id: 'pages.tip.success',
+              }),
+            );
             if (actionRef.current) {
               actionRef.current.reload();
             }
@@ -178,7 +182,7 @@ const RoleList: React.FC = () => {
     <div>
       <PageContainer>
         <ProTable<RoleItem, RoleParams>
-          headerTitle=""
+        
           actionRef={actionRef}
           pagination={paginationProps}
           rowKey={(record) => record.id}

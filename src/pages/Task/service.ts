@@ -19,7 +19,7 @@ export async function queryTaskList(
     /** 列表的内容总数 */
     total?: number;
     success?: boolean;
-  }>(host.api + 'api/admin/task/list', {
+  }>(host.api + 'api/manage/task/list', {
     method: 'POST',
     params: {
       ...params,

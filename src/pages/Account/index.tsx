@@ -1,11 +1,10 @@
+import { currentSystemUser } from '@/services/api';
 import { GridContent } from '@ant-design/pro-layout';
 import { FormattedMessage, useRequest } from '@umijs/max';
 import { Menu } from 'antd';
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import BaseView from './components/base';
-import BindingView from './components/binding';
-import SecurityView from './components/security';
-import { queryCurrent } from './service';
+import BaseView from './base';
+import SecurityView from './security';
 import styles from './style.less';
 
 const { Item } = Menu;
@@ -17,17 +16,11 @@ type SettingsState = {
 };
 
 const Settings: React.FC = () => {
-  const { data: currentUser, loading } = useRequest(() => {
-    return queryCurrent();
+  const { loading } = useRequest(() => {
+    return currentSystemUser;
   });
 
   const menuMap: Record<string, React.ReactNode> = {
-    base: <FormattedMessage id="pages.account.base" />,
-    security: <FormattedMessage id="pages.account.security" />,
-    binding: <FormattedMessage id="pages.account.binding" />,
-  };
-
-  const menuUserMap: Record<string, React.ReactNode> = {
     base: <FormattedMessage id="pages.account.base" />,
     security: <FormattedMessage id="pages.account.security" />,
   };
@@ -66,11 +59,7 @@ const Settings: React.FC = () => {
   }, [dom.current]);
 
   const getMenu = () => {
-    if (currentUser?.group == 'user') {
-      return Object.keys(menuUserMap).map((item) => <Item key={item}>{menuUserMap[item]}</Item>);
-    } else {
-      return Object.keys(menuMap).map((item) => <Item key={item}>{menuMap[item]}</Item>);
-    }
+    return Object.keys(menuMap).map((item) => <Item key={item}>{menuMap[item]}</Item>);
   };
 
   const renderChildren = () => {
@@ -80,8 +69,6 @@ const Settings: React.FC = () => {
         return <BaseView />;
       case 'security':
         return <SecurityView />;
-      case 'binding':
-        return <BindingView />;
       default:
         return null;
     }

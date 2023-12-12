@@ -16,7 +16,7 @@ export async function queryBillList(
     /** 列表的内容总数 */
     total?: number;
     success?: boolean;
-  }>(host.api + 'api/admin/bill/list', {
+  }>(host.api + 'api/manage/bill/list', {
     method: 'POST',
     params: {
       ...params,
@@ -29,7 +29,7 @@ export async function addBill(data: { [id: string]: any }, options?: { [id: stri
   return request<{
     success?: boolean;
     errorMessage?: string;
-  }>(host.api + 'api/admin/bill/add', {
+  }>(host.api + 'api/manage/bill/add', {
     data,
     method: 'POST',
     ...(options || {}),
@@ -40,7 +40,7 @@ export async function updateBill(data: { [key: string]: any }, options?: { [key:
   return request<{
     success?: boolean;
     errorMessage?: string;
-  }>(host.api + 'api/admin/bill/update', {
+  }>(host.api + 'api/manage/bill/update', {
     data,
     method: 'PUT',
     ...(options || {}),
@@ -51,7 +51,7 @@ export async function removeBill(data: { [id: string]: any }, options?: { [id: s
   return request<{
     success?: boolean;
     errorMessage?: string;
-  }>(host.api + 'api/admin/bill/delete', {
+  }>(host.api + 'api/manage/bill/delete', {
     data,
     method: 'DELETE',
     ...(options || {}),
@@ -71,7 +71,7 @@ export async function queryBillTypeList(
     /** 列表的内容总数 */
     total?: number;
     success?: boolean;
-  }>(host.api + 'api/admin/bill/type/list', {
+  }>(host.api + 'api/manage/bill/type/list', {
     method: 'POST',
     params: {
       ...params,
@@ -84,7 +84,7 @@ export async function addBillType(data: { [id: string]: any }, options?: { [id: 
   return request<{
     success?: boolean;
     errorMessage?: string;
-  }>(host.api + 'api/admin/bill/type/add', {
+  }>(host.api + 'api/manage/bill/type/add', {
     data,
     method: 'POST',
     ...(options || {}),
@@ -95,7 +95,7 @@ export async function updateBillType(data: { [key: string]: any }, options?: { [
   return request<{
     success?: boolean;
     errorMessage?: string;
-  }>(host.api + 'api/admin/bill/type/update', {
+  }>(host.api + 'api/manage/bill/type/update', {
     data,
     method: 'PUT',
     ...(options || {}),
@@ -106,7 +106,7 @@ export async function removeBillType(data: { [id: string]: any }, options?: { [i
   return request<{
     success?: boolean;
     errorMessage?: string;
-  }>(host.api + 'api/admin/bill/type/delete', {
+  }>(host.api + 'api/manage/bill/type/delete', {
     data,
     method: 'DELETE',
     ...(options || {}),
@@ -128,7 +128,7 @@ export async function queryBillWithdrawList(
     /** 列表的内容总数 */
     total?: number;
     success?: boolean;
-  }>(host.api + 'api/admin/bill/withdraw/list', {
+  }>(host.api + 'api/manage/bill/withdraw/list', {
     method: 'POST',
     params: {
       ...params,
@@ -151,7 +151,7 @@ export async function queryBillInvestList(
     /** 列表的内容总数 */
     total?: number;
     success?: boolean;
-  }>(host.api + 'api/admin/bill/invest/list', {
+  }>(host.api + 'api/manage/bill/invest/list', {
     method: 'POST',
     params: {
       ...params,
@@ -167,7 +167,7 @@ export async function getWalletByAddress(params: { [key: string]: any }, options
   return request<{
     data: WalletItem;
     success?: boolean;
-  }>(host.api+'api/admin/wallet/get', {
+  }>(host.api+'api/manage/wallet/get', {
     params: {
       ...params,
     },

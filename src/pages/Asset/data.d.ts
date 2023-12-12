@@ -21,9 +21,9 @@ export type StoreItem = {
   type: string;
   address?: string;
   systemUser: SystemUserItem;
-  province:ProvinceCityDistrictItem;
-  city:ProvinceCityDistrictItem;
-  district:ProvinceCityDistrictItem;
+  province: ProvinceCityDistrictItem;
+  city: ProvinceCityDistrictItem;
+  district: ProvinceCityDistrictItem;
 };
 
 export type StoreParams = {
@@ -36,9 +36,9 @@ export type StoreParams = {
 export type ProductItem = {
   id: string;
   name: number;
-  brand: CustomOptionItem; //品牌
-  business: CustomOptionItem; //运营商
-  spec: CustomOptionItem; //型号
+  brand: OptionItem; //品牌
+  business: OptionItem; //运营商
+  spec: OptionItem; //型号
   size: string;
   weight: string;
   material: string;
@@ -46,25 +46,6 @@ export type ProductItem = {
   store: StoreItem;
   action: string;
 };
-
-export type CustomOptionItem = {
-  id: string;
-  name: string;
-  mark: string;
-};
-
-export type CustomOptionData = {
-  id: string;
-  business: CustomOptionItem[];
-  brand: CustomOptionItem[];
-  spec: CustomOptionItem[];
-};
-
-export type CustomOptionParams = {
-  mark?: string;
-  filter?: Record<string, any[]>;
-  sorter?: Record<string, any>;
-} & Partial<CustomOptionItem>;
 
 export type ProductLogItem = {
   id: string;
@@ -96,3 +77,20 @@ export type ProvinceCityDistrictItem = {
   pinyin: string;
   sort: number;
 };
+
+
+export type ProductCheckItem = {
+  id: string;
+  input0:boolean;
+  input1:boolean;
+  input2:boolean;
+  input3:boolean;
+  input4:boolean;
+  content: string;
+  address:string;
+  imglist:string;
+  createTime: Date;
+  Product: ProductItem;
+  systemUser: SystemUserItem;
+};
+

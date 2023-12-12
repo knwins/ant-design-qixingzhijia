@@ -24,19 +24,17 @@ const SystemUserModel: FC<SystemUserModelProps> = (props) => {
   }
 
   //读取分类数据
-  const { data } = useRequest(() => {
+  const { data: roleDate } = useRequest(() => {
     return queryRoleList({
       current: 1,
       pageSize: 100,
     });
   });
 
-  const dataListOptions = {};
-  dataListOptions[0] = { text: '请选择分类', value: 'undefined' };
-  const listData = data || [];
-  if (listData) {
-    listData.map((item) => {
-      dataListOptions[item.id] = {
+  const roleListOptions = {};
+  if (roleDate) {
+    roleDate.map((item) => {
+      roleListOptions[item.id] = {
         text: item.name,
         value: item.id,
       };
@@ -56,22 +54,29 @@ const SystemUserModel: FC<SystemUserModelProps> = (props) => {
       type: key,
     };
     //读取仓库数据
-    const { data: store } = await queryStoreSelect({
+    const { data: storeData } = await queryStoreSelect({
       ...pagination,
       ...options,
     });
+
     const storeListOptions = [];
-    const storeData = store || [];
     if (storeData) {
       for (let i = 0; i < storeData.length; i += 1) {
         const item = storeData[i];
         if (item) {
           storeListOptions.push({
-            text: item.name,
+            label: item.name,
             value: item.id,
           });
         }
       }
+
+      //    storeData.map((item) => {
+      //   storeListOptions.push({
+      //     text: item.name,
+      //     value: item.id,
+      //   });
+      // }
     }
     return storeListOptions;
   };
@@ -133,11 +138,13 @@ const SystemUserModel: FC<SystemUserModelProps> = (props) => {
         />
 
         <ProFormSelect
-          name="roleId"
-          initialValue={current ? current?.role?.id + '' : 'undefined'}
+          name="role"
           label={intl.formatMessage({
             id: 'pages.system.user.role.name',
           })}
+          fieldProps={{
+            labelInValue: true,
+          }}
           width="lg"
           rules={[
             {
@@ -150,7 +157,7 @@ const SystemUserModel: FC<SystemUserModelProps> = (props) => {
           placeholder={intl.formatMessage({
             id: 'pages.system.user.role.name.placeholder',
           })}
-          valueEnum={dataListOptions}
+          valueEnum={roleListOptions}
         />
 
         <ProFormText
@@ -212,6 +219,9 @@ const SystemUserModel: FC<SystemUserModelProps> = (props) => {
         <ProFormSelect
           name="store"
           width="lg"
+          fieldProps={{
+            labelInValue: true,
+          }}
           rules={[
             {
               required: true,

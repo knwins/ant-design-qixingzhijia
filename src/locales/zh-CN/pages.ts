@@ -1,9 +1,62 @@
 export default {
   'pages.layouts.userLayout.title': '资产管理系统',
 
-  'pages.welcome': '欢迎使用Fans365.Net',
-  'pages.welcome.title': '欢迎使用粉丝365,Fans365.Net 全年365天为您提供服务',
-  'pages.welcome.title5': '便宜、快速、丰富的社交媒体营销服务',
+  'pages.welcome': '欢迎使用',
+  'pages.welcome.title': '',
+  'pages.welcome.title5': '',
+
+  /** account */
+  'pages.account.username': '用户名称',
+  'pages.account.username.label': '用户名称',
+  'pages.account.username.placeholder': '请输入用户名称',
+  'pages.account.username.required': '请输入用户名称!',
+
+  'pages.account.email': '邮件地址',
+  'pages.account.email.label': '邮件地址',
+  'pages.account.email.placeholder': '请输入邮件地址',
+  'pages.account.email.required': '请输入邮件地址!',
+
+  'pages.account.base': '基本信息',
+  'pages.account.security': '安全设置',
+  'pages.account.binding': '账户绑定',
+  'pages.account.notification': '消息设置',
+
+  'pages.account.role.name.label': '用户角色',
+
+  'pages.account.signature.label': '昵称',
+  'pages.account.signature.placeholder': '请设置昵称',
+  'pages.account.signature.required': '请设置昵称!',
+
+  'pages.account.description.label': '简介',
+  'pages.account.description.placeholder': '请设置简介',
+  'pages.account.description.required': '请设置简介!',
+
+  'pages.account.phones.label': '手机号',
+  'pages.account.phones.placeholder': '请设置手机号',
+  'pages.account.phones.required': '请设置手机号!',
+
+  'pages.account.store.name.label': '默认所在地址',
+
+  'pages.account.header.image': '头像',
+  'pages.account.header.image.modify': ' 修改头像',
+  'pages.account.payimage.upload': ' 上传二维码',
+
+  'pages.account.password.title': '账户密码',
+  'pages.account.password.description':
+    '为了账户安全请定期更改您的密码，请使用数字+字母+特殊字符6位以上密码。',
+
+  'pages.account.modify.password': '密码修改',
+  'pages.account.password.label': '密码',
+  'pages.account.password.placeholder': '请输入密码',
+  'pages.account.password.required': '请输入密码!',
+
+  'pages.account.newpassword.label': '新密码',
+  'pages.account.newpassword.placeholder': '请输入新密码',
+  'pages.account.newpassword.required': '请输入新密码!',
+
+  'pages.account.confirmnewpassword.label': '确认密码',
+  'pages.account.confirmnewpassword.placeholder': '请输入确认密码',
+  'pages.account.confirmnewpassword.required': '请输入确认密码!',
 
   /**login */
   'pages.login': '登陆',
@@ -159,161 +212,6 @@ export default {
   'pages.accounts.status.lock': '锁定中',
   'pages.accounts.status.abnormality': '异常',
 
-  /**spot */
-  'pages.spot.coin.title': '合约交易对',
-  'pages.spot.coin.name': '名称',
-  'pages.spot.coin.username': '所属用户',
-  'pages.spot.coin.username.search': '用户搜索',
-  'pages.spot.coin.username.placeholder': '请输入用户名称',
-  'pages.spot.coin.symbol': '交易对',
-  'pages.spot.coin.state': '状态',
-  'pages.spot.coin.runEnvironment': '环境',
-  'pages.spot.coin.capital': '本金(U)',
-  'pages.spot.coin.balance': '可用余额(U)',
-  'pages.spot.coin.leverage': '杠杆(倍)',
-  'pages.spot.coin.updateTime': '更新时间',
-  'pages.spot.coin.frequency': '频率(M)',
-  'pages.spot.coin.profitSum': '累计收益(U)',
-  'pages.spot.coin.exchange.name': '交易所',
-  'pages.spot.coin.strategy.name': '策略名称',
-  'pages.spot.coin.trackType': '跟踪标识',
-
-  'pages.spot.coin.averagePrice': '持仓均价',
-  'pages.spot.coin.tokenTotal': '持仓Token',
-  'pages.spot.coin.moneyTotal': '持仓金额',
-  'pages.spot.coin.tradeNumber': '交易次数',
-  'pages.spot.coin.profit': '利润',
-
-  'pages.spot.strategy.title': '策略列表',
-  'pages.spot.strategy.name': '名称',
-  'pages.spot.strategy.name.required': '请输入名称',
-  'pages.spot.strategy.name.placeholder': '请输入名称',
-
-  'pages.spot.strategy.state': '状态',
-  'pages.spot.strategy.state.required': '请选择状态',
-  'pages.spot.strategy.state.placeholder': '请选择状态',
-
-  'pages.spot.strategy.handOperation': '手动操作',
-  'pages.spot.strategy.interval': '时间级别',
-  'pages.spot.strategy.trackDown': '追跌',
-  'pages.spot.strategy.trackUp': '追涨',
-  'pages.spot.strategy.subFristLastHold': '首尾减仓',
-  'pages.spot.strategy.subLastHold': '尾仓获利',
-  'pages.spot.strategy.doubleHold': '倍投',
-  'pages.spot.strategy.trackAI': 'AI',
-  'pages.spot.strategy.incomePercent': '固定值盈利',
-
-  /** spot.trade*/
-  'pages.spot.trade.title': '合约交易列表',
-  'pages.spot.trade.tradeType': '方向',
-  'pages.spot.trade.orderId': 'OrderId',
-  'pages.spot.trade.clientOrderId': 'ClientOrderId',
-  'pages.spot.trade.price': '价格',
-  'pages.spot.trade.rUnitQty': 'U数量',
-  'pages.spot.trade.lUnitQty': '币数量',
-  'pages.spot.trade.fee': '交易费',
-  'pages.spot.trade.profit': '利润',
-  'pages.spot.trade.runEnvironment': '环境',
-  'pages.spot.trade.state': '状态',
-  'pages.spot.trade.username': '所属用户',
-  'pages.spot.trade.symbol': '交易对',
-  'pages.spot.trade.systemMsg': '系统信息',
-  'pages.spot.trade.trackType': '跟踪标识',
-  'pages.spot.trade.exchange': '交易所',
-
-  /*future */
-  'pages.future.coin.title': '合约交易对',
-  'pages.future.coin.name': '名称',
-  'pages.future.coin.username': '所属用户',
-  'pages.future.coin.symbol': '交易对',
-  'pages.future.coin.state': '状态',
-  'pages.future.coin.runEnvironment': '环境',
-  'pages.future.coin.capital': '本金(U)',
-  'pages.future.coin.balance': '可用余额(U)',
-  'pages.future.coin.leverage': '杠杆(倍)',
-  'pages.future.coin.updateTime': '更新时间',
-  'pages.future.coin.frequency': '频率(M)',
-  'pages.future.coin.profitSum': '累计收益(U)',
-  'pages.future.coin.exchange.name': '交易所',
-  'pages.future.coin.strategy.name': '策略名称',
-
-  /*future strategy */
-  'pages.future.strategy.title': '策略列表',
-
-  'pages.future.strategy.name': '名称',
-  'pages.future.strategy.name.required': '请输入名称',
-  'pages.future.strategy.name.placeholder': '请输入名称',
-
-  'pages.future.strategy.state': '状态',
-  'pages.future.strategy.state.required': '请选择状态',
-  'pages.future.strategy.state.placeholder': '请选择状态',
-
-  'pages.future.strategy.monitorIntervals': '监测模块',
-  'pages.future.strategy.monitorIntervals.required': '请输入监测策略',
-  'pages.future.strategy.monitorIntervals.placeholder': '请输入监测策略',
-
-  'pages.future.strategy.maxOrderNumber': '实时最大订单数量',
-  'pages.future.strategy.maxOrderNumber.required': '请输入实时最大订单数量',
-  'pages.future.strategy.maxOrderNumber.placeholder': '请输入实时最大订单数量',
-
-  'pages.future.strategy.everyTradePercent': '建仓金额占本金比例',
-  'pages.future.strategy.everyTradePercent.required': '请输入建仓金额占本金比例',
-  'pages.future.strategy.everyTradePercent.placeholder': '请输入建仓金额占本金比例',
-
-  /** future.trade*/
-  'pages.future.trade.title': '合约交易列表',
-  'pages.future.trade.side': '方向',
-  'pages.future.trade.positionSide': 'Long/Short',
-  'pages.future.trade.orderId': 'OrderId',
-  'pages.future.trade.clientOrderId': 'ClientOrderId',
-  'pages.future.trade.price': '价格',
-  'pages.future.trade.rUnitQty': 'U数量',
-  'pages.future.trade.lUnitQty': '币数量',
-  'pages.future.trade.fee': '交易费',
-  'pages.future.trade.feeAsset': '交易币种',
-  'pages.future.trade.realizedProfit': '利润',
-  'pages.future.trade.runEnvironment': '环境',
-  'pages.future.trade.state': '状态',
-  'pages.future.trade.username': '所属用户',
-  'pages.future.trade.symbol': '交易对',
-  'pages.future.trade.systemMsg': '系统信息',
-  'pages.future.trade.trackType': '跟踪标识',
-  'pages.future.trade.exchange': '交易所',
-
-  /** future.ext.order*/
-  'pages.future.ext.order.title': '订单交易列表',
-  'pages.future.ext.order.long.title': 'Long交易列表',
-  'pages.future.ext.order.short.title': 'Short交易列表',
-  'pages.future.ext.order.side': '方向',
-  'pages.future.ext.order.positionSide': 'Long/Short',
-  'pages.future.ext.order.orderId': 'OrderId',
-  'pages.future.ext.order.clientOrderId': 'ClientOrderId',
-  'pages.future.ext.order.price': '价格',
-  'pages.future.ext.order.rUnitQty': 'U数量',
-  'pages.future.ext.order.lUnitQty': '币数量',
-  'pages.future.ext.order.fee': '交易费',
-  'pages.future.ext.order.feeAsset': '交易币种',
-  'pages.future.ext.order.realizedProfit': '利润',
-  'pages.future.ext.order.runEnvironment': '环境',
-  'pages.future.ext.order.state': '状态',
-  'pages.future.ext.order.username': '所属用户',
-  'pages.future.ext.order.symbol': '交易对',
-  'pages.future.ext.order.moneyTotal': '金额(U)',
-  'pages.future.ext.order.tokenTotal': 'Token数量',
-  'pages.future.ext.order.profit': '盈亏',
-  'pages.future.ext.order.orderType': '监测模组',
-  'pages.future.ext.order.entrustPrice': '委托价',
-  'pages.future.ext.order.stopLossPrice': '止损价',
-  'pages.future.ext.order.takeProfitPrice': '止盈价',
-  'pages.future.ext.order.interval': '时间级别',
-
-  /** pages.exchange.name */
-  'pages.exchange.title': '交易所API列表',
-  'pages.exchange.name': 'API名称',
-  'pages.exchange.account': 'API账户',
-  'pages.exchange.state': '状态',
-  'pages.exchange.username': '用户',
-
   /**bill */
   'pages.bill.createTime': '创建时间',
   'pages.bill.username': '所属用户',
@@ -390,21 +288,6 @@ export default {
   'pages.article.type.thumbImgHeight.placeholder': '请设置缩略图高度',
   'pages.article.type.edit.title': '账单分类编辑',
 
-  /**express */
-  'pages.express.title': '标题',
-  'pages.express.title.placeholder': '请输入标题',
-  'pages.express.title.required': '请输入标题',
-  'pages.express.source': '来源',
-  'pages.express.state': '状态',
-  'pages.express.hitCount': '访问量',
-  'pages.express.username': '发布用户',
-  'pages.express.content': '内容',
-  'pages.express.content.placeholder': '请输入内容',
-  'pages.express.content.required': '请输入内容',
-  'pages.express.showEndtime': '展示截止时间',
-  'pages.express.showEndtime.required': '请选择展示截止时间',
-  'pages.express.showEndtime.placeholder': '请选择展示截止时间',
-
   /* user */
   'pages.user.title': '用户列表',
   'pages.user.name': '用户名',
@@ -429,10 +312,12 @@ export default {
   'pages.system.user.title': '管理员',
   'pages.system.user.username': '用户名',
   'pages.system.user.username.placeholder': '请输入用户名',
+  'pages.system.user.username.required': '请输入用户名',
   'pages.system.user.password': '密码',
   'pages.system.user.password.placeholder': '请输入6位密码',
   'pages.system.user.nick': '昵名',
   'pages.system.user.nick.placeholder': '请输入昵名',
+  'pages.system.user.nick.required': '请输入昵名',
   'pages.system.user.phone': '电话',
   'pages.system.user.phone.placeholder': '请输入电话',
   'pages.system.user.email': '邮件',
@@ -441,64 +326,6 @@ export default {
   'pages.system.user.description.placeholder': '请输入备注',
   'pages.system.user.role.name': '角色',
   'pages.system.user.role.name.placeholder': '请选择角色',
-
-  /* coin */
-  'pages.coin.title': '实时价格',
-
-  'pages.coin.name': '名称',
-  'pages.coin.name.required': '请输入代币简称',
-  'pages.coin.name.placeholder': '请输入代币简称',
-
-  'pages.coin.state': '状态',
-  'pages.coin.state.required': '请选择状态',
-  'pages.coin.state.placeholder': '请选择状态',
-
-  'pages.coin.symbol': '交易对',
-  'pages.coin.symbol.required': '请输入交易对',
-  'pages.coin.symbol.placeholder': '请输入交易对',
-
-  'pages.coin.symbolType': '现货/合约',
-  'pages.coin.symbolType.required': '请选择交易对类型',
-  'pages.coin.symbolType.placeholder': '请选择交易对类型',
-
-  'pages.coin.lot': 'LOT精度',
-  'pages.coin.top': '排名',
-
-  /* coin.price */
-  'pages.coin.price.title': '实时价格',
-  'pages.coin.price.symbol': '交易对',
-  'pages.coin.price.symbolType': '现货/合约',
-
-  'pages.coin.price.exchange': '交易所',
-  'pages.coin.price.buyPrice': '最佳买入',
-  'pages.coin.price.sellPrice': '最佳卖出',
-
-  /* coin.thrend */
-  'pages.coin.thrend.title': '币种模块监测',
-  'pages.coin.thrend.symbol': '交易对',
-  'pages.coin.thrend.symbolType': '现货/合约',
-  'pages.coin.thrend.threndType': '策略模块',
-  'pages.coin.thrend.longShort': 'Long/Short',
-  'pages.coin.thrend.interval': '时间级别',
-  'pages.coin.thrend.message': '信息',
-
-  'pages.tweet.model.title': '引用或回复',
-  'pages.tweet.content': '内容',
-  'pages.tweet.content.required': '内容必填项!',
-  'pages.tweet.useCount': '使用人数',
-  'pages.tweet.useCount.required': '使用人数必填!',
-  'pages.tweet.buy': ' 购买 ',
-  'pages.tweet.status': '状态',
-  'pages.tweet.status.on': '启用',
-  'pages.tweet.status.off': '停用',
-  'pages.tweet.useCount.tip1': '请计算好所有使用人数之和大于购买人数，为0时内容不被使用.',
-  'pages.tweet.useCount.tip2': '如果订单一直未完成，请检查是否人数用完。',
-
-  'pages.result.success.twitter.title': '特推授权成功',
-  'pages.result.success.twitter.subTitle': '请进入我的账户查看授权Twitter用户.',
-
-  'pages.result.fail.twitter.title': '特推授权失败',
-  'pages.result.fail.twitter.subTitle': '请检查是否是网络问题，如问题依据请联系客服.',
 
   /** 权限菜单 */
   'pages.privilege.name': '名称',
@@ -531,9 +358,9 @@ export default {
   'pages.role.name': '名称',
   'pages.role.name.required': '请输入名称',
   'pages.role.name.placeholder': '请输入名称',
-  'pages.role.description': '简介',
-  'pages.role.description.required': '请输入简介',
-  'pages.role.description.placeholder': '请输入简介',
+  'pages.role.group': '群级标识',
+  'pages.role.group.required': '请输入群级标识',
+  'pages.role.group.placeholder': '请输入群级标识',
 
   'pages.user.avatar': '头像',
   'pages.user.username': '用户名称',
@@ -557,34 +384,39 @@ export default {
   'pages.store.search.keywords.placeholder': '请输入搜索名称或用户名',
   'pages.store.username.placeholder': '请输入用户名',
   'pages.store.title': '站点列表',
+
   'pages.store.name': '名称',
   'pages.store.name.placeholder': '请输入名称',
+  'pages.store.state': '状态',
   'pages.store.type': '类型',
   'pages.store.type.placeholder': '请选择类型',
   'pages.store.address': '地址',
   'pages.store.system.user.name': '负责人',
+  'pages.store.system.user.name.placeholder': '请选择负责人',
   'pages.store.system.username.search': '用户名搜索',
   'pages.store.address.placeholder': '请输入站点详细地址',
   'pages.store.address.required': '请输入站点详细地址',
 
-  'pages.product.ids':'批量IDS',
+  'pages.product.ids': '批量IDS',
   'pages.product.title': '电池列表',
   'pages.product.brand': '品牌',
+  'pages.product.brand.placeholder': '请选择品牌',
   'pages.product.business': '运营商',
+  'pages.product.business.placeholder': '请选择运营商',
   'pages.product.spec': '规格',
-  'pages.product.number': '电池编号',
+  'pages.product.spec.placeholder': '请选择规格',
+  'pages.product.number': '编号',
   'pages.product.number.placeholder': '请输入编号',
-  'pages.product.search.keywords':'编号或站点',
+  'pages.product.search.keywords': '编号或站点',
   'pages.product.search.keywords.placeholder': '搜索编号或站点',
   'pages.product.weight': '重量(KG)',
   'pages.product.weight.placeholder': '请输入重量',
   'pages.product.size': '尺寸',
   'pages.product.size.placeholder': '请输入尺寸',
-  'pages.product.material': '电芯材质',
+  'pages.product.material': '材质',
   'pages.product.material.placeholder': '请输入电芯材质',
   'pages.product.store': '仓库/站点',
   'pages.product.store.placeholder': '请选择仓库',
-  
 
   'pages.product.log.username': '操作人',
   'pages.product.log.title': '调拨日志',
@@ -592,15 +424,22 @@ export default {
   'pages.product.log.inro.placeholder': '请输入备注',
   'pages.product.log.content': '内容',
   'pages.product.log.create': '调拨',
-  'pages.product.log.int.store':'调入网点',
-  'pages.product.log.out.store':'调出网点',
-  'pages.product.log.type':'类型',
-  
+  'pages.product.log.int.store': '调入网点',
+  'pages.product.log.out.store': '调出网点',
+  'pages.product.log.type': '类型',
 
-  'pages.customoption.title': '属性设置',
-  'pages.customoption.name': '名称',
-  'pages.customoption.name.placeholder': '请输入名称',
-  'pages.customoption.mark': '标识',
-  'pages.customoption.mark.placeholder': '请输入标识',
-  
+  'pages._option.title': '属性设置',
+  'pages._option.name': '名称',
+  'pages._option.name.placeholder': '请输入名称',
+  'pages._option.mark': '标识',
+  'pages._option.type': '分类',
+  'pages._option.mark.placeholder': '请输入标识',
+
+  'pages.cabinet.number.search.keywords':'编号搜索',
+  'pages.cabinet.number.search.keywords.placeholder':'请输入电柜编号',
+  'pages.cabinet.number':'电柜编号',
+  'pages.cabinet.check.username':'巡检员',
+  'pages.cabinet.state':'状态',
+  'pages.cabinet.address':'巡检位置',
+
 };

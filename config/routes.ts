@@ -6,7 +6,6 @@ export default [
     component: './Welcome',
   },
 
-
   {
     path: '/asset',
     name: 'asset',
@@ -16,12 +15,25 @@ export default [
         path: '/asset',
         redirect: '/asset/list',
       },
-      
+
       {
         name: 'cell',
         icon: 'smile',
         path: '/asset/cell',
         component: './Asset/cell',
+      },
+
+      {
+        name: 'cabinet',
+        icon: 'smile',
+        path: '/asset/cabinet',
+        component: './Asset/cabinet',
+      },
+      {
+        name: 'electric',
+        icon: 'smile',
+        path: '/asset/electric',
+        component: './Asset/electric',
       },
       {
         name: 'store',
@@ -29,16 +41,15 @@ export default [
         path: '/asset/store',
         component: './Asset/store',
       },
-
       {
-        name: 'option',
+        name: 'check',
         icon: 'smile',
-        path: '/asset/option',
-        component: './Asset/option',
+        path: '/asset/check',
+        component: './Asset/check',
       },
     ],
   },
-  
+
   {
     path: '/user',
     name: 'user',
@@ -136,116 +147,6 @@ export default [
   },
 
   {
-    path: '/future',
-    name: 'future',
-    icon: 'transaction',
-    routes: [
-      {
-        path: '/future',
-        redirect: '/future/coin',
-      },
-
-      {
-        name: 'coin',
-        icon: 'smile',
-        path: '/future/coin',
-        component: './Future/list',
-      },
-
-      {
-        name: 'trade',
-        icon: 'smile',
-        path: '/future/trade',
-        component: './Future/trade',
-      },
-
-      {
-        name: 'strategy',
-        icon: 'smile',
-        path: '/future/strategy',
-        component: './Future/strategy',
-      },
-      {
-        name: 'order',
-        icon: 'smile',
-        path: '/future/order',
-        component: './Future/order',
-      },
-    ],
-  },
-
-  {
-    path: '/spot',
-    name: 'spot',
-    icon: 'deploymentUnit',
-    routes: [
-      {
-        path: '/spot',
-        redirect: '/spot/coin',
-      },
-
-      {
-        name: 'coin',
-        icon: 'smile',
-        path: '/spot/coin',
-        component: './Spot/list',
-      },
-
-      {
-        name: 'trade',
-        icon: 'smile',
-        path: '/spot/trade',
-        component: './Spot/list',
-      },
-
-      {
-        name: 'strategy',
-        icon: 'smile',
-        path: '/spot/strategy',
-        component: './Spot/strategy',
-      },
-    ],
-  },
-
-  {
-    path: '/coin',
-    name: 'coin',
-    icon: 'smile',
-    routes: [
-      {
-        path: '/coin',
-        redirect: '/coin/exchange',
-      },
-
-      {
-        name: 'symbol',
-        icon: 'smile',
-        path: '/coin/symbol',
-        component: './Coin/list',
-      },
-      {
-        name: 'thrend',
-        icon: 'smile',
-        path: '/coin/thrend',
-        component: './Coin/thrend',
-      },
-
-      {
-        name: 'price',
-        icon: 'smile',
-        path: '/coin/price',
-        component: './Coin/price',
-      },
-      {
-        name: 'exchange',
-        icon: 'smile',
-        path: '/coin/exchange',
-        component: './Coin/exchange',
-      },
-    ],
-  },
-
-  {
     path: '/setting',
     name: 'setting',
     icon: 'setting',
@@ -280,10 +181,10 @@ export default [
       },
 
       {
-        name: 'task',
+        name: 'option',
         icon: 'smile',
-        path: '/setting/task',
-        component: './Task/list',
+        path: '/setting/option',
+        component: './Setting/option',
       },
     ],
   },
@@ -297,6 +198,24 @@ export default [
         layout: false,
         name: 'login',
         component: './SystemUser/login',
+      },
+    ],
+  },
+
+  {
+    name: 'account',
+    icon: 'user',
+    path: '/account',
+    routes: [
+      {
+        path: '/account',
+        redirect: '/account/settings',
+      },
+      {
+        name: 'settings',
+        icon: 'smile',
+        path: '/account/settings',
+        component: './Account/index',
       },
     ],
   },

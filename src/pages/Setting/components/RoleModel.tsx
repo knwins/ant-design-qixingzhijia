@@ -126,21 +126,21 @@ const RoleModel: FC<RoleModelProps> = (props) => {
         />
 
         <ProFormText
-          name="mark"
+          name="group"
           label={intl.formatMessage({
-            id: 'pages.role.mark',
+            id: 'pages.role.group',
           })}
           width="lg"
           rules={[
             {
               required: true,
               message: intl.formatMessage({
-                id: 'pages.role.mark.required',
+                id: 'pages.role.group.required',
               }),
             },
           ]}
           placeholder={intl.formatMessage({
-            id: 'pages.role.mark.placeholder',
+            id: 'pages.role.group.placeholder',
           })}
         />
         <label style={{ padding: '10px 0' }}> 权限配置</label>

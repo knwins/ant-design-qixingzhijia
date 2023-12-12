@@ -21,6 +21,8 @@ const PrivilegeList: React.FC = () => {
   /** 国际化配置 */
   const intl = useIntl();
 
+  
+
   const handleAction = async (fields: PrivilegeItem) => {
     const loadingHidde = message.loading(
       intl.formatMessage({
@@ -33,7 +35,6 @@ const PrivilegeList: React.FC = () => {
         const { success } = await updatePrivilege({
           ...fields,
         });
-
         if (success) {
           message.success(
             intl.formatMessage({
@@ -94,14 +95,16 @@ const PrivilegeList: React.FC = () => {
               id: 'pages.tip.loading',
             }),
           );
-
-          const { success, errorMessage } = await removePrivilege({
+          const { success } = await removePrivilege({
             id: selectedRows.id,
           });
-
           if (success) {
             loadingHidde();
-            message.success(errorMessage);
+            message.success(
+              intl.formatMessage({
+                id: 'pages.tip.success',
+              }),
+            );
             if (actionRef.current) {
               actionRef.current.reload();
             }
@@ -197,7 +200,15 @@ const PrivilegeList: React.FC = () => {
       hideInDescriptions: true,
       render: (_, record) => {
         return [
-          
+          <a
+            key="new"
+            onClick={() => {
+              setVisible(true);
+              setParentId(record.id);
+            }}
+          >
+            <FormattedMessage id="pages.new" />
+          </a>,
           <a
             key="edit"
             onClick={() => {
@@ -224,9 +235,9 @@ const PrivilegeList: React.FC = () => {
     <div>
       <PageContainer>
         <ProTable<PrivilegeItem, PrivilegeParams>
-          headerTitle=""
           actionRef={actionRef}
           pagination={paginationProps}
+        
           rowKey={(record) => record.id}
           params={params}
           search={false}

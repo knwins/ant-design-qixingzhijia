@@ -90,13 +90,17 @@ const SystemUser: React.FC = () => {
             }),
           );
 
-          const { success, errorMessage } = await updateSystemUser({
+          const { success } = await updateSystemUser({
             ...fields,
           });
 
           if (success) {
             loadingHidde();
-            message.success(errorMessage);
+            message.success(
+          intl.formatMessage({
+            id: 'pages.tip.success',
+          }),
+        );
             if (actionRef.current) {
               actionRef.current.reload();
             }
@@ -138,13 +142,17 @@ const SystemUser: React.FC = () => {
             }),
           );
 
-          const { success, errorMessage } = await removeSystemUser({
+          const { success } = await removeSystemUser({
             id: selectedRows.id,
           });
 
           if (success) {
             loadingHidde();
-            message.success(errorMessage);
+            message.success(
+          intl.formatMessage({
+            id: 'pages.tip.success',
+          }),
+        );
             if (actionRef.current) {
               actionRef.current.reload();
             }

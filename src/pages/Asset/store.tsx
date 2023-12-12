@@ -97,13 +97,17 @@ const Spot: React.FC = () => {
               id: 'pages.tip.loading',
             }),
           );
-          const { success, errorMessage } = await removeStore({
+          const { success } = await removeStore({
             id: selectedRows.id,
           });
 
           if (success) {
             loadingHidde();
-            message.success(errorMessage);
+            message.success(
+              intl.formatMessage({
+                id: 'pages.tip.success',
+              }),
+            );
             if (actionRef.current) {
               actionRef.current.reload();
             }
@@ -126,7 +130,6 @@ const Spot: React.FC = () => {
     setDone(false);
     setVisible(false);
     setCurrentRow(undefined);
-    
   };
 
   //导出数据
@@ -163,6 +166,8 @@ const Spot: React.FC = () => {
     const typeOptions = {};
     typeOptions['Store'] = '仓库';
     typeOptions['Site'] = '站点';
+    typeOptions['Stage'] = '驿站';
+    typeOptions['Supplier'] = '供应商';
 
     //用户数据
     const { data: systemUserData } = await querySytemUserList({
@@ -268,14 +273,43 @@ const Spot: React.FC = () => {
           text: '站点',
           type: 'Site',
         },
+        // Stage: {
+        //   text: '驿站',
+        //   type: 'Stage',
+        // },
+        // Supplier: {
+        //   text: '供应商',
+        //   type: 'Supplier',
+        // },
       },
     },
+
     {
       title: <FormattedMessage id="pages.store.address" />,
       dataIndex: 'address',
       valueType: 'text',
       hideInSearch: true,
       hideInForm: true,
+    },
+    {
+      title: <FormattedMessage id="pages.store.state" />,
+      dataIndex: 'state',
+      valueType: 'select',
+      hideInForm: true,
+      valueEnum: {
+        Application: {
+          text: '申请中',
+          state: 'Application',
+        },
+        Construction: {
+          text: '建设中',
+          state: 'Construction',
+        },
+        Normal: {
+          text: '运行中',
+          state: 'Normal',
+        },
+      },
     },
     {
       title: <FormattedMessage id="pages.option" />,
@@ -373,13 +407,17 @@ const Spot: React.FC = () => {
               id: 'pages.tip.loading',
             }),
           );
-          const { success, errorMessage } = await removeStoreByIds({
+          const { success } = await removeStoreByIds({
             ids: ids,
           });
 
           if (success) {
             loadingHidde();
-            message.success(errorMessage);
+            message.success(
+              intl.formatMessage({
+                id: 'pages.tip.success',
+              }),
+            );
             if (actionRef.current) {
               actionRef.current.reload();
               handleDone();
@@ -403,9 +441,6 @@ const Spot: React.FC = () => {
     <div>
       <PageContainer>
         <ProTable<StoreItem>
-          headerTitle={intl.formatMessage({
-            id: 'pages.store.title',
-          })}
           actionRef={actionRef}
           rowKey={(record) => record.id}
           search={{

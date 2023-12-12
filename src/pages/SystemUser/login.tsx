@@ -18,7 +18,7 @@ const Login: React.FC = () => {
     if (userInfo) {
       await setInitialState((s) => ({
         ...s,
-        currentUser: userInfo,
+        currentSystemUser: userInfo,
       }));
     }
     return userInfo;

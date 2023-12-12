@@ -1,12 +1,12 @@
 declare namespace API {
-
-
-  type CurrentUser = {
+  type CurrentSystemUser = {
     id: string;
     username: string;
-        nick: string;
+    nick: string;
+    avatar?:string;
+    phone?:string;
+    
   };
-
 
   // LoginResult
   type LoginResult = {
@@ -67,8 +67,4 @@ declare namespace API {
     /** 业务上的请求是否成功 */
     success?: boolean;
   };
-
-
-  
 }
-

@@ -10,7 +10,7 @@ import styles from './index.less';
 export type HeaderSearchProps = {
   onSearch?: (value?: string) => void;
   onChange?: (value?: string) => void;
-  onVisibleChange?: (b: boolean) => void;
+  ?: (b: boolean) => void;
   className?: string;
   placeholder?: string;
   options: AutoCompleteProps['options'];
@@ -24,7 +24,7 @@ const HeaderSearch: React.FC<HeaderSearchProps> = (props) => {
   const {
     className,
     defaultValue,
-    onVisibleChange,
+    onOpenChange,
     placeholder,
     visible,
     defaultVisible,
@@ -40,7 +40,7 @@ const HeaderSearch: React.FC<HeaderSearchProps> = (props) => {
 
   const [searchMode, setSearchMode] = useMergedState(defaultVisible ?? false, {
     value: props.visible,
-    onChange: onVisibleChange,
+    onChange: onOpenChange,
   });
 
   const inputClass = classNames(styles.input, {
@@ -57,8 +57,8 @@ const HeaderSearch: React.FC<HeaderSearchProps> = (props) => {
       }}
       onTransitionEnd={({ propertyName }) => {
         if (propertyName === 'width' && !searchMode) {
-          if (onVisibleChange) {
-            onVisibleChange(searchMode);
+          if (onOpenChange) {
+            onOpenChange(searchMode);
           }
         }
       }}

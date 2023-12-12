@@ -1,4 +1,4 @@
-import { querySytemUserList } from '@/pages/Setting/service';
+import { querySytemUserSelect } from '@/pages/Setting/service';
 import ProForm, {
   ModalForm,
   ProFormDependency,
@@ -8,7 +8,6 @@ import ProForm, {
 } from '@ant-design/pro-form';
 import { useIntl } from '@umijs/max';
 import type { FC } from 'react';
-import { useRequest } from 'umi';
 import { StoreItem } from '../data';
 import { queryPCDList } from '../service';
 
@@ -23,26 +22,6 @@ type StoreModelProps = {
 const StoreModel: FC<StoreModelProps> = (props) => {
   const { done, visible, current, onDone, onSubmit, children } = props;
   const intl = useIntl();
-
-  //读取分类数据
-  const { data } = useRequest(() => {
-    return querySytemUserList({
-      current: 1,
-      pageSize: 100,
-    });
-  });
-
-  const dataListOptions = {};
-  const listData = data || [];
-  if (listData) {
-    listData.map((item) => {
-      dataListOptions[item.id] = {
-        text: item.username + '-' + item.nick,
-        value: item.id,
-      };
-    });
-  }
-  //end
 
   if (!visible) {
     return null;
@@ -110,16 +89,20 @@ const StoreModel: FC<StoreModelProps> = (props) => {
           options={[
             { label: '仓库', value: 'Store' },
             { label: '站点', value: 'Site' },
+            { label: '驿站', value: 'Stage' },
+            { label: '供应商', value: 'Supplier' },
           ]}
         />
 
         <ProFormSelect
-          name="systemUserId"
+          name="systemUser"
           label={intl.formatMessage({
             id: 'pages.store.system.user.name',
           })}
+          fieldProps={{
+            labelInValue: true,
+          }}
           width="md"
-          initialValue={current?.systemUser?.id + ''}
           rules={[
             {
               required: true,
@@ -128,7 +111,19 @@ const StoreModel: FC<StoreModelProps> = (props) => {
           placeholder={intl.formatMessage({
             id: 'pages.store.system.user.name.placeholder',
           })}
-          valueEnum={dataListOptions}
+          request={async () => {
+            return querySytemUserSelect({
+              current: 1,
+              pageSize: 1000,
+            }).then(({ data }) => {
+              return data.map((item) => {
+                return {
+                  label: item.username + '-' + item.nick,
+                  value: item.id + '',
+                };
+              });
+            });
+          }}
         />
 
         <ProForm.Group title="所在省市区" size={8}>
@@ -150,14 +145,14 @@ const StoreModel: FC<StoreModelProps> = (props) => {
                   return data.map((item) => {
                     return {
                       label: item.name,
-                      value: item.id+'',
+                      value: item.id + '',
                     };
                   });
                 },
               );
             }}
           />
-          
+
           <ProFormDependency name={['province']}>
             {({ province }) => {
               return (
@@ -189,7 +184,7 @@ const StoreModel: FC<StoreModelProps> = (props) => {
                       return data.map((item) => {
                         return {
                           label: item.name,
-                          value: item.id+'',
+                          value: item.id + '',
                         };
                       });
                     });
@@ -227,7 +222,7 @@ const StoreModel: FC<StoreModelProps> = (props) => {
                         return data.map((item) => {
                           return {
                             label: item.name,
-                            value: item.id+'',
+                            value: item.id + '',
                           };
                         });
                       },

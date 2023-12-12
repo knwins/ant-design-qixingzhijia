@@ -1,14 +1,19 @@
 import Footer from '@/components/Footer';
 import RightContent from '@/components/RightContent';
-import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
+import {
+  DollarOutlined,
+  SettingOutlined,
+  SlackOutlined,
+  SmileOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
+import type { MenuDataItem, Settings as LayoutSettings } from '@ant-design/pro-layout';
 import { SettingDrawer } from '@ant-design/pro-layout';
 import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history } from '@umijs/max';
 import defaultSettings from '../config/defaultSettings';
 import { errorConfig } from './requestErrorConfig';
-import { currentUser as queryCurrentUser, privilegeMenus } from './services/api';
-import { DollarOutlined, HeartOutlined, SettingOutlined, SmileOutlined, UserOutlined } from '@ant-design/icons';
-import type { MenuDataItem } from '@ant-design/pro-layout';
+import { currentSystemUser as queryCurrentUser, privilegeMenus } from './services/api';
 
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/system/user/login';
@@ -18,9 +23,9 @@ const loginPath = '/system/user/login';
  * */
 export async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
-  currentUser?: API.CurrentUser;
+  currentSystemUser?: API.CurrentSystemUser;
   loading?: boolean;
-  fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
+  fetchUserInfo?: () => Promise<API.CurrentSystemUser | undefined>;
 }> {
   const fetchUserInfo = async () => {
     try {
@@ -36,10 +41,10 @@ export async function getInitialState(): Promise<{
   // 如果不是登录页面，执行
   if (window.location.pathname !== loginPath) {
     console.log(loginPath + '.....');
-    const currentUser = await fetchUserInfo();
+    const currentSystemUser = await fetchUserInfo();
     return {
       fetchUserInfo,
-      currentUser,
+      currentSystemUser,
       settings: defaultSettings,
     };
   }
@@ -51,12 +56,12 @@ export async function getInitialState(): Promise<{
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
-
   const IconMap = {
+    slack: <SlackOutlined />,
     smile: <SmileOutlined />,
     dollar: <DollarOutlined />,
-    setting:<SettingOutlined/>,
-    user:<UserOutlined/>,
+    setting: <SettingOutlined />,
+    user: <UserOutlined />,
   };
   const loopMenuItem = (menus: any[]): MenuDataItem[] =>
     menus.map(({ icon, routes, ...item }) => ({
@@ -69,7 +74,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     rightContentRender: () => <RightContent />,
     disableContentMargin: false,
     waterMarkProps: {
-      content: initialState?.currentUser?.username,
+      content: initialState?.currentSystemUser?.username,
     },
     menu: {
       locale: false, //我们自己匹配语言
@@ -82,8 +87,8 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     onPageChange: () => {
       const { location } = history;
       // 如果没有登录，重定向到 login
-      if (!initialState?.currentUser && location.pathname !== loginPath) {
-        console.log(initialState?.currentUser + '...');
+      if (!initialState?.currentSystemUser && location.pathname !== loginPath) {
+        console.log(initialState?.currentSystemUser + '...');
         history.push(loginPath);
       }
     },

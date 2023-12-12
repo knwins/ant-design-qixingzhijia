@@ -14,7 +14,7 @@ export async function queryArticleList(
     data: ArticleItem[];
     total?: number;
     success?: boolean;
-  }>(host.api + 'api/admin/article/list', {
+  }>(host.api + 'api/manage/article/list', {
     method: 'POST',
     params: {
       ...params,
@@ -28,7 +28,7 @@ export async function getArticle(data: { [id: string]: any }, options?: { [id: s
     data: ArticleItem;
     success?: boolean;
     errorMessage?: number;
-  }>(host.api + 'api/admin/article/get', {
+  }>(host.api + 'api/manage/article/get', {
     data,
     method: 'POST',
     ...(options || {}),
@@ -39,7 +39,7 @@ export async function updateArticle(data: { [id: string]: any }, options?: { [id
   return request<{
     success?: boolean;
     errorMessage?: number;
-  }>(host.api + 'api/admin/article/update', {
+  }>(host.api + 'api/manage/article/update', {
     data,
     method: 'PUT',
     ...(options || {}),
@@ -50,7 +50,7 @@ export async function addArticle(data: { [id: string]: any }, options?: { [id: s
   return request<{
     success?: boolean;
     errorMessage?: string;
-  }>(host.api + 'api/admin/article/add', {
+  }>(host.api + 'api/manage/article/add', {
     data,
     method: 'POST',
     ...(options || {}),
@@ -61,7 +61,7 @@ export async function removeArticle(data: { [id: string]: any }, options?: { [id
   return request<{
     success?: boolean;
     errorMessage?: string;
-  }>(host.api + 'api/admin/article/delete', {
+  }>(host.api + 'api/manage/article/delete', {
     data,
     method: 'DELETE',
     ...(options || {}),
@@ -81,7 +81,7 @@ export async function queryArticleTypeList(
     data: ArticleTypeItem[];
     total?: number;
     success?: boolean;
-  }>(host.api + 'api/admin/article/type/list', {
+  }>(host.api + 'api/manage/article/type/list', {
     method: 'POST',
     params: {
       ...params,
@@ -94,7 +94,7 @@ export async function getArticleType(data: { [id: string]: any }, options?: { [i
   return request<{
     data: ArticleTypeItem;
     success?: boolean;
-  }>(host.api + 'api/admin/article/type/get', {
+  }>(host.api + 'api/manage/article/type/get', {
     data,
     method: 'POST',
     ...(options || {}),
@@ -108,7 +108,7 @@ export async function updateArticleType(
   return request<{
     success?: boolean;
     errorMessage?: string;
-  }>(host.api + 'api/admin/article/type/update', {
+  }>(host.api + 'api/manage/article/type/update', {
     data,
     method: 'PUT',
     ...(options || {}),
@@ -122,7 +122,7 @@ export async function addArticleType(
   return request<{
     success?: boolean;
     errorMessage?: string;
-  }>(host.api + 'api/admin/article/type/add', {
+  }>(host.api + 'api/manage/article/type/add', {
     data,
     method: 'POST',
     ...(options || {}),
@@ -133,7 +133,7 @@ export async function removeArticleType(data: { id: string }, options?: { [key: 
   return request<{
     success?: boolean;
     errorMessage?: string;
-  }>(host.api + 'api/admin/article/type/delete', {
+  }>(host.api + 'api/manage/article/type/delete', {
     data,
     method: 'DELETE',
 
@@ -156,7 +156,7 @@ export async function queryExpressList(
     data: ExpressItem[];
     total?: number;
     success?: boolean;
-  }>(host.api + 'api/admin/express/list', {
+  }>(host.api + 'api/manage/express/list', {
     method: 'POST',
     params: {
       ...params,
@@ -169,7 +169,7 @@ export async function getExpress(data: { [id: string]: any }, options?: { [id: s
   return request<{
     data: ExpressItem;
     success?: boolean;
-  }>(host.api + 'api/admin/express/get', {
+  }>(host.api + 'api/manage/express/get', {
     data,
     method: 'POST',
     ...(options || {}),
@@ -183,7 +183,7 @@ export async function updateExpress(
   return request<{
     success?: boolean;
     errorMessage?: string;
-  }>(host.api + 'api/admin/express/update', {
+  }>(host.api + 'api/manage/express/update', {
     data,
     method: 'PUT',
     ...(options || {}),
@@ -197,7 +197,7 @@ export async function addExpress(
   return request<{
     success?: boolean;
     errorMessage?: string;
-  }>(host.api + 'api/admin/express/add', {
+  }>(host.api + 'api/manage/express/add', {
     data,
     method: 'POST',
     ...(options || {}),
@@ -208,7 +208,7 @@ export async function removeExpress(data: { id: string }, options?: { [key: stri
   return request<{
     success?: boolean;
     errorMessage?: string;
-  }>(host.api + 'api/admin/express/delete', {
+  }>(host.api + 'api/manage/express/delete', {
     data,
     method: 'DELETE',
     ...(options || {}),

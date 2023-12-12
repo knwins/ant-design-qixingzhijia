@@ -14,9 +14,10 @@ import { Button, Drawer, message, Modal, Space, Table, Upload, UploadProps } fro
 import ExportJsonExcel from 'js-export-excel';
 import React, { useRef, useState } from 'react';
 import host from '../../host';
+import { queryOptionSelect } from '../Setting/service';
 import BatchProductLogModel from './components/BatchProductLogModel';
 import ProductLogModel from './components/ProductLogModel';
-import ProductModel from './components/ProductModel';
+import ProductModel from './components/CellModel';
 import { ProductItem, ProductLogBatchItem, ProductLogItem, ProductLogParams } from './data';
 import {
   addProduct,
@@ -24,7 +25,6 @@ import {
   createProductLog,
   queryProductList,
   queryProductLogList,
-  queryCustomOptionSelect,
   queryStoreSelect,
   removeProduct,
   removeProductByIds,
@@ -48,9 +48,10 @@ const Spot: React.FC = () => {
   const intl = useIntl();
   //读取属性数据
   const { data } = useRequest(() => {
-    return queryCustomOptionSelect({
+    return queryOptionSelect({
       current: 1,
       pageSize: 100,
+      type: 'Cell',
     });
   });
 
@@ -207,13 +208,17 @@ const Spot: React.FC = () => {
               id: 'pages.tip.loading',
             }),
           );
-          const { success, errorMessage } = await removeProduct({
+          const { success } = await removeProduct({
             id: selectedRows.id,
           });
 
           if (success) {
             loadingHidde();
-            message.success(errorMessage);
+            message.success(
+          intl.formatMessage({
+            id: 'pages.tip.success',
+          }),
+        );
             if (actionRef.current) {
               actionRef.current.reload();
             }
@@ -288,13 +293,17 @@ const Spot: React.FC = () => {
               id: 'pages.tip.loading',
             }),
           );
-          const { success, errorMessage } = await removeProductByIds({
+          const { success } = await removeProductByIds({
             ids: ids,
           });
 
           if (success) {
             loadingHidde();
-            message.success(errorMessage);
+            message.success(
+          intl.formatMessage({
+            id: 'pages.tip.success',
+          }),
+        );
             if (actionRef.current) {
               actionRef.current.reload();
             }
@@ -325,7 +334,17 @@ const Spot: React.FC = () => {
   const exportExcel = async () => {
     //console.log(exportParams);
     const { data: dataList } = await queryProductList({ ...exportParams });
-    const columns = ['number', 'store', 'brand', 'business', 'spec', 'size', 'weight', 'material','category'];
+    const columns = [
+      'number',
+      'store',
+      'brand',
+      'business',
+      'spec',
+      'size',
+      'weight',
+      'material',
+      'category',
+    ];
     const tableItem = {
       number: '编号',
       store: '站点',
@@ -335,7 +354,7 @@ const Spot: React.FC = () => {
       size: '尺寸',
       weight: '重量',
       material: '材质',
-      category:'类别',
+      category: '类别',
     };
 
     const headerColumns = columns.map((k) => tableItem[k]);
@@ -644,10 +663,10 @@ const Spot: React.FC = () => {
         }}
         pagination={paginationProps}
         request={(params) => {
-          const res = queryProductList({ ...params });
+          const res = queryProductList({ ...params, category: 'Cell' });
           res.then((value) => {
             params.pageSize = value.total;
-            params.category="Cell";
+            params.category = 'Cell';
             setExportParams(params);
           });
           return res;

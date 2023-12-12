@@ -133,12 +133,16 @@ const Notice: React.FC = () => {
         }),
         0,
       );
-      const { success, errorMessage } = await removeArticle({
+      const { success } = await removeArticle({
         id: selectedRows.id,
       });
       loadingHiddle();
       if (success) {
-        message.success(errorMessage);
+        message.success(
+          intl.formatMessage({
+            id: 'pages.tip.success',
+          }),
+        );
         actionRef.current?.reload?.();
         return true;
       }
