@@ -1,9 +1,9 @@
 export default {
-  'pages.layouts.userLayout.title': '资产管理系统',
+  'pages.layouts.userLayout.title': '江门市骑行之家咨询有限公司',
 
   'pages.welcome': '欢迎使用',
-  'pages.welcome.title': '',
-  'pages.welcome.title5': '',
+  'pages.welcome.title': 'QiXiniJia.com',
+  'pages.welcome.title5': 'QiXiniJia.com',
 
   /** account */
   'pages.account.username': '用户名称',

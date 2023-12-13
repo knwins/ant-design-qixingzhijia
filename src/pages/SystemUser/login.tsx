@@ -58,7 +58,7 @@ const Login: React.FC = () => {
       <div className={styles.content}>
         <LoginForm
           logo={<img alt="logo" src="/logo_login.png" />}
-          title="库存管理"
+          title="骑行之家"
           submitter={{
             searchConfig: {
               submitText: intl.formatMessage({
