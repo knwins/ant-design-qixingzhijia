@@ -53,7 +53,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
     >
       <>
         <ProFormDigit name="id" hidden />
-        <ProFormDigit name="category" hidden initialValue={"Cabinet"}/>
+        <ProFormDigit name="category" hidden initialValue={"CABINET"}/>
         <ProFormText
           name="number"
           label={intl.formatMessage({
@@ -70,9 +70,8 @@ const ProductModel: FC<ProductModelProps> = (props) => {
           })}
         />
 
-        {/* <ProFormSelect
-          name="storeId"
-          initialValue={current ? current.store?.id + '' : ''}
+        <ProFormSelect
+          name="state"
           width="lg"
           rules={[
             {
@@ -80,10 +79,23 @@ const ProductModel: FC<ProductModelProps> = (props) => {
             },
           ]}
           label={intl.formatMessage({
-            id: 'pages.product.store',
+            id: 'pages.product.state',
           })}
-          valueEnum={storeListOptions}
-        /> */}
+          options={[
+            {
+              label: '仓库中',
+              value: 'STORE',
+            },
+            {
+              label: '安装中',
+              value: 'INSTALL',
+            },
+            {
+              label: '使用中',
+              value: 'NORMAL',
+            },
+          ]}
+        />
         <ProFormSelect
           name="business"
           width="lg"
@@ -106,7 +118,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
             return queryOptionSelect({
               current: 1,
               pageSize: 1000,
-              type: 'Cabinet',
+              type: 'CABINET',
             }).then(({ data }) => {
               return data?.business.map((item) => {
                 return {
@@ -140,7 +152,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
             return queryOptionSelect({
               current: 1,
               pageSize: 1000,
-              type: 'Cabinet',
+              type: 'CABINET',
             }).then(({ data }) => {
               return data?.brand.map((item) => {
                 return {
@@ -174,7 +186,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
             return queryOptionSelect({
               current: 1,
               pageSize: 1000,
-              type: 'Cabinet',
+              type: 'CABINET',
             }).then(({ data }) => {
               return data?.spec.map((item) => {
                 return {

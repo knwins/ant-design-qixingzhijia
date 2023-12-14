@@ -1,10 +1,4 @@
-import {
-  DeleteOutlined,
-  ExportOutlined,
-  ImportOutlined,
-  PlusOutlined,
-  ShareAltOutlined,
-} from '@ant-design/icons';
+import { DeleteOutlined, ExportOutlined, ImportOutlined, PlusOutlined } from '@ant-design/icons';
 import ProDescriptions, { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
 import { PageContainer } from '@ant-design/pro-layout';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
@@ -15,20 +9,18 @@ import ExportJsonExcel from 'js-export-excel';
 import React, { useRef, useState } from 'react';
 import host from '../../host';
 import { queryOptionSelect } from '../Setting/service';
-import BatchProductLogModel from './components/BatchProductLogModel';
-import ProductModel from './components/ElectricModel';
-import ProductLogModel from './components/ProductLogModel';
-import { ProductItem, ProductLogBatchItem, ProductLogItem, ProductLogParams } from './data';
+import ProductModel from './components/OtherModel';
+import ProductStockModel from './components/ProductStockModel';
+import StocksModal from './components/StockModel';
+import { ProductItem, ProductLogItem, ProductLogParams, ProductStockItem } from './data';
 import {
   addProduct,
-  batchCreateProductLog,
-  createProductLog,
+  createProductStockCreate,
   queryProductList,
   queryProductLogList,
   queryStoreSelect,
   removeProduct,
   removeProductByIds,
-  updateProduct,
 } from './service';
 
 const Spot: React.FC = () => {
@@ -37,10 +29,9 @@ const Spot: React.FC = () => {
   const [done, setDone] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
   const [logVisible, setLogVisible] = useState<boolean>(false);
-  const [logAllVisible, setLogAllVisible] = useState<boolean>(false);
   const [currentRow, setCurrentRow] = useState<ProductItem>();
-  const [currentBatch, setCurrentBatch] = useState<ProductLogBatchItem>();
   const [showDetail, setShowDetail] = useState<boolean>(false);
+  const [stockVisible, setStockVisible] = useState<boolean>(false);
   const [exportParams, setExportParams] = useState({}); //导出参数
   const [ids, setIds] = useState<string>();
 
@@ -51,7 +42,7 @@ const Spot: React.FC = () => {
     return queryOptionSelect({
       current: 1,
       pageSize: 100,
-      type: 'ELECTRIC',
+      type: 'OTHER',
     });
   });
 
@@ -123,7 +114,7 @@ const Spot: React.FC = () => {
     });
   }
 
-  /**
+ /**
    * Product 操作
    * @param fields
    * @returns
@@ -186,6 +177,42 @@ const Spot: React.FC = () => {
     }
   };
 
+   /**
+   * Product Stock 操作
+   * @param fields
+   * @returns
+   */
+    const handleStockAction = async (fields: ProductStockItem) => {
+      const loadingHidde = message.loading(
+        intl.formatMessage({
+          id: 'pages.tip.loading',
+        }),
+      );
+      loadingHidde();
+      try {
+        if (fields.action == 'createProductStock') {
+          const { success } = await createProductStockCreate({
+            ...fields,
+          });
+          if (success) {
+            message.success(
+              intl.formatMessage({
+                id: 'pages.tip.success',
+              }),
+            );
+            return true;
+          }
+        }
+        return false;
+      } catch (error) {
+        message.error(
+          intl.formatMessage({
+            id: 'pages.tip.error',
+          }),
+        );
+        return false;
+      }
+    };
 
   const handleRemove = (selectedRows: ProductItem) => {
     Modal.confirm({
@@ -216,10 +243,10 @@ const Spot: React.FC = () => {
           if (success) {
             loadingHidde();
             message.success(
-          intl.formatMessage({
-            id: 'pages.tip.success',
-          }),
-        );
+              intl.formatMessage({
+                id: 'pages.tip.success',
+              }),
+            );
             if (actionRef.current) {
               actionRef.current.reload();
             }
@@ -236,38 +263,6 @@ const Spot: React.FC = () => {
         }
       },
     });
-  };
-
-  const handleBatchAction = async (fields: ProductLogBatchItem) => {
-    const loadingHidde = message.loading(
-      intl.formatMessage({
-        id: 'pages.tip.loading',
-      }),
-    );
-    loadingHidde();
-    try {
-      if (fields.action == 'batchCreateProductLog') {
-        const { success } = await batchCreateProductLog({
-          ...fields,
-        });
-        if (success) {
-          message.success(
-            intl.formatMessage({
-              id: 'pages.tip.success',
-            }),
-          );
-          return true;
-        }
-      }
-      return false;
-    } catch (error) {
-      message.error(
-        intl.formatMessage({
-          id: 'pages.tip.error',
-        }),
-      );
-      return false;
-    }
   };
 
   //批量删除数据
@@ -301,10 +296,10 @@ const Spot: React.FC = () => {
           if (success) {
             loadingHidde();
             message.success(
-          intl.formatMessage({
-            id: 'pages.tip.success',
-          }),
-        );
+              intl.formatMessage({
+                id: 'pages.tip.success',
+              }),
+            );
             if (actionRef.current) {
               actionRef.current.reload();
             }
@@ -327,8 +322,8 @@ const Spot: React.FC = () => {
     setDone(false);
     setVisible(false);
     setLogVisible(false);
-    setLogAllVisible(false);
     setCurrentRow(undefined);
+    setStockVisible(false);
   };
 
   //导出数据
@@ -387,7 +382,7 @@ const Spot: React.FC = () => {
     // console.log(tableData);
 
     const option = {
-      fileName: '电柜数据',
+      fileName: 'other-' + new Date(),
       datas: [
         {
           sheetData: tableData, // 要导出的原数据
@@ -484,17 +479,6 @@ const Spot: React.FC = () => {
       hideInSearch: true,
     },
 
-    // {
-    //   title: <FormattedMessage id="pages.product.spec" />,
-    //   dataIndex: 'specId',
-    //   valueType: 'select',
-    //   width:'80px',
-    //   hideInForm: true,
-    //   hideInTable:true,
-    //   valueEnum:specListOptions
-
-    // },
-
     {
       title: <FormattedMessage id="pages.product.spec" />,
       dataIndex: ['spec', 'name'],
@@ -534,6 +518,16 @@ const Spot: React.FC = () => {
             }}
           >
             <FormattedMessage id="pages.detail" />
+          </a>,
+
+          <a
+            key="detail"
+            onClick={() => {
+              setCurrentRow(record);
+              setStockVisible(true);
+            }}
+          >
+            <FormattedMessage id="pages.stock" />
           </a>,
           <a
             key="edit"
@@ -655,7 +649,7 @@ const Spot: React.FC = () => {
     <PageContainer>
       <ProTable<ProductItem>
         headerTitle={intl.formatMessage({
-          id: 'pages.product.electric.title',
+          id: 'pages.product.other.title',
         })}
         actionRef={actionRef}
         rowKey={(record) => record.id}
@@ -664,10 +658,10 @@ const Spot: React.FC = () => {
         }}
         pagination={paginationProps}
         request={(params) => {
-          const res = queryProductList({ ...params, category: 'ELECTRIC' });
+          const res = queryProductList({ ...params, category: 'OTHER' });
           res.then((value) => {
             params.pageSize = value.total;
-            params.category = 'ELECTRIC';
+            params.category = 'OTHER';
             setExportParams(params);
           });
           return res;
@@ -709,19 +703,6 @@ const Spot: React.FC = () => {
                 type="primary"
                 size="small"
                 onClick={() => {
-                  const ProductLogBatch: ProductLogBatchItem = {};
-                  ProductLogBatch.ids = ids;
-                  setCurrentBatch(ProductLogBatch);
-                  setLogAllVisible(true);
-                }}
-              >
-                <ShareAltOutlined />
-                调配
-              </Button>
-              <Button
-                type="primary"
-                size="small"
-                onClick={() => {
                   exportExcel();
                 }}
               >
@@ -744,7 +725,7 @@ const Spot: React.FC = () => {
         toolBarRender={() => [
           <a
             onClick={() => {
-              jumpToTemplate(`${host.api}/static/template/product.xlsx`);
+              jumpToTemplate(`${host.api}/static/template/other.xlsx`);
             }}
             style={{ fontSize: '12px', verticalAlign: 'center' }}
           >
@@ -786,13 +767,13 @@ const Spot: React.FC = () => {
         }}
       />
 
-      <ProductLogModel
+      <ProductStockModel
         done={done}
         visible={logVisible}
         current={currentRow || {}}
         onDone={handleDone}
         onSubmit={async (value) => {
-          const success = await handleAction(value as ProductItem);
+          const success = await handleStockAction(value as ProductStockItem);
           if (success) {
             setLogVisible(false);
             setCurrentRow(undefined);
@@ -802,27 +783,9 @@ const Spot: React.FC = () => {
           }
         }}
       />
-
-      <BatchProductLogModel
-        done={done}
-        visible={logAllVisible}
-        current={currentBatch || {}}
-        onDone={handleDone}
-        onSubmit={async (value) => {
-          const success = await handleBatchAction(value as ProductLogBatchItem);
-          if (success) {
-            setLogAllVisible(false);
-            setCurrentBatch(undefined);
-            if (actionRef.current) {
-              actionRef.current.reload();
-            }
-          }
-        }}
-      />
-
       <Drawer
         width={600}
-        open={showDetail}
+        visible={showDetail}
         onClose={() => {
           setCurrentRow(undefined);
           setShowDetail(false);
@@ -860,6 +823,8 @@ const Spot: React.FC = () => {
           ''
         )}
       </Drawer>
+
+      <StocksModal done={done} current={currentRow} visible={stockVisible} onDone={handleDone} />
     </PageContainer>
   );
 };

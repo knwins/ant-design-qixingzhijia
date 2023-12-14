@@ -1,0 +1,186 @@
+import { StoreParams } from '@/pages/Asset/data';
+import { queryStoreSelect } from '@/pages/Asset/service';
+import { ProFormRadio } from '@ant-design/pro-components';
+import { ModalForm, ProFormDigit, ProFormSelect, ProFormText } from '@ant-design/pro-form';
+import { useIntl } from '@umijs/max';
+import type { FC } from 'react';
+import { pagination, UserItem } from '../data';
+import styles from '../style.less';
+
+type UserModelProps = {
+  done: boolean;
+  visible: boolean;
+  current: Partial<UserItem> | undefined;
+  onDone: () => void;
+  onSubmit: (values: UserItem) => void;
+};
+
+const UserModel: FC<UserModelProps> = (props) => {
+  const { done, visible, current, onDone, onSubmit, children } = props;
+  const intl = useIntl();
+  if (!visible) {
+    return null;
+  }
+
+  const handleStoreSelect = async (key?: any) => {
+    if (key === '') {
+      return;
+    }
+    const pagination: pagination = {
+      current: 1,
+      pageSize: 10,
+      total: 100,
+    };
+    const options: StoreParams = {
+      type: key,
+    };
+    //读取仓库数据
+    const { data: storeData } = await queryStoreSelect({
+      ...pagination,
+      ...options,
+    });
+    const storeListOptions = [];
+    if (storeData) {
+      for (let i = 0; i < storeData.length; i += 1) {
+        const item = storeData[i];
+        if (item) {
+          storeListOptions.push({
+            label: item.name,
+            value: item.id,
+          });
+        }
+      }
+    }
+    return storeListOptions;
+  };
+
+  //end
+
+  return (
+    <ModalForm<UserItem>
+      visible={visible}
+      title={
+        done
+          ? null
+          : `${
+              current?.id
+                ? intl.formatMessage({
+                    id: 'pages.edit',
+                  })
+                : intl.formatMessage({
+                    id: 'pages.new',
+                  })
+            }`
+      }
+      className={styles.standardListForm}
+      width={640}
+      onFinish={async (values) => {
+        onSubmit(values);
+      }}
+      initialValues={current}
+      submitter={{
+        render: (_, dom) => (done ? null : dom),
+      }}
+      trigger={<>{children}</>}
+      modalProps={{
+        onCancel: () => onDone(),
+        destroyOnClose: true,
+        bodyStyle: done ? { padding: '72px 0' } : {},
+      }}
+    >
+      <>
+        <ProFormDigit name="id" hidden />
+
+        <ProFormText
+          name="username"
+          label={intl.formatMessage({
+            id: 'pages.user.username',
+          })}
+          width="lg"
+          rules={[
+            {
+              required: true,
+              message: intl.formatMessage({
+                id: 'pages.user.username.required',
+              }),
+            },
+          ]}
+          placeholder={intl.formatMessage({
+            id: 'pages.user.username.placeholder',
+          })}
+        />
+
+        <ProFormText
+          name="nick"
+          label={intl.formatMessage({
+            id: 'pages.user.nick',
+          })}
+          width="lg"
+          rules={[
+            {
+              required: true,
+              message: intl.formatMessage({
+                id: 'pages.user.nick.required',
+              }),
+            },
+          ]}
+          placeholder={intl.formatMessage({
+            id: 'pages.user.nick.placeholder',
+          })}
+        />
+
+        <ProFormText
+          name="phone"
+          label={intl.formatMessage({
+            id: 'pages.user.phone',
+          })}
+          width="lg"
+          placeholder={intl.formatMessage({
+            id: 'pages.user.phone.placeholder',
+          })}
+        />
+
+        <ProFormText
+          name="email"
+          label={intl.formatMessage({
+            id: 'pages.user.email',
+          })}
+          width="lg"
+          placeholder={intl.formatMessage({
+            id: 'pages.user.email.placeholder',
+          })}
+        />
+        <ProFormSelect
+          name="store"
+          width="lg"
+          fieldProps={{
+            labelInValue: true,
+          }}
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          label="默认位置"
+          dependencies={['type']}
+          request={async (params) => {
+            return handleStoreSelect("ADDRESS");
+          }}
+        />
+
+        <ProFormText
+          name="description"
+          label={intl.formatMessage({
+            id: 'pages.user.description',
+          })}
+          width="lg"
+          placeholder={intl.formatMessage({
+            id: 'pages.user.description.placeholder',
+          })}
+        />
+      </>
+    </ModalForm>
+  );
+};
+
+export default UserModel;

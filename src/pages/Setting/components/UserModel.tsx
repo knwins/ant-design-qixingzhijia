@@ -4,19 +4,19 @@ import { ProFormRadio } from '@ant-design/pro-components';
 import { ModalForm, ProFormDigit, ProFormSelect, ProFormText } from '@ant-design/pro-form';
 import { useIntl, useRequest } from '@umijs/max';
 import type { FC } from 'react';
-import { pagination, SystemUserItem } from '../data';
+import { pagination, UserItem } from '../data';
 import { queryRoleList } from '../service';
 import styles from '../style.less';
 
-type SystemUserModelProps = {
+type UserModelProps = {
   done: boolean;
   visible: boolean;
-  current: Partial<SystemUserItem> | undefined;
+  current: Partial<UserItem> | undefined;
   onDone: () => void;
-  onSubmit: (values: SystemUserItem) => void;
+  onSubmit: (values: UserItem) => void;
 };
 
-const SystemUserModel: FC<SystemUserModelProps> = (props) => {
+const UserModel: FC<UserModelProps> = (props) => {
   const { done, visible, current, onDone, onSubmit, children } = props;
   const intl = useIntl();
   if (!visible) {
@@ -84,7 +84,7 @@ const SystemUserModel: FC<SystemUserModelProps> = (props) => {
   //end
 
   return (
-    <ModalForm<SystemUserItem>
+    <ModalForm<UserItem>
       visible={visible}
       title={
         done
@@ -121,26 +121,26 @@ const SystemUserModel: FC<SystemUserModelProps> = (props) => {
         <ProFormText
           name="username"
           label={intl.formatMessage({
-            id: 'pages.system.user.username',
+            id: 'pages.user.username',
           })}
           width="lg"
           rules={[
             {
               required: true,
               message: intl.formatMessage({
-                id: 'pages.system.user.username.required',
+                id: 'pages.user.username.required',
               }),
             },
           ]}
           placeholder={intl.formatMessage({
-            id: 'pages.system.user.username.placeholder',
+            id: 'pages.user.username.placeholder',
           })}
         />
 
         <ProFormSelect
           name="role"
           label={intl.formatMessage({
-            id: 'pages.system.user.role.name',
+            id: 'pages.user.role.name',
           })}
           fieldProps={{
             labelInValue: true,
@@ -150,12 +150,12 @@ const SystemUserModel: FC<SystemUserModelProps> = (props) => {
             {
               required: true,
               message: intl.formatMessage({
-                id: 'pages.system.user.role.name.required',
+                id: 'pages.user.role.name.required',
               }),
             },
           ]}
           placeholder={intl.formatMessage({
-            id: 'pages.system.user.role.name.placeholder',
+            id: 'pages.user.role.name.placeholder',
           })}
           valueEnum={roleListOptions}
         />
@@ -163,41 +163,41 @@ const SystemUserModel: FC<SystemUserModelProps> = (props) => {
         <ProFormText
           name="nick"
           label={intl.formatMessage({
-            id: 'pages.system.user.nick',
+            id: 'pages.user.nick',
           })}
           width="lg"
           rules={[
             {
               required: true,
               message: intl.formatMessage({
-                id: 'pages.system.user.nick.required',
+                id: 'pages.user.nick.required',
               }),
             },
           ]}
           placeholder={intl.formatMessage({
-            id: 'pages.system.user.nick.placeholder',
+            id: 'pages.user.nick.placeholder',
           })}
         />
 
         <ProFormText
           name="phone"
           label={intl.formatMessage({
-            id: 'pages.system.user.phone',
+            id: 'pages.user.phone',
           })}
           width="lg"
           placeholder={intl.formatMessage({
-            id: 'pages.system.user.phone.placeholder',
+            id: 'pages.user.phone.placeholder',
           })}
         />
 
         <ProFormText
           name="email"
           label={intl.formatMessage({
-            id: 'pages.system.user.email',
+            id: 'pages.user.email',
           })}
           width="lg"
           placeholder={intl.formatMessage({
-            id: 'pages.system.user.email.placeholder',
+            id: 'pages.user.email.placeholder',
           })}
         />
 
@@ -237,11 +237,11 @@ const SystemUserModel: FC<SystemUserModelProps> = (props) => {
         <ProFormText
           name="description"
           label={intl.formatMessage({
-            id: 'pages.system.user.description',
+            id: 'pages.user.description',
           })}
           width="lg"
           placeholder={intl.formatMessage({
-            id: 'pages.system.user.description.placeholder',
+            id: 'pages.user.description.placeholder',
           })}
         />
       </>
@@ -249,4 +249,4 @@ const SystemUserModel: FC<SystemUserModelProps> = (props) => {
   );
 };
 
-export default SystemUserModel;
+export default UserModel;

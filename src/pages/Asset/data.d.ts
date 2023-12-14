@@ -1,4 +1,4 @@
-import { SystemUserItem } from '../Setting/data';
+import { UserItem } from '../Setting/data';
 import { UserItem } from '../User/data';
 
 export type Pagination = {
@@ -20,7 +20,7 @@ export type StoreItem = {
   name: string;
   type: string;
   address?: string;
-  systemUser: SystemUserItem;
+  user: UserItem;
   province: ProvinceCityDistrictItem;
   city: ProvinceCityDistrictItem;
   district: ProvinceCityDistrictItem;
@@ -52,7 +52,7 @@ export type ProductLogItem = {
   content: string;
   createTime: Date;
   Product: ProductItem;
-  systemUser: SystemUserItem;
+  user: UserItem;
 };
 
 export type ProductLogParams = {
@@ -91,6 +91,21 @@ export type ProductCheckItem = {
   imglist:string;
   createTime: Date;
   Product: ProductItem;
-  systemUser: SystemUserItem;
+  user: UserItem;
 };
 
+export type ProductStockItem = {
+  id: string;
+  product: ProductItem;
+  store: StoreItem;
+  qty: number;
+  action:string;
+};
+
+ 
+	
+
+export type ProductStockParams={
+
+  
+}

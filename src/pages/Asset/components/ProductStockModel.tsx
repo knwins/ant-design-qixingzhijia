@@ -7,32 +7,33 @@ import {
 } from '@ant-design/pro-form';
 import { useIntl } from '@umijs/max';
 import type { FC } from 'react';
-import { ProductItem, Pagination, StoreParams } from '../data';
-import { queryStoreSelect } from '../service';
+import { Pagination, ProductItem, ProductStockItem, StoreParams } from '../data';
+import { queryProductStockSelect, queryStoreSelect } from '../service';
 
-type ProductLogModelProps = {
+type ProductStockModelProps = {
   done: boolean;
   visible: boolean;
   current: Partial<ProductItem> | undefined;
   onDone: () => void;
-  onSubmit: (values: ProductItem) => void;
+  onSubmit: (values: ProductStockItem) => void;
 };
 
-const ProductLogModel: FC<ProductLogModelProps> = (props) => {
+const ProductStockModel: FC<ProductStockModelProps> = (props) => {
   const { done, visible, current, onDone, onSubmit, children } = props;
   const intl = useIntl();
 
-  const handleStoreSelect = async (key?: any,keywords?:any) => {
+  const handleStoreSelect = async (key?: any, keywords?: any) => {
     if (key === '') {
       return;
     }
     const pagination: Pagination = {
       current: 1,
-      pageSize: 20,
+      pageSize: 1000,
     };
     const options: StoreParams = {
       type: key,
     };
+
     //读取仓库数据
     const { data: store } = await queryStoreSelect({
       ...pagination,
@@ -55,31 +56,20 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
   };
 
   const handleStoreType = async (key?: any) => {
-    console.log('key:' + key);
     const storeTypeListOptions = [];
-
-    if (key == 'Store') {
-      storeTypeListOptions.push({
-        label: '调拨',
-        value: 'StoreToStore',
-      });
-      storeTypeListOptions.push({
-        label: '出库',
-        value: 'OutStore',
-      });
-      return storeTypeListOptions;
-    } else {
-      //if (key == 'Site')
-      storeTypeListOptions.push({
-        label: '入库',
-        value: 'InStore',
-      });
-      storeTypeListOptions.push({
-        label: '调拨',
-        value: 'StoreToStore',
-      });
-      return storeTypeListOptions;
-    }
+    storeTypeListOptions.push({
+      label: '入库',
+      value: 'InStore',
+    });
+    storeTypeListOptions.push({
+      label: '出库',
+      value: 'OutStore',
+    });
+    storeTypeListOptions.push({
+      label: '调拨',
+      value: 'StoreToStore',
+    });
+    return storeTypeListOptions;
   };
   //end
 
@@ -120,7 +110,8 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
     >
       <>
         <ProFormDigit name="id" hidden />
-        <ProFormText name="action" initialValue="createProductLog" hidden />
+        <ProFormDigit name="productId" initialValue={current?.id} hidden />
+        <ProFormText name="action" initialValue="createProductStock" hidden />
         <ProFormText
           name="number"
           label={intl.formatMessage({
@@ -145,18 +136,40 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
             },
           ]}
         />
-        <ProFormText
-          name="beforeStoreId"
+
+        <ProFormSelect
+          name="outProductStockId"
+          width="lg"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
           label={intl.formatMessage({
             id: 'pages.product.log.out.store',
           })}
-          width="md"
-          initialValue={current ? current?.store?.name : ''}
-          disabled
+          placeholder={intl.formatMessage({
+            id: 'pages.product.log.out.store.placeholder',
+          })}
+          request={async () => {
+            return queryProductStockSelect({
+              current: 1,
+              pageSize: 1000,
+              productId: current?.id,
+            }).then(({ data }) => {
+              return data.map((item) => {
+                return {
+                  label: item.store.name + '(库存数量:' + item.qty + ')',
+                  value: item.id + '',
+                  id: item.id ,
+                };
+              });
+            });
+          }}
         />
 
         <ProFormSelect
-          name="storeId"
+          name="inStoreId"
           width="md"
           showSearch
           rules={[
@@ -167,29 +180,35 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
           label={intl.formatMessage({
             id: 'pages.product.log.int.store',
           })}
+          placeholder={intl.formatMessage({
+            id: 'pages.product.log.int.store.placeholder',
+          })}
           dependencies={['type']}
           request={async (params) => {
             let key = '';
-            //当前为仓库时
-            if (current?.store?.type == 'STORE') {
-              if (params.type === 'StoreToStore') {
-                key = 'STORE';
-              } else if (params.type === 'OutStore') {
-                key = 'SITE';
-              }
+            if (params.type === 'StoreToStore') {
+              key = 'STORE';
+            } else if (params.type === 'OutStore') {
+              key = 'SITE';
             }
-            //当前为站点时
-            if (current?.store?.type == 'SITE') {
-              if (params.type === 'StoreToStore') {
-                key = 'SITE';
-              } else if (params.type === 'InStore') {
-                key = 'STORE';
-              }
-            }
-            return handleStoreSelect(key,params.keyWords);
+            return handleStoreSelect(key, params.keyWords);
           }}
         />
-
+        <ProFormDigit
+          name="_qty"
+          label={intl.formatMessage({
+            id: 'pages.product.stock.qty',
+          })}
+          width="xs"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          placeholder={intl.formatMessage({
+            id: 'pages.product.stock.qty.placeholder',
+          })}
+        />
         <ProFormText
           name="inro"
           label={intl.formatMessage({
@@ -204,4 +223,4 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
     </ModalForm>
   );
 };
-export default ProductLogModel;
+export default ProductStockModel;

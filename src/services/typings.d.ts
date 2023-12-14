@@ -1,5 +1,5 @@
 declare namespace API {
-  type CurrentSystemUser = {
+  type CurrentUser = {
     id: string;
     username: string;
     nick: string;

@@ -5,20 +5,20 @@ import ProTable from '@ant-design/pro-table';
 import { FormattedMessage, useIntl } from '@umijs/max';
 import { Button, message, Modal } from 'antd';
 import React, { useRef, useState } from 'react';
-import SystemUserModel from './components/SystemUserModel';
-import type { SystemUserItem } from './data';
-import { addSystemUser, querySytemUserList, removeSystemUser, updateSystemUser } from './service';
+import UserModel from './components/UserModel';
+import type { UserItem } from './data';
+import { addUser, queryUserList, removeUser, updateUser } from './service';
 
-const SystemUser: React.FC = () => {
+const User: React.FC = () => {
   const actionRef = useRef<ActionType>();
   const [done, setDone] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
-  const [currentRow, setCurrentRow] = useState<SystemUserItem>();
+  const [currentRow, setCurrentRow] = useState<UserItem>();
 
   //国际化
   const intl = useIntl();
 
-  const handleAction = async (fields: SystemUserItem) => {
+  const handleAction = async (fields: UserItem) => {
     const loadingHidde = message.loading(
       intl.formatMessage({
         id: 'pages.tip.loading',
@@ -27,7 +27,7 @@ const SystemUser: React.FC = () => {
     loadingHidde();
     try {
       if (fields.id != null) {
-        const { success } = await updateSystemUser({
+        const { success } = await updateUser({
           ...fields,
         });
 
@@ -40,7 +40,7 @@ const SystemUser: React.FC = () => {
           return true;
         }
       } else {
-        const { success } = await addSystemUser({
+        const { success } = await addUser({
           ...fields,
         });
         if (success) {
@@ -67,7 +67,7 @@ const SystemUser: React.FC = () => {
    *初始化密码
    * @param selectedRows
    */
-  const handleInitPassword = (fields: SystemUserItem) => {
+  const handleInitPassword = (fields: UserItem) => {
     Modal.confirm({
       title: intl.formatMessage({
         id: 'pages.tip.title',
@@ -90,7 +90,7 @@ const SystemUser: React.FC = () => {
             }),
           );
 
-          const { success } = await updateSystemUser({
+          const { success } = await updateUser({
             ...fields,
           });
 
@@ -119,7 +119,7 @@ const SystemUser: React.FC = () => {
     });
   };
 
-  const handleRemove = (selectedRows: SystemUserItem) => {
+  const handleRemove = (selectedRows: UserItem) => {
     Modal.confirm({
       title: intl.formatMessage({
         id: 'pages.tip.title',
@@ -142,7 +142,7 @@ const SystemUser: React.FC = () => {
             }),
           );
 
-          const { success } = await removeSystemUser({
+          const { success } = await removeUser({
             id: selectedRows.id,
           });
 
@@ -182,9 +182,9 @@ const SystemUser: React.FC = () => {
     showQuickJumper: true,
   };
 
-  const columns: ProColumns<SystemUserItem>[] = [
+  const columns: ProColumns<UserItem>[] = [
     {
-      title: <FormattedMessage id="pages.system.user.username" />,
+      title: <FormattedMessage id="pages.user.username" />,
       dataIndex: 'username',
       hideInSearch: true,
       valueType: 'text',
@@ -192,25 +192,17 @@ const SystemUser: React.FC = () => {
     },
 
     {
-      title: <FormattedMessage id="pages.system.user.nick" />,
+      title: <FormattedMessage id="pages.user.nick" />,
       dataIndex: 'nick',
       hideInSearch: true,
       valueType: 'text',
       width: 'md',
     },
 
-    {
-      title: <FormattedMessage id="pages.system.user.description" />,
-      dataIndex: 'description',
-      valueType: 'text',
-      hideInSearch: true,
-      hideInForm: true,
-      align: 'center',
-      width: 'md',
-    },
+    
 
     {
-      title: <FormattedMessage id="pages.system.user.phone" />,
+      title: <FormattedMessage id="pages.user.phone" />,
       dataIndex: 'phone',
       hideInSearch: true,
       valueType: 'text',
@@ -218,11 +210,21 @@ const SystemUser: React.FC = () => {
     },
 
     {
-      title: <FormattedMessage id="pages.system.user.email" />,
+      title: <FormattedMessage id="pages.user.email" />,
       dataIndex: 'email',
       valueType: 'text',
       hideInSearch: true,
       hideInForm: true,
+      width: 'md',
+    },
+
+    {
+      title: <FormattedMessage id="pages.user.role.name" />,
+      dataIndex: ['role','name'],
+      valueType: 'text',
+      hideInSearch: true,
+      hideInForm: true,
+      align: 'center',
       width: 'md',
     },
     {
@@ -265,9 +267,9 @@ const SystemUser: React.FC = () => {
 
   return (
     <PageContainer title=" ">
-      <ProTable<SystemUserItem>
+      <ProTable<UserItem>
         headerTitle={intl.formatMessage({
-          id: 'pages.system.user.title',
+          id: 'pages.user.title',
         })}
         actionRef={actionRef}
         rowKey={(record) => record.id}
@@ -284,17 +286,19 @@ const SystemUser: React.FC = () => {
           </Button>,
         ]}
         pagination={paginationProps}
-        request={querySytemUserList}
+        request={(params) => {
+          return queryUserList({ ...params, type: 'SYSTEM' });
+        }}
         columns={columns}
       />
 
-      <SystemUserModel
+      <UserModel
         done={done}
         visible={visible}
         current={currentRow || {}}
         onDone={handleDone}
         onSubmit={async (value) => {
-          const success = await handleAction(value as SystemUserItem);
+          const success = await handleAction(value as UserItem);
           if (success) {
             setVisible(false);
             setCurrentRow(undefined);
@@ -307,4 +311,4 @@ const SystemUser: React.FC = () => {
     </PageContainer>
   );
 };
-export default SystemUser;
+export default User;

@@ -1,15 +1,13 @@
-
 import { request } from '@umijs/max';
 import host from '../../host';
 import type { UserItem, UserLogItem } from './data';
 
+/** User */
 export async function queryUserList(
   params: {
-    // query
-    /** 当前的页码 */
     current?: number;
-    /** 页面的容量 */
     pageSize?: number;
+    type?:string;
   },
   options?: { [key: string]: any },
 ) {
@@ -26,36 +24,87 @@ export async function queryUserList(
   });
 }
 
-export async function getUser(data: { [id: string]: any }, options?: { [id: string]: any }) {
-  return request<UserItem>(host.api + 'api/manage/user/get', {
-    data,
-    method: 'GET',
-    ...(options || {}),
-  });
-}
-
-export async function updateUser(data: { [id: string]: any }, options?: { [id: string]: any }) {
+export async function queryUserSelect(
+  params: {
+    current?: number;
+    pageSize?: number;
+    type?:string;
+  },
+  options?: { [key: string]: any },
+) {
   return request<{
-    data: UserItem;
-    errorMessage?: string;
-    success?: boolean;
-  }>(host.api + 'api/manage/user/update', {
-    data,
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
+    data: UserItem[];
+    total?: number;
+    status?: boolean;
+  }>(host.api + 'api/manage/user/select', {
+    method: 'POST',
+    params: {
+      ...params,
     },
     ...(options || {}),
   });
 }
 
-export async function removeUser(data: { [id: string]: any }, options?: { [id: string]: any }) {
+export async function getUser(params: { [id: string]: any }, options?: { [id: string]: any }) {
+  return request<{
+    data: UserItem;
+    success?: boolean;
+  }>(host.api + 'api/manage/user/get', {
+    params: {
+      ...params,
+    },
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
+export async function addUser(data: { [id: string]: any }, options?: { [id: string]: any }) {
+  return request<{
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/manage/user/add', {
+    data,
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
+export async function updateUser(
+  data: { [key: string]: any },
+  options?: { [key: string]: any },
+) {
+  return request<{
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/manage/user/update', {
+    data,
+    method: 'PUT',
+    ...(options || {}),
+  });
+}
+
+export async function removeUser(
+  data: { [id: string]: any },
+  options?: { [id: string]: any },
+) {
   return request<{
     success?: boolean;
     errorMessage?: string;
   }>(host.api + 'api/manage/user/delete', {
     data,
     method: 'DELETE',
+    ...(options || {}),
+  });
+}
+
+
+export async function initPassword(data: { [key: string]: any }, options?: { [key: string]: any }) {
+  return request<{
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/manage/user/init_password', {
+    data,
+    method: 'PUT',
     ...(options || {}),
   });
 }

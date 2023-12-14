@@ -1,9 +1,7 @@
 export default [
   {
-    path: '/welcome',
-    name: 'welcome',
-    icon: 'smile',
-    component: './Welcome',
+    path: '/',
+    redirect: '/asset/cell',
   },
 
   {
@@ -13,7 +11,7 @@ export default [
     routes: [
       {
         path: '/asset',
-        redirect: '/asset/list',
+        redirect: '/asset/cell',
       },
 
       {
@@ -34,6 +32,13 @@ export default [
         icon: 'smile',
         path: '/asset/electric',
         component: './Asset/electric',
+      },
+
+      {
+        name: 'other',
+        icon: 'smile',
+        path: '/asset/other',
+        component: './Asset/other',
       },
       {
         name: 'store',
@@ -85,13 +90,6 @@ export default [
       },
 
       {
-        name: 'express',
-        icon: 'smile',
-        path: '/information/express',
-        component: './Information/express',
-      },
-
-      {
         name: 'article',
         icon: 'smile',
         path: '/information/article',
@@ -130,19 +128,6 @@ export default [
         path: '/finance/bill/list',
         component: './Bill/list',
       },
-
-      {
-        name: 'withdraw',
-        icon: 'smile',
-        path: '/finance/bill/withdraw',
-        component: './Bill/withdraw',
-      },
-      {
-        name: 'invest',
-        icon: 'smile',
-        path: '/finance/bill/invest',
-        component: './Bill/invest',
-      },
     ],
   },
 
@@ -153,13 +138,13 @@ export default [
     routes: [
       {
         path: '/setting',
-        redirect: '/setting/systemuser',
+        redirect: '/setting/user',
       },
       {
-        name: 'systemuser',
+        name: 'user',
         icon: 'smile',
-        path: '/setting/systemuser',
-        component: './Setting/systemuser',
+        path: '/setting/user',
+        component: './Setting/user',
       },
       {
         name: 'role',
@@ -190,14 +175,14 @@ export default [
   },
 
   {
-    path: '/system/user/',
+    path: '/user/',
     layout: false,
     routes: [
       {
-        path: '/system/user/login',
+        path: '/user/login',
         layout: false,
         name: 'login',
-        component: './SystemUser/login',
+        component: './User/login',
       },
     ],
   },

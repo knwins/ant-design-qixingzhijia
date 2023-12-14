@@ -24,7 +24,7 @@ const Spot: React.FC = () => {
     return queryOptionMark({
       current: 1,
       pageSize: 100,
-      type: 'Cell',
+      type: 'CELL',
     });
   });
 

@@ -44,7 +44,7 @@ export default {
 
   /* setting */
   'menu.setting': '系统设置',
-  'menu.setting.systemuser': '管理员',
+  'menu.setting.user': '管理员',
   'menu.setting.config': '全局配置',
   'menu.setting.task': '定时任务',
   'menu.setting.privilege': '权限列表',

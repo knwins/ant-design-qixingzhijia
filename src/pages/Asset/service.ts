@@ -6,6 +6,7 @@ import {
   ProductCheckItem,
   ProductItem,
   ProductLogItem,
+  ProductStockItem,
   ProvinceCityDistrictItem,
   StoreItem,
 } from './data';
@@ -267,6 +268,27 @@ export async function createProductLog(
   });
 }
 
+
+/**
+ * 库存调拨
+ * @param data
+ * @param options
+ * @returns
+ */
+ export async function createProductStockCreate(
+  data: { [id: string]: any },
+  options?: { [id: string]: any },
+) {
+  return request<{
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/manage/product/stock/create', {
+    data,
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
 /**
  * 批量调拨
  * @param data
@@ -313,6 +335,50 @@ export async function removeProductByIds(
 }
 
 
+/* product stock */
+
+export async function queryProductStockList(
+  params: {
+    current?: number;
+    pageSize?: number;
+    productId?: string;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{
+    data: ProductStockItem[];
+    total?: number;
+    success?: boolean;
+  }>(host.api + 'api/manage/product/stock/list', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+
+export async function queryProductStockSelect(
+  params: {
+    current?: number;
+    pageSize?: number;
+    productId?: string;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{
+    data: ProductStockItem[];
+    total?: number;
+    success?: boolean;
+  }>(host.api + 'api/manage/product/stock/select', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
 
 /**productLog */
 

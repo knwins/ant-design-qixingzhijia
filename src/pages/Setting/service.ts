@@ -8,7 +8,7 @@ import type {
   OptionMarkItem,
   RoleItem,
   SiteConfigItem,
-  SystemUserItem,
+  UserItem,
 } from './data';
 import { PrivilegeItem } from './data';
 
@@ -213,56 +213,54 @@ export async function removeRole(data: { [id: string]: any }, options?: { [id: s
   });
 }
 
-/** SystemUser */
+/** User */
 
-export async function querySytemUserList(
+export async function queryUserList(
   params: {
-    /** 当前的页码 */
     current?: number;
-    /** 页面的容量 */
     pageSize?: number;
+    type?: string;
   },
   options?: { [key: string]: any },
 ) {
   return request<{
-    data: SystemUserItem[];
-    /** 列表的内容总数 */
+    data: UserItem[];
     total?: number;
-    status?: boolean;
-  }>(host.api + 'api/system/system_user/list', {
-    method: 'POST',
-    params: {
-      ...params,
-    },
-    ...(options || {}),
-  });
-}
-
-export async function querySytemUserSelect(
-  params: {
-    current?: number;
-    pageSize?: number;
-  },
-  options?: { [key: string]: any },
-) {
-  return request<{
-    data: SystemUserItem[];
-    total?: number;
-    status?: boolean;
-  }>(host.api + 'api/system/system_user/select', {
-    method: 'POST',
-    params: {
-      ...params,
-    },
-    ...(options || {}),
-  });
-}
-
-export async function getSytemUser(params: { [id: string]: any }, options?: { [id: string]: any }) {
-  return request<{
-    data: RoleItem;
     success?: boolean;
-  }>(host.api + 'api/system/system_user/get', {
+  }>(host.api + 'api/system/user/list', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+export async function queryUserSelect(
+  params: {
+    current?: number;
+    pageSize?: number;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{
+    data: UserItem[];
+    total?: number;
+    status?: boolean;
+  }>(host.api + 'api/system/user/select', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+export async function getUser(params: { [id: string]: any }, options?: { [id: string]: any }) {
+  return request<{
+    data: UserItem;
+    success?: boolean;
+  }>(host.api + 'api/system/user/get', {
     params: {
       ...params,
     },
@@ -271,39 +269,33 @@ export async function getSytemUser(params: { [id: string]: any }, options?: { [i
   });
 }
 
-export async function addSystemUser(data: { [id: string]: any }, options?: { [id: string]: any }) {
+export async function addUser(data: { [id: string]: any }, options?: { [id: string]: any }) {
   return request<{
     success?: boolean;
     errorMessage?: string;
-  }>(host.api + 'api/system/system_user/add', {
+  }>(host.api + 'api/system/user/add', {
     data,
     method: 'POST',
     ...(options || {}),
   });
 }
 
-export async function updateSystemUser(
-  data: { [key: string]: any },
-  options?: { [key: string]: any },
-) {
+export async function updateUser(data: { [key: string]: any }, options?: { [key: string]: any }) {
   return request<{
     success?: boolean;
     errorMessage?: string;
-  }>(host.api + 'api/system/system_user/update', {
+  }>(host.api + 'api/system/user/update', {
     data,
     method: 'PUT',
     ...(options || {}),
   });
 }
 
-export async function removeSystemUser(
-  data: { [id: string]: any },
-  options?: { [id: string]: any },
-) {
+export async function removeUser(data: { [id: string]: any }, options?: { [id: string]: any }) {
   return request<{
     success?: boolean;
     errorMessage?: string;
-  }>(host.api + 'api/system/system_user/delete', {
+  }>(host.api + 'api/system/user/delete', {
     data,
     method: 'DELETE',
     ...(options || {}),
@@ -315,7 +307,7 @@ export async function initPassword(data: { [key: string]: any }, options?: { [ke
   return request<{
     success?: boolean;
     errorMessage?: string;
-  }>(host.api + 'api/system/user/init_password', {
+  }>(host.api + 'api/user/init_password', {
     data,
     method: 'PUT',
     ...(options || {}),
@@ -361,17 +353,6 @@ export async function queryOptionSelect(params: {
     },
   });
 }
-
-[
-  { key: 'CellBrand', name: 'brand', label: '电池品牌', type: 'Cell' },
-  { key: 'CellBusiness', name: 'business', label: '电池运营商', type: 'Cell' },
-  { key: 'CellSpec', name: 'spec', label: '电池规格', type: 'Cell' },
-  { key: 'CellSize', name: 'size', label: '电池尺寸', type: 'Cell' },
-  { key: 'CabinetBrand', name: 'brand', label: '电柜品牌', type: 'Cabinet' },
-  { key: 'CabinetBusiness', name: 'business', label: '电柜运营商', type: 'Cabinet' },
-  { key: 'CabinetSpec', name: 'spec', label: '电柜规格', type: 'Cabinet' },
-  { key: 'CellSize', name: 'size', label: '电柜尺寸', type: 'Cabinet' },
-];
 
 export async function queryOptionMark(
   params: {

@@ -51,7 +51,7 @@ const Spot: React.FC = () => {
     return queryOptionSelect({
       current: 1,
       pageSize: 100,
-      type: 'Cabinet',
+      type: 'CABINET',
     });
   });
 
@@ -186,7 +186,6 @@ const Spot: React.FC = () => {
     }
   };
 
-
   const handleRemove = (selectedRows: ProductItem) => {
     Modal.confirm({
       title: intl.formatMessage({
@@ -216,10 +215,10 @@ const Spot: React.FC = () => {
           if (success) {
             loadingHidde();
             message.success(
-          intl.formatMessage({
-            id: 'pages.tip.success',
-          }),
-        );
+              intl.formatMessage({
+                id: 'pages.tip.success',
+              }),
+            );
             if (actionRef.current) {
               actionRef.current.reload();
             }
@@ -301,10 +300,10 @@ const Spot: React.FC = () => {
           if (success) {
             loadingHidde();
             message.success(
-          intl.formatMessage({
-            id: 'pages.tip.success',
-          }),
-        );
+              intl.formatMessage({
+                id: 'pages.tip.success',
+              }),
+            );
             if (actionRef.current) {
               actionRef.current.reload();
             }
@@ -481,19 +480,9 @@ const Spot: React.FC = () => {
       dataIndex: ['business', 'name'],
       valueType: 'text',
       hideInForm: true,
+      hideInTable: true,
       hideInSearch: true,
     },
-
-    // {
-    //   title: <FormattedMessage id="pages.product.spec" />,
-    //   dataIndex: 'specId',
-    //   valueType: 'select',
-    //   width:'80px',
-    //   hideInForm: true,
-    //   hideInTable:true,
-    //   valueEnum:specListOptions
-
-    // },
 
     {
       title: <FormattedMessage id="pages.product.spec" />,
@@ -504,10 +493,36 @@ const Spot: React.FC = () => {
     },
 
     {
+      title: <FormattedMessage id="pages.product.state" />,
+      dataIndex: 'state',
+      valueType: 'select',
+      hideInForm: true,
+      valueEnum: {
+        STORE: {
+          text: '仓库',
+          state: 'STORE',
+        },
+        NORMAL: {
+          text: '运行',
+          state: 'NORMAL',
+        },
+        INSTALL: {
+          text: '安装',
+          state: 'INSTALL',
+        },
+        APPLICATION: {
+          text: '申请',
+          state: 'APPLICATION',
+        },
+      },
+    },
+
+    {
       title: <FormattedMessage id="pages.product.weight" />,
       dataIndex: 'weight',
       valueType: 'text',
       hideInSearch: true,
+      hideInTable: true,
       hideInForm: true,
     },
 
@@ -516,6 +531,7 @@ const Spot: React.FC = () => {
       dataIndex: 'material',
       valueType: 'text',
       hideInSearch: true,
+      hideInTable: true,
       hideInForm: true,
     },
 
@@ -606,7 +622,7 @@ const Spot: React.FC = () => {
     },
     {
       title: <FormattedMessage id="pages.product.log.username" />,
-      dataIndex: ['systemUser', 'nick'],
+      dataIndex: ['user', 'nick'],
       valueType: 'text',
       hideInSearch: true,
       ellipsis: true,
@@ -655,7 +671,7 @@ const Spot: React.FC = () => {
     <PageContainer>
       <ProTable<ProductItem>
         headerTitle={intl.formatMessage({
-          id: 'pages.product.title',
+          id: 'pages.product.cabinet.title',
         })}
         actionRef={actionRef}
         rowKey={(record) => record.id}
@@ -664,10 +680,10 @@ const Spot: React.FC = () => {
         }}
         pagination={paginationProps}
         request={(params) => {
-          const res = queryProductList({ ...params, category: 'Cabinet' });
+          const res = queryProductList({ ...params, category: 'CABINET' });
           res.then((value) => {
             params.pageSize = value.total;
-            params.category = 'Cabinet';
+            params.category = 'CABINET';
             setExportParams(params);
           });
           return res;

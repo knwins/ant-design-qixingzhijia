@@ -7,7 +7,7 @@ import { Button, message, Modal, Space, Table, Upload, UploadProps } from 'antd'
 import ExportJsonExcel from 'js-export-excel';
 import React, { useRef, useState } from 'react';
 import host from '../../host';
-import { querySytemUserList } from '../Setting/service';
+import { queryUserList } from '../Setting/service';
 import StoreModel from './components/StoreModel';
 import { StoreItem } from './data';
 import {
@@ -135,7 +135,7 @@ const Spot: React.FC = () => {
   //导出数据
   const exportExcel = async () => {
     const { data: dataList } = await queryStoreList({ ...exportParams });
-    const columns = ['name', 'province', 'city', 'district', 'address', 'type', 'systemUser'];
+    const columns = ['name', 'province', 'city', 'district', 'address', 'type', 'user'];
     const tableItem = {
       name: '名称',
       province: '省份',
@@ -143,7 +143,7 @@ const Spot: React.FC = () => {
       district: '区县',
       address: '详细地址',
       type: '分类',
-      systemUser: '负责人',
+      user: '负责人',
     };
     const headerColumns = columns.map((k) => tableItem[k]);
 
@@ -164,22 +164,22 @@ const Spot: React.FC = () => {
 
     //分类数据
     const typeOptions = {};
-    typeOptions['Store'] = '仓库';
-    typeOptions['Site'] = '站点';
-    typeOptions['Stage'] = '驿站';
-    typeOptions['Supplier'] = '供应商';
+    typeOptions['STORE'] = '仓库';
+    typeOptions['SITE'] = '站点';
+    typeOptions['SITE'] = '地址';
 
+   
     //用户数据
-    const { data: systemUserData } = await querySytemUserList({
+    const { data: userData } = await queryUserList({
       current: 1,
       pageSize: 5000,
     });
-    const systemUserListOptions = {};
-    if (systemUserData) {
-      const data = systemUserData || [];
+    const userListOptions = {};
+    if (userData) {
+      const data = userData || [];
       if (data) {
         data.map((item) => {
-          systemUserListOptions[item.id] = item.username + '-' + item.nick;
+          userListOptions[item.id] = item.username + '-' + item.nick;
         });
       }
     }
@@ -196,8 +196,8 @@ const Spot: React.FC = () => {
             kv[vv] = pcdListOptions[item.city.id] || '';
           } else if (vv === 'district') {
             kv[vv] = pcdListOptions[item.district.id] || '';
-          } else if (vv === 'systemUser') {
-            kv[vv] = systemUserListOptions[item.systemUser.id] || '';
+          } else if (vv === 'user') {
+            kv[vv] = userListOptions[item.user.id] || '';
           } else if (vv === 'type') {
             kv[vv] = typeOptions[item.type] || '';
           } else {
@@ -253,8 +253,8 @@ const Spot: React.FC = () => {
     },
 
     {
-      title: <FormattedMessage id="pages.store.system.user.name" />,
-      dataIndex: ['systemUser', 'username'],
+      title: <FormattedMessage id="pages.store.user.name" />,
+      dataIndex: ['user', 'username'],
       hideInSearch: true,
       valueType: 'text',
     },
@@ -265,22 +265,18 @@ const Spot: React.FC = () => {
       hideInForm: true,
       width: 'sm',
       valueEnum: {
-        Store: {
+        STORE: {
           text: '仓库',
-          type: 'Store',
+          type: 'STORE',
         },
-        Site: {
+        SITE: {
           text: '站点',
-          type: 'Site',
+          type: 'SITE',
         },
-        // Stage: {
-        //   text: '驿站',
-        //   type: 'Stage',
-        // },
-        // Supplier: {
-        //   text: '供应商',
-        //   type: 'Supplier',
-        // },
+        ADDRESS: {
+          text: '地址',
+          type: 'ADDRESS',
+        },
       },
     },
 
@@ -297,17 +293,17 @@ const Spot: React.FC = () => {
       valueType: 'select',
       hideInForm: true,
       valueEnum: {
-        Application: {
+        APPLICATION: {
           text: '申请中',
-          state: 'Application',
+          state: 'APPLICATION',
         },
-        Construction: {
+        CONSTRUCTION: {
           text: '建设中',
-          state: 'Construction',
+          state: 'CONSTRUCTION',
         },
-        Normal: {
+        NORMAL: {
           text: '运行中',
-          state: 'Normal',
+          state: 'NORMAL',
         },
       },
     },

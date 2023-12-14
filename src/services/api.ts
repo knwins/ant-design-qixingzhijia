@@ -2,17 +2,17 @@ import { PrivilegeItem } from '@/pages/Setting/data';
 import { request } from '@umijs/max';
 import host from '../host';
 
-export async function currentSystemUser(options?: { [key: string]: any }) {
+export async function currentUser(options?: { [key: string]: any }) {
   return request<{
-    data: API.CurrentSystemUser;
-  }>(host.api + 'api/system/user/current', {
+    data: API.CurrentUser;
+  }>(host.api + 'api/user/current', {
     method: 'POST',
     ...(options || {}),
   });
 }
 
 export async function login(body: API.LoginParams, options?: { [key: string]: any }) {
-  return request<API.LoginResult>(host.api + 'api/system/user/login', {
+  return request<API.LoginResult>(host.api + 'api/user/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

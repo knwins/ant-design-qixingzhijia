@@ -25,7 +25,7 @@ const OptionModel: FC<OptionModelProps> = (props) => {
     return queryOptionMark({
       current: 1,
       pageSize: 100,
-      type: 'Cell',
+      type: 'CELL',
     });
   });
 

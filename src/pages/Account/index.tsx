@@ -1,4 +1,4 @@
-import { currentSystemUser } from '@/services/api';
+import { currentUser } from '@/services/api';
 import { GridContent } from '@ant-design/pro-layout';
 import { FormattedMessage, useRequest } from '@umijs/max';
 import { Menu } from 'antd';
@@ -17,7 +17,7 @@ type SettingsState = {
 
 const Settings: React.FC = () => {
   const { loading } = useRequest(() => {
-    return currentSystemUser;
+    return currentUser;
   });
 
   const menuMap: Record<string, React.ReactNode> = {

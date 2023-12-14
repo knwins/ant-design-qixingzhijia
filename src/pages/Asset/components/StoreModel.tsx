@@ -1,4 +1,4 @@
-import { querySytemUserSelect } from '@/pages/Setting/service';
+import { queryUserSelect } from '@/pages/Setting/service';
 import ProForm, {
   ModalForm,
   ProFormDependency,
@@ -87,17 +87,16 @@ const StoreModel: FC<StoreModelProps> = (props) => {
             id: 'pages.store.type.placeholder',
           })}
           options={[
-            { label: '仓库', value: 'Store' },
-            { label: '站点', value: 'Site' },
-            { label: '驿站', value: 'Stage' },
-            { label: '供应商', value: 'Supplier' },
+            { label: '仓库', value: 'STORE' },
+            { label: '站点', value: 'SITE' },
+            { label: '地址', value: 'ADDRESS' },
           ]}
         />
 
         <ProFormSelect
-          name="systemUser"
+          name="user"
           label={intl.formatMessage({
-            id: 'pages.store.system.user.name',
+            id: 'pages.store.user.name',
           })}
           fieldProps={{
             labelInValue: true,
@@ -109,10 +108,10 @@ const StoreModel: FC<StoreModelProps> = (props) => {
             },
           ]}
           placeholder={intl.formatMessage({
-            id: 'pages.store.system.user.name.placeholder',
+            id: 'pages.store.user.name.placeholder',
           })}
           request={async () => {
-            return querySytemUserSelect({
+            return queryUserSelect({
               current: 1,
               pageSize: 1000,
             }).then(({ data }) => {

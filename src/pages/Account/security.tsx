@@ -1,13 +1,13 @@
-import { currentSystemUser } from '@/services/api';
+import { currentUser } from '@/services/api';
 import { LockOutlined } from '@ant-design/icons';
 import { ActionType } from '@ant-design/pro-components';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
 import { FormattedMessage, useIntl, useRequest } from '@umijs/max';
 import { List, message } from 'antd';
 import React, { useRef } from 'react';
-import { SystemUserParams } from '../Setting/data';
+import { UserParams } from '../Setting/data';
 import styles from './base.less';
-import { updateSystemUser } from './service';
+import { updateUser } from './service';
 
 type Unpacked<T> = T extends (infer U)[] ? U : T;
 
@@ -17,7 +17,7 @@ const SecurityView: React.FC = () => {
   const intl = useIntl();
 
   const { data: current, loading } = useRequest(() => {
-    return currentSystemUser;
+    return currentUser;
   });
 
   const getData = () => [
@@ -28,7 +28,7 @@ const SecurityView: React.FC = () => {
   ];
   const titleData = getData();
 
-  const handleFinish = async (fields: any, currentRow?: SystemUserParams) => {
+  const handleFinish = async (fields: any, currentRow?: UserParams) => {
     try {
       const loadingHiddle = message.loading(
         intl.formatMessage({
@@ -37,7 +37,7 @@ const SecurityView: React.FC = () => {
         0,
       );
 
-      const { success } = await updateSystemUser({
+      const { success } = await updateUser({
         ...currentRow,
         ...fields,
       });

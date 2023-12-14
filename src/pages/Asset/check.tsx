@@ -6,7 +6,7 @@ import { FormattedMessage, useIntl } from '@umijs/max';
 import { Drawer, message, Modal } from 'antd';
 import React, { useRef, useState } from 'react';
 import { ProductCheckItem } from './data';
-import { addStore, queryProductCheckList, removeStore, updateStore } from './service';
+import { queryProductCheckList, removeProductCheck, updateProductCheck } from './service';
 
 const Spot: React.FC = () => {
   const actionRef = useRef<ActionType>();
@@ -26,20 +26,7 @@ const Spot: React.FC = () => {
     loadingHidde();
     try {
       if (fields.id != null) {
-        const { success } = await updateStore({
-          ...fields,
-        });
-
-        if (success) {
-          message.success(
-            intl.formatMessage({
-              id: 'pages.tip.success',
-            }),
-          );
-          return true;
-        }
-      } else {
-        const { success } = await addStore({
+        const { success } = await updateProductCheck({
           ...fields,
         });
         if (success) {
@@ -84,7 +71,7 @@ const Spot: React.FC = () => {
               id: 'pages.tip.loading',
             }),
           );
-          const { success } = await removeStore({
+          const { success } = await removeProductCheck({
             id: selectedRows.id,
           });
 
@@ -153,10 +140,10 @@ const Spot: React.FC = () => {
       hideInSearch: true,
       hideInForm: true,
     },
-    
+
     {
       title: <FormattedMessage id="pages.cabinet.check.username" />,
-      dataIndex: ['systemUser', 'username'],
+      dataIndex: ['user', 'username'],
       hideInSearch: true,
       valueType: 'text',
     },
@@ -180,65 +167,123 @@ const Spot: React.FC = () => {
     },
 
     {
-      title: "柜点地面是否符合安装要求",
+      title: '柜点地面是否符合安装要求',
       dataIndex: 'inpu0',
-      valueType: 'text',
+      valueType: 'select',
       hideInSearch: true,
       hideInForm: true,
       hideInTable: true,
+      valueEnum: {
+        true: {
+          text: '是',
+          inpu0: true,
+        },
+        false: {
+          text: '否',
+          inpu0: false,
+        },
+      },
     },
     {
-      title: "地线安装是否符合要求",
+      title: '地线安装是否符合要求',
       dataIndex: 'inpu1',
-      valueType: 'text',
+      valueType: 'select',
       hideInSearch: true,
       hideInForm: true,
       hideInTable: true,
+      valueEnum: {
+        true: {
+          text: '是',
+          inpu1: true,
+        },
+        false: {
+          text: '否',
+          inpu1: false,
+        },
+      },
     },
     {
-      title: "电线是否完好无破损",
+      title: '电线是否完好无破损',
       dataIndex: 'inpu2',
-      valueType: 'text',
+      valueType: 'select',
       hideInSearch: true,
       hideInForm: true,
       hideInTable: true,
+      valueEnum: {
+        true: {
+          text: '是',
+          inpu2: true,
+        },
+        false: {
+          text: '否',
+          inpu2: false,
+        },
+      },
     },
     {
-      title: "电柜是否稳固",
+      title: '电柜是否稳固',
       dataIndex: 'inpu3',
-      valueType: 'text',
+      valueType: 'select',
       hideInSearch: true,
       hideInForm: true,
       hideInTable: true,
+      valueEnum: {
+        true: {
+          text: '是',
+          inpu3: true,
+        },
+        false: {
+          text: '否',
+          inpu3: false,
+        },
+      },
     },
     {
-      title: "电柜是否完好无损坏",
+      title: '电柜是否完好无损坏',
       dataIndex: 'inpu4',
+      valueType: 'select',
+      hideInSearch: true,
+      hideInForm: true,
+      hideInTable: true,
+      valueEnum: {
+        true: {
+          text: '是',
+          inpu4: true,
+        },
+        false: {
+          text: '否',
+          inpu4: false,
+        },
+      },
+    },
+    {
+      title: '巡检图片1',
+      dataIndex: ['imgs', '0'],
+      valueType: 'image',
+      hideInSearch: true,
+      hideInForm: true,
+      hideInTable: true,
+    },
+    {
+      title: '巡检图片2',
+      dataIndex: ['imgs', '1'],
+      valueType: 'image',
+      hideInSearch: true,
+      hideInForm: true,
+      hideInTable: true,
+    },
+    {
+      title: '巡检图片3',
+      dataIndex: ['imgs', '2'],
+      valueType: 'image',
+      hideInSearch: true,
+      hideInForm: true,
+      hideInTable: true,
+    },
+    {
+      title: '备注',
+      dataIndex: 'inro',
       valueType: 'text',
-      hideInSearch: true,
-      hideInForm: true,
-      hideInTable: true,
-    },
-    {
-      title: "巡检图片1",
-      dataIndex: ['imgs','0'],
-      valueType: 'image',
-      hideInSearch: true,
-      hideInForm: true,
-      hideInTable: true,
-    },
-    {
-      title: "巡检图片2",
-      dataIndex: ['imgs','1'],
-      valueType: 'image',
-      hideInSearch: true,
-      hideInForm: true,
-      hideInTable: true,
-    },
-    {
-      title: "巡检图片3",
-      dataIndex: ['imgs','2'],
-      valueType: 'image',
       hideInSearch: true,
       hideInForm: true,
       hideInTable: true,

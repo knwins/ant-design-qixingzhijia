@@ -53,7 +53,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
     >
       <>
         <ProFormDigit name="id" hidden />
-        <ProFormDigit name="category" hidden initialValue={"CELL"}/>
+        <ProFormDigit name="category" hidden initialValue={"OTHER"}/>
 
         <ProFormText
           name="number"
@@ -71,20 +71,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
           })}
         />
 
-        {/* <ProFormSelect
-          name="storeId"
-          initialValue={current ? current.store?.id + '' : ''}
-          width="lg"
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-          label={intl.formatMessage({
-            id: 'pages.product.store',
-          })}
-          valueEnum={storeListOptions}
-        /> */}
+        
         <ProFormSelect
           name="business"
           width="lg"
@@ -102,12 +89,11 @@ const ProductModel: FC<ProductModelProps> = (props) => {
           placeholder={intl.formatMessage({
             id: 'pages.product.business.placeholder',
           })}
-          // valueEnum={businessListOptions}
           request={async () => {
             return queryOptionSelect({
               current: 1,
               pageSize: 1000,
-              type: 'CELL',
+              type: 'OTHER',
             }).then(({ data }) => {
               return data?.business.map((item) => {
                 return {
@@ -141,7 +127,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
             return queryOptionSelect({
               current: 1,
               pageSize: 1000,
-              type: 'CELL',
+              type: 'OTHER',
             }).then(({ data }) => {
               return data?.brand.map((item) => {
                 return {
@@ -175,7 +161,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
             return queryOptionSelect({
               current: 1,
               pageSize: 1000,
-              type: 'CELL',
+              type: 'OTHER',
             }).then(({ data }) => {
               return data?.spec.map((item) => {
                 return {

@@ -2,6 +2,7 @@ import Footer from '@/components/Footer';
 import RightContent from '@/components/RightContent';
 import {
   DollarOutlined,
+  HddFilled,
   SettingOutlined,
   SlackOutlined,
   SmileOutlined,
@@ -13,19 +14,19 @@ import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history } from '@umijs/max';
 import defaultSettings from '../config/defaultSettings';
 import { errorConfig } from './requestErrorConfig';
-import { currentSystemUser as queryCurrentUser, privilegeMenus } from './services/api';
+import { currentUser as queryCurrentUser, privilegeMenus } from './services/api';
 
 const isDev = process.env.NODE_ENV === 'development';
-const loginPath = '/system/user/login';
+const loginPath = '/user/login';
 
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
  * */
 export async function getInitialState(): Promise<{
   settings?: Partial<LayoutSettings>;
-  currentSystemUser?: API.CurrentSystemUser;
+  currentUser?: API.CurrentUser;
   loading?: boolean;
-  fetchUserInfo?: () => Promise<API.CurrentSystemUser | undefined>;
+  fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
 }> {
   const fetchUserInfo = async () => {
     try {
@@ -41,10 +42,10 @@ export async function getInitialState(): Promise<{
   // 如果不是登录页面，执行
   if (window.location.pathname !== loginPath) {
     console.log(loginPath + '.....');
-    const currentSystemUser = await fetchUserInfo();
+    const currentUser = await fetchUserInfo();
     return {
       fetchUserInfo,
-      currentSystemUser,
+      currentUser,
       settings: defaultSettings,
     };
   }
@@ -57,6 +58,7 @@ export async function getInitialState(): Promise<{
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) => {
   const IconMap = {
+    hdd:<HddFilled/>,
     slack: <SlackOutlined />,
     smile: <SmileOutlined />,
     dollar: <DollarOutlined />,
@@ -74,7 +76,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     rightContentRender: () => <RightContent />,
     disableContentMargin: false,
     waterMarkProps: {
-      content: initialState?.currentSystemUser?.username,
+      content: initialState?.currentUser?.username,
     },
     menu: {
       locale: false, //我们自己匹配语言
@@ -87,8 +89,8 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     onPageChange: () => {
       const { location } = history;
       // 如果没有登录，重定向到 login
-      if (!initialState?.currentSystemUser && location.pathname !== loginPath) {
-        console.log(initialState?.currentSystemUser + '...');
+      if (!initialState?.currentUser && location.pathname !== loginPath) {
+        console.log(initialState?.currentUser + '...');
         history.push(loginPath);
       }
     },

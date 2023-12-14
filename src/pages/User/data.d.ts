@@ -12,6 +12,7 @@ export type UserItem = {
   state: string;
   nickName: string;
   signature: string;
+  password:string;
   parent: UserItem;
 };
 

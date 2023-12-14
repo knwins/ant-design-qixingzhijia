@@ -51,7 +51,7 @@ const Spot: React.FC = () => {
     return queryOptionSelect({
       current: 1,
       pageSize: 100,
-      type: 'Cell',
+      type: 'CELL',
     });
   });
 
@@ -386,7 +386,7 @@ const Spot: React.FC = () => {
     // console.log(tableData);
 
     const option = {
-      fileName: '电池数据',
+      fileName: '电池数据'+new Date(),
       datas: [
         {
           sheetData: tableData, // 要导出的原数据
@@ -605,7 +605,7 @@ const Spot: React.FC = () => {
     },
     {
       title: <FormattedMessage id="pages.product.log.username" />,
-      dataIndex: ['systemUser', 'nick'],
+      dataIndex: ['user', 'nick'],
       valueType: 'text',
       hideInSearch: true,
       ellipsis: true,
@@ -654,7 +654,7 @@ const Spot: React.FC = () => {
     <PageContainer>
       <ProTable<ProductItem>
         headerTitle={intl.formatMessage({
-          id: 'pages.product.title',
+          id: 'pages.product.cell.title',
         })}
         actionRef={actionRef}
         rowKey={(record) => record.id}
@@ -663,10 +663,10 @@ const Spot: React.FC = () => {
         }}
         pagination={paginationProps}
         request={(params) => {
-          const res = queryProductList({ ...params, category: 'Cell' });
+          const res = queryProductList({ ...params, category: 'CELL' });
           res.then((value) => {
             params.pageSize = value.total;
-            params.category = 'Cell';
+            params.category = 'CELL';
             setExportParams(params);
           });
           return res;

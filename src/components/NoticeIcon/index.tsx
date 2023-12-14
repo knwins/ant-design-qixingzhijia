@@ -1,13 +1,12 @@
+import { ArticleItem } from '@/pages/Information/data';
 import { queryArticleList, removeArticle, updateArticle } from '@/pages/Information/service';
 import { useIntl, useRequest } from '@umijs/max';
-import { message, Tag } from 'antd';
+import { message } from 'antd';
 import { groupBy } from 'lodash';
-import moment from 'moment';
 import { useEffect, useState } from 'react';
 import styles from './index.less';
 import NoticeIcon from './NoticeIcon';
 import NoticeForm from './NoticeModel';
-import { ArticleItem } from '@/pages/Information/data';
 
 export type GlobalHeaderRightProps = {
   fetchingNotices?: boolean;
@@ -78,7 +77,6 @@ const NoticeIconView: React.FC = () => {
   const [done, setDone] = useState<boolean>(false);
   const [currentRow, setCurrentRow] = useState<Partial<ArticleItem> | undefined>(undefined);
 
-
   const handleDone = () => {
     setDone(false);
     setiVisible(false);
@@ -102,7 +100,7 @@ const NoticeIconView: React.FC = () => {
         notices.map((item) => {
           const notice = { ...item };
           if (notice.id === id) {
-            if (item.ArticleTypeId == '1') {
+            if (item.articleTypeId == '1') {
               setiVisible(true);
               setCurrentRow(notice);
               return notice;
@@ -138,7 +136,7 @@ const NoticeIconView: React.FC = () => {
       }
       notices.map((item) => {
         const notice = { ...item };
-        if (notice.ArticleTypeId === key) {
+        if (notice.articleTypeId === key) {
           //更新服务器数据
           removeArticle(notice);
         }

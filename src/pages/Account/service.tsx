@@ -1,16 +1,16 @@
 import { request } from 'umi';
 import host from '../../host';
-import { SystemUserItem } from '../Setting/data';
+import { UserItem } from '../Setting/data';
 
-export async function updateSystemUser(
+export async function updateUser(
   data: { [id: string]: any },
   options?: { [id: string]: any },
 ) {
   return request<{
-    data: SystemUserItem;
+    data: UserItem;
     errorMessage?: string;
     success?: boolean;
-  }>(host.api + 'api/system/user/update', {
+  }>(host.api + 'api/user/update', {
     data,
     method: 'PUT',
     headers: {

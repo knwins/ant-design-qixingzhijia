@@ -1,35 +1,24 @@
-import type { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
-import ProDescriptions from '@ant-design/pro-descriptions';
+import { PlusOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { FormattedMessage, useIntl } from '@umijs/max';
-import { Drawer, message } from 'antd';
+import { Button, message, Modal } from 'antd';
 import React, { useRef, useState } from 'react';
-import BillInvestCreateForm from './components/BillInvestCreateForm';
-import type { BillInvestItem } from '../Bill/data';
-import { addBill } from '../Bill/service';
-import type { UserItem, UserLogItem, UserLogParams, UserParams } from './data';
-import { queryUserList, queryUserLogList } from './service';
+import UserModel from './components/UserModel';
+import type { UserItem } from './data';
+import {  queryUserList, removeUser, updateUser,addUser } from './service';
 
-const UserList: React.FC = () => {
-  /** 分布更新窗口的弹窗 */
-
-  const [createModalVisible, setCreateModalVisible] = useState<boolean>(false);
-
+const User: React.FC = () => {
   const actionRef = useRef<ActionType>();
-  const [showDetail, setShowDetail] = useState<boolean>(false);
-  const [currentRow, setCurrentRow] = useState<UserItem | undefined>(undefined);
-  const [params, setParams] = useState<Partial<UserParams> | undefined>(undefined);
+  const [done, setDone] = useState<boolean>(false);
+  const [visible, setVisible] = useState<boolean>(false);
+  const [currentRow, setCurrentRow] = useState<UserItem>();
 
   //国际化
   const intl = useIntl();
 
-  const handleDone = () => {
-    setCreateModalVisible(false);
-  };
-
-  const handleAddBillInvest = async (fields: BillInvestItem) => {
+  const handleAction = async (fields: UserItem) => {
     const loadingHidde = message.loading(
       intl.formatMessage({
         id: 'pages.tip.loading',
@@ -37,16 +26,31 @@ const UserList: React.FC = () => {
     );
     loadingHidde();
     try {
-      const { success } = await addBill({
-        ...fields,
-      });
-      if (success) {
-        message.success(
-          intl.formatMessage({
-            id: 'pages.tip.success',
-          }),
-        );
-        return true;
+      if (fields.id != null) {
+        const { success } = await updateUser({
+          ...fields,
+        });
+
+        if (success) {
+          message.success(
+            intl.formatMessage({
+              id: 'pages.tip.success',
+            }),
+          );
+          return true;
+        }
+      } else {
+        const { success } = await addUser({
+          ...fields,
+        });
+        if (success) {
+          message.success(
+            intl.formatMessage({
+              id: 'pages.tip.success',
+            }),
+          );
+          return true;
+        }
       }
       return false;
     } catch (error) {
@@ -59,201 +63,245 @@ const UserList: React.FC = () => {
     }
   };
 
+  /**
+   *初始化密码
+   * @param selectedRows
+   */
+  const handleInitPassword = (fields: UserItem) => {
+    Modal.confirm({
+      title: intl.formatMessage({
+        id: 'pages.tip.title',
+      }),
+      content: intl.formatMessage({
+        id: 'pages.tip.content.initPassword',
+      }),
+      okText: intl.formatMessage({
+        id: 'pages.tip.ok',
+      }),
+      cancelText: intl.formatMessage({
+        id: 'pages.tip.cancel',
+      }),
+      onOk: async () => {
+        if (!fields) return true;
+        try {
+          const loadingHidde = message.loading(
+            intl.formatMessage({
+              id: 'pages.tip.loading',
+            }),
+          );
+
+          const { success } = await updateUser({
+            ...fields,
+          });
+
+          if (success) {
+            loadingHidde();
+            message.success(
+          intl.formatMessage({
+            id: 'pages.tip.success',
+          }),
+        );
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+            return true;
+          }
+          return false;
+        } catch (error) {
+          message.error(
+            intl.formatMessage({
+              id: 'pages.tip.error',
+            }),
+          );
+          return false;
+        }
+      },
+    });
+  };
+
+  const handleRemove = (selectedRows: UserItem) => {
+    Modal.confirm({
+      title: intl.formatMessage({
+        id: 'pages.tip.title',
+      }),
+      content: intl.formatMessage({
+        id: 'pages.tip.content',
+      }),
+      okText: intl.formatMessage({
+        id: 'pages.tip.ok',
+      }),
+      cancelText: intl.formatMessage({
+        id: 'pages.tip.cancel',
+      }),
+      onOk: async () => {
+        if (!selectedRows) return true;
+        try {
+          const loadingHidde = message.loading(
+            intl.formatMessage({
+              id: 'pages.tip.loading',
+            }),
+          );
+
+          const { success } = await removeUser({
+            id: selectedRows.id,
+          });
+
+          if (success) {
+            loadingHidde();
+            message.success(
+          intl.formatMessage({
+            id: 'pages.tip.success',
+          }),
+        );
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+            return true;
+          }
+          return false;
+        } catch (error) {
+          message.error(
+            intl.formatMessage({
+              id: 'pages.tip.error',
+            }),
+          );
+          return false;
+        }
+      },
+    });
+  };
+
+  const handleDone = () => {
+    setDone(false);
+    setVisible(false);
+    setCurrentRow(undefined);
+  };
+
   const paginationProps = {
     showSizeChanger: true,
     showQuickJumper: true,
   };
-  const paginationUserLog = {
-    showSizeChanger: true,
-    showQuickJumper: true,
-    pageSize:10
-  };
- 
 
   const columns: ProColumns<UserItem>[] = [
     {
-      title: <FormattedMessage id="pages.user.portrait" />,
-      dataIndex: 'portrait',
-      hideInSearch: true,
-      valueType: 'image',
-      align: 'center',
-      width: '60',
-    },
-    {
-      title: <FormattedMessage id="pages.user.name" />,
-      dataIndex: 'name',
-      valueType: 'text',
-      width: 'md',
-    },
-
-    {
-      title: <FormattedMessage id="pages.user.nickName" />,
-      dataIndex: 'nickName',
+      title: <FormattedMessage id="pages.user.username" />,
+      dataIndex: 'username',
       hideInSearch: true,
       valueType: 'text',
       width: 'md',
     },
 
     {
-      title: <FormattedMessage id="pages.user.state" />,
-      dataIndex: 'state',
+      title: <FormattedMessage id="pages.user.nick" />,
+      dataIndex: 'nick',
       hideInSearch: true,
       valueType: 'text',
       width: 'md',
     },
+
+    
+
     {
-      title: <FormattedMessage id="pages.user.parent" />,
-      dataIndex: ['parent', 'name'],
+      title: <FormattedMessage id="pages.user.phone" />,
+      dataIndex: 'phone',
       hideInSearch: true,
       valueType: 'text',
       width: 'md',
     },
+
+    {
+      title: <FormattedMessage id="pages.user.email" />,
+      dataIndex: 'email',
+      valueType: 'text',
+      hideInSearch: true,
+      hideInForm: true,
+      width: 'md',
+    },
+
+  
     {
       title: <FormattedMessage id="pages.option" />,
       dataIndex: 'option',
       valueType: 'option',
       hideInDescriptions: true,
-      render: (_, record) => [
-        <a
-          key="detail"
-          onClick={() => {
-            setCurrentRow(record);
-            setShowDetail(true);
-          }}
-        >
-          <FormattedMessage id="pages.detail" />
-        </a>,
-
-        <a
-          key="invest"
-          onClick={(e) => {
-            e.preventDefault();
-            setCurrentRow(record);
-            setCreateModalVisible(true);
-          }}
-        >
-          <FormattedMessage id="pages.invest" />
-        </a>,
-      ],
+      render: (_, record) => {
+        return [
+          <a
+            key="repassword"
+            onClick={() => {
+              record.password = '123456';
+              handleInitPassword(record);
+            }}
+          >
+            <FormattedMessage id="pages.repassword" />
+          </a>,
+          <a
+            key="edit"
+            onClick={() => {
+              setCurrentRow(record);
+              setVisible(true);
+            }}
+          >
+            <FormattedMessage id="pages.edit" />
+          </a>,
+          <a
+            key="delete"
+            onClick={() => {
+              handleRemove(record);
+            }}
+          >
+            <FormattedMessage id="pages.delete" />
+          </a>,
+        ];
+      },
     },
   ];
-
-  const tcolumns: ProColumns<UserLogItem>[] = [
-    {
-      title: <FormattedMessage id="pages.create.time" />,
-      dataIndex: 'createTime',
-      valueType: 'dateTime',
-      width: '150px',
-      fieldProps: { size: 'small' },
-      hideInSearch: true,
-      ellipsis: true,
-    },
-
-    {
-      title: <FormattedMessage id="pages.user.log.content" />,
-      dataIndex: 'content',
-      valueType: 'text',
-      hideInSearch: true,
-      ellipsis: true,
-    },
-  ];
-
-  const tparams: UserLogParams = {
-    userId: currentRow?.id,
-  };
 
   return (
-    <PageContainer>
-     
-      <ProTable<UserItem, UserParams>
-        headerTitle=""
+    <PageContainer title=" ">
+      <ProTable<UserItem>
+        headerTitle={intl.formatMessage({
+          id: 'pages.user.title',
+        })}
         actionRef={actionRef}
-        pagination={paginationProps}
         rowKey={(record) => record.id}
-        params={params}
-        search={{
-          labelWidth: 80,
+        search={false}
+        toolBarRender={() => [
+          <Button
+            type="primary"
+            key="primary"
+            onClick={() => {
+              setVisible(true);
+            }}
+          >
+            <PlusOutlined /> <FormattedMessage id="pages.new" />
+          </Button>,
+        ]}
+        pagination={paginationProps}
+        request={(params) => {
+          return queryUserList({ ...params, type: 'USER' });
         }}
-        toolBarRender={() => []}
-        request={queryUserList}
+
         columns={columns}
-        onChange={(pagination, filters: any, sorter: any) => {
-          if (sorter) {
-            sorter.order = sorter.order === 'descend' ? 'DESC' : 'ASC';
-            const userParams: UserParams = {
-              sorter: sorter.order,
-              filter: sorter.field,
-            };
-            setParams(userParams);
-          }
-        }}
       />
 
-      <Drawer
-        width={600}
-        open={showDetail}
-        onClose={() => {
-          setCurrentRow(undefined);
-          setShowDetail(false);
-        }}
-        closable={false}
-      >
-        {currentRow?.id && (
-           
-          <ProDescriptions<UserItem>
-            column={1}
-            title={currentRow?.name}
-            request={async () => ({
-              data: currentRow || {},
-            })}
-            params={{
-              id: currentRow?.id,
-            }}
-            columns={columns as ProDescriptionsItemProps<UserItem>[]}
-          />
-          
-        )}
-
-        {currentRow ? (
-         
-          <ProTable<UserLogItem, UserLogParams>
-            headerTitle={intl.formatMessage({
-              id: 'pages.user.log.title',
-            })}
-            search={false}
-            pagination={paginationUserLog}
-            options={false}
-            params={tparams}
-            rowKey={(record) => record.id}
-            request={queryUserLogList}
-            columns={tcolumns}
-          />
-        
-        ) : (
-          ''
-        )}
-      </Drawer>
-
-      <BillInvestCreateForm
-        visible={createModalVisible}
-        onCancel={() => {
-          setCreateModalVisible(false);
-        }}
+      <UserModel
+        done={done}
+        visible={visible}
         current={currentRow || {}}
         onDone={handleDone}
         onSubmit={async (value) => {
-          const success = await handleAddBillInvest(value as BillInvestItem);
+          const success = await handleAction(value as UserItem);
           if (success) {
-            setCreateModalVisible(false);
+            setVisible(false);
+            setCurrentRow(undefined);
             if (actionRef.current) {
               actionRef.current.reload();
             }
           }
         }}
       />
-     
     </PageContainer>
   );
 };
-
-export default UserList;
+export default User;

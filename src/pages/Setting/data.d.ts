@@ -64,13 +64,13 @@ export type RoleParams = {
 } & Partial<RoleItem>;
 
 
-export type SystemUserPagination = {
+export type UserPagination = {
   total: number;
   pageSize: number;
   current: number;
 };
 
-export type SystemUserItem = {
+export type UserItem = {
   id: string;
   username: string;
   password:string;
@@ -83,10 +83,10 @@ export type SystemUserItem = {
   store?:StoreItem;
 };
 
-export type SystemUserParams = {
+export type UserParams = {
   filter?: Record<string, any[]>;
   sorter?: Record<string, any>;
-} & Partial<SystemUserItem>;
+} & Partial<UserItem>;
 
 
 export type OptionItem = {

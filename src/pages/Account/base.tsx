@@ -1,4 +1,4 @@
-import { SystemUserParams } from '@/pages/Setting/data';
+import { UserParams } from '@/pages/Setting/data';
 import { UploadOutlined } from '@ant-design/icons';
 import ProForm, { ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import { FormattedMessage, useIntl } from '@umijs/max';
@@ -6,16 +6,18 @@ import { Button, message, Upload } from 'antd';
 import React, { useRef } from 'react';
 import { useRequest } from 'umi';
 import host from '../../host';
-import { updateSystemUser } from './service';
+import { updateUser } from './service';
 
-import { currentSystemUser } from '@/services/api';
+import { currentUser } from '@/services/api';
 import { ActionType } from '@ant-design/pro-components';
 import styles from './base.less';
 
-const uploadFileURL = host.api + 'api/system/user/upload_image';
+const uploadFileURL = host.api + 'api/user/upload_image';
 
 // 头像组件 方便以后独立，增加裁剪之类的功能
 const AvatarView = ({ avatar }: { avatar: string }) => {
+  const actionRef = useRef<ActionType>();
+ 
   //国际化
   const intl = useIntl();
 
@@ -32,17 +34,20 @@ const AvatarView = ({ avatar }: { avatar: string }) => {
   };
 
   const handleChange = (info: any) => {
-    // console.log(info);
-    //上传完成处理返回数据
+    if (info.file.status !== 'uploading') {
+      message.loading('正在上传中...');
+    }
+
     if (info.file.status === 'done') {
-      if (info.file.response.status) {
-        message.success(
-          intl.formatMessage({
-            id: 'pages.tip.success',
-          }),
-        );
-        location.reload();
+      console.log(info);
+      if (!info.file.response.success) {
+        message.error(info.file.response.errorMessage);
+      } else {
+        message.success('头像上传成功');
+        actionRef.current?.reloadAndRest;
       }
+    } else if (info.file.status === 'error') {
+      message.error(`本地导入文件失败`);
     }
   };
 
@@ -80,7 +85,7 @@ const AvatarView = ({ avatar }: { avatar: string }) => {
 const BaseView: React.FC = () => {
   const actionRef = useRef<ActionType>();
   const { data: current, loading } = useRequest(() => {
-    return currentSystemUser();
+    return currentUser();
   });
 
   //国际化
@@ -98,7 +103,7 @@ const BaseView: React.FC = () => {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-shadow
-  const handleFinish = async (fields: any, currentRow?: SystemUserParams) => {
+  const handleFinish = async (fields: any, currentRow?: UserParams) => {
     try {
       const loadingHiddle = message.loading(
         intl.formatMessage({
@@ -106,18 +111,19 @@ const BaseView: React.FC = () => {
         }),
         0,
       );
-      const { success } = await updateSystemUser({
+      const { success } = await updateUser({
         ...currentRow,
         ...fields,
       });
       loadingHiddle();
       if (success) {
-       message.success(
+        message.success(
           intl.formatMessage({
             id: 'pages.tip.success',
           }),
         );
         if (actionRef.current) {
+          
           actionRef.current.reload();
         }
         return true;
@@ -155,7 +161,7 @@ const BaseView: React.FC = () => {
               }}
               hideRequiredMark
             >
-              <ProFormText name="id" hidden/>
+              <ProFormText name="id" hidden />
               <ProFormText
                 width="md"
                 tooltip="管理员设定，修改请系统管理员"

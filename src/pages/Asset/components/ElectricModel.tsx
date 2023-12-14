@@ -53,7 +53,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
     >
       <>
         <ProFormDigit name="id" hidden />
-        <ProFormDigit name="category" hidden initialValue={"Electric"}/>
+        <ProFormDigit name="category" hidden initialValue={"ELECTRIC"}/>
         <ProFormText
           name="number"
           label={intl.formatMessage({
@@ -106,7 +106,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
             return queryOptionSelect({
               current: 1,
               pageSize: 1000,
-              type: 'Electric',
+              type: 'ELECTRIC',
             }).then(({ data }) => {
               return data?.business.map((item) => {
                 return {
@@ -140,7 +140,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
             return queryOptionSelect({
               current: 1,
               pageSize: 1000,
-              type: 'Electric',
+              type: 'ELECTRIC',
             }).then(({ data }) => {
               return data?.brand.map((item) => {
                 return {
@@ -174,7 +174,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
             return queryOptionSelect({
               current: 1,
               pageSize: 1000,
-              type: 'Electric',
+              type: 'ELECTRIC',
             }).then(({ data }) => {
               return data?.spec.map((item) => {
                 return {

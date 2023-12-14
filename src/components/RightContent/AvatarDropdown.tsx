@@ -23,9 +23,9 @@ const loginOut = async () => {
   /** 此方法会跳转到 redirect 参数所在的位置 */
   const redirect = urlParams.get('redirect');
   // Note: There may be security issues, please note
-  if (window.location.pathname !== '/system/user/login' && !redirect) {
+  if (window.location.pathname !== '/user/login' && !redirect) {
     history.replace({
-      pathname: '/system/user/login',
+      pathname: '/user/login',
       search: stringify({
         redirect: pathname + search,
       }),
@@ -42,7 +42,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
     (event: MenuInfo) => {
       const { key } = event;
       if (key === 'logout') {
-        setInitialState((s) => ({ ...s, currentSystemUser: undefined }));
+        setInitialState((s) => ({ ...s, currentUser: undefined }));
         loginOut();
         return;
       }
@@ -67,9 +67,9 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
     return loading;
   }
 
-  const { currentSystemUser } = initialState;
+  const { currentUser } = initialState;
 
-  if (!currentSystemUser || !currentSystemUser.username) {
+  if (!currentUser || !currentUser.username) {
     return loading;
   }
 
@@ -100,8 +100,8 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
   return (
     <HeaderDropdown overlay={menuHeaderDropdown}>
       <span className={`${styles.action} ${styles.account}`}>
-        <Avatar size="small" className={styles.avatar} src={currentSystemUser.username} alt="avatar" />
-        <span className={`${styles.name} anticon`}>{currentSystemUser.username}</span>
+        <Avatar size="small" className={styles.avatar} src={currentUser.username} alt="avatar" />
+        <span className={`${styles.name} anticon`}>{currentUser.username}</span>
       </span>
     </HeaderDropdown>
   );
