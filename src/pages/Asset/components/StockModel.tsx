@@ -1,3 +1,4 @@
+import { PlusOutlined } from '@ant-design/icons';
 import {
   ActionType,
   ModalForm,
@@ -5,11 +6,12 @@ import {
   ProFormInstance,
   ProTable,
 } from '@ant-design/pro-components';
-import { useIntl } from '@umijs/max';
-import type { FC } from 'react';
-import { useRef } from 'react';
+import { FormattedMessage, useIntl } from '@umijs/max';
+import { Button, message } from 'antd';
+import { FC, useRef, useState } from 'react';
 import { ProductItem, ProductStockItem } from '../data';
-import { queryProductStockList } from '../service';
+import { addProductStock, queryProductStockList } from '../service';
+import StockAddModel from './StockAddModel';
 
 type StockModalProps = {
   done: boolean;
@@ -24,11 +26,54 @@ const StocksModal: FC<StockModalProps> = (props) => {
   const formRef = useRef<ProFormInstance>();
   //国际化
   const intl = useIntl();
+
   const actionRef = useRef<ActionType>();
+  const [stockVisible, setStockVisible] = useState<boolean>(false);
 
   if (!visible) {
     return null;
   }
+
+  const addDone = () => {
+    setStockVisible(false);
+  };
+
+  /**
+   * Product Stock 操作
+   * @param fields
+   * @returns
+   */
+  const handleStockAction = async (fields: ProductStockItem) => {
+    const loadingHidde = message.loading(
+      intl.formatMessage({
+        id: 'pages.tip.loading',
+      }),
+    );
+    loadingHidde();
+    try {
+      if (fields.action == 'addProductStock') {
+        const { success } = await addProductStock({
+          ...fields,
+        });
+        if (success) {
+          message.success(
+            intl.formatMessage({
+              id: 'pages.tip.success',
+            }),
+          );
+          return true;
+        }
+      }
+      return false;
+    } catch (error) {
+      message.error(
+        intl.formatMessage({
+          id: 'pages.tip.error',
+        }),
+      );
+      return false;
+    }
+  };
 
   const columns: ProColumns<ProductStockItem>[] = [
     {
@@ -62,15 +107,43 @@ const StocksModal: FC<StockModalProps> = (props) => {
       >
         <ProTable<ProductStockItem>
           rowKey="id"
-         
           actionRef={actionRef}
           columns={columns}
           search={false}
+          toolBarRender={() => [
+            <Button
+              type="primary"
+              key="add"
+              size="small"
+              onClick={() => {
+                setStockVisible(true);
+              }}
+            >
+              <PlusOutlined />
+              <FormattedMessage id="pages.new" />
+            </Button>,
+          ]}
           request={(params) => {
             return queryProductStockList({ ...params, productId: current?.id });
           }}
         />
       </ModalForm>
+
+      <StockAddModel
+        done={done}
+        visible={stockVisible}
+        onDone={addDone}
+        current={current || {}}
+        onSubmit={async (value) => {
+          const success = await handleStockAction(value as ProductStockItem);
+          if (success) {
+            setStockVisible(false);
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+          }
+        }}
+      />
     </>
   );
 };

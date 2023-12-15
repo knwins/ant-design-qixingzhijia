@@ -15,12 +15,14 @@ import StocksModal from './components/StockModel';
 import { ProductItem, ProductLogItem, ProductLogParams, ProductStockItem } from './data';
 import {
   addProduct,
-  createProductStockCreate,
+  createProductLog,
+  createProductStock,
   queryProductList,
   queryProductLogList,
   queryStoreSelect,
   removeProduct,
   removeProductByIds,
+  updateProduct,
 } from './service';
 
 const Spot: React.FC = () => {
@@ -114,7 +116,7 @@ const Spot: React.FC = () => {
     });
   }
 
- /**
+  /**
    * Product 操作
    * @param fields
    * @returns
@@ -177,42 +179,42 @@ const Spot: React.FC = () => {
     }
   };
 
-   /**
+  /**
    * Product Stock 操作
    * @param fields
    * @returns
    */
-    const handleStockAction = async (fields: ProductStockItem) => {
-      const loadingHidde = message.loading(
+  const handleStockAction = async (fields: ProductStockItem) => {
+    const loadingHidde = message.loading(
+      intl.formatMessage({
+        id: 'pages.tip.loading',
+      }),
+    );
+    loadingHidde();
+    try {
+      if (fields.action == 'createProductStock') {
+        const { success } = await createProductStock({
+          ...fields,
+        });
+        if (success) {
+          message.success(
+            intl.formatMessage({
+              id: 'pages.tip.success',
+            }),
+          );
+          return true;
+        }
+      }
+      return false;
+    } catch (error) {
+      message.error(
         intl.formatMessage({
-          id: 'pages.tip.loading',
+          id: 'pages.tip.error',
         }),
       );
-      loadingHidde();
-      try {
-        if (fields.action == 'createProductStock') {
-          const { success } = await createProductStockCreate({
-            ...fields,
-          });
-          if (success) {
-            message.success(
-              intl.formatMessage({
-                id: 'pages.tip.success',
-              }),
-            );
-            return true;
-          }
-        }
-        return false;
-      } catch (error) {
-        message.error(
-          intl.formatMessage({
-            id: 'pages.tip.error',
-          }),
-        );
-        return false;
-      }
-    };
+      return false;
+    }
+  };
 
   const handleRemove = (selectedRows: ProductItem) => {
     Modal.confirm({
@@ -431,6 +433,18 @@ const Spot: React.FC = () => {
       hideInForm: true,
       hideInSearch: true,
       valueType: 'text',
+      render: (dom, entity) => {
+        return (
+          <a
+            onClick={() => {
+              setCurrentRow(entity);
+              setShowDetail(true);
+            }}
+          >
+            {dom}
+          </a>
+        );
+      },
     },
 
     {
@@ -493,6 +507,7 @@ const Spot: React.FC = () => {
       valueType: 'text',
       hideInSearch: true,
       hideInForm: true,
+      hideInTable: true,
     },
 
     {
@@ -501,6 +516,7 @@ const Spot: React.FC = () => {
       valueType: 'text',
       hideInSearch: true,
       hideInForm: true,
+      hideInTable: true,
     },
 
     {
@@ -510,16 +526,6 @@ const Spot: React.FC = () => {
       hideInDescriptions: true,
       render: (_, record) => {
         return [
-          <a
-            key="detail"
-            onClick={() => {
-              setCurrentRow(record);
-              setShowDetail(true);
-            }}
-          >
-            <FormattedMessage id="pages.detail" />
-          </a>,
-
           <a
             key="detail"
             onClick={() => {
@@ -671,7 +677,6 @@ const Spot: React.FC = () => {
           selections: [Table.SELECTION_ALL, Table.SELECTION_INVERT],
         }}
         tableAlertRender={({ selectedRowKeys, selectedRows, onCleanSelected }) => {
-          //console.log(selectedRowKeys, selectedRows);
           let idsStr = '';
           for (let i = 0; i < selectedRows.length; i += 1) {
             const item = selectedRows[i];
@@ -785,7 +790,7 @@ const Spot: React.FC = () => {
       />
       <Drawer
         width={600}
-        visible={showDetail}
+        open={showDetail}
         onClose={() => {
           setCurrentRow(undefined);
           setShowDetail(false);

@@ -435,6 +435,18 @@ const Spot: React.FC = () => {
       hideInForm: true,
       hideInSearch: true,
       valueType: 'text',
+      render: (dom, entity) => {
+        return (
+          <a
+            onClick={() => {
+              setCurrentRow(entity);
+              setShowDetail(true);
+            }}
+          >
+            {dom}
+          </a>
+        );
+      },
     },
 
     {
@@ -542,24 +554,8 @@ const Spot: React.FC = () => {
       hideInDescriptions: true,
       render: (_, record) => {
         return [
-          <a
-            key="detail"
-            onClick={() => {
-              setCurrentRow(record);
-              setShowDetail(true);
-            }}
-          >
-            <FormattedMessage id="pages.detail" />
-          </a>,
-          <a
-            key="edit"
-            onClick={() => {
-              setCurrentRow(record);
-              setVisible(true);
-            }}
-          >
-            <FormattedMessage id="pages.edit" />
-          </a>,
+          
+         
           <a
             key="create"
             onClick={() => {
@@ -569,6 +565,15 @@ const Spot: React.FC = () => {
           >
             <FormattedMessage id="pages.product.log.create" />
           </a>,
+           <a
+           key="edit"
+           onClick={() => {
+             setCurrentRow(record);
+             setVisible(true);
+           }}
+         >
+           <FormattedMessage id="pages.edit" />
+         </a>,
           <a
             key="delete"
             onClick={() => {

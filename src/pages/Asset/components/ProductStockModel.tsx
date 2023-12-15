@@ -7,7 +7,7 @@ import {
 } from '@ant-design/pro-form';
 import { useIntl } from '@umijs/max';
 import type { FC } from 'react';
-import { Pagination, ProductItem, ProductStockItem, StoreParams } from '../data';
+import { ProductItem, ProductStockItem, ProductStockParams, StoreParams } from '../data';
 import { queryProductStockSelect, queryStoreSelect } from '../service';
 
 type ProductStockModelProps = {
@@ -22,21 +22,44 @@ const ProductStockModel: FC<ProductStockModelProps> = (props) => {
   const { done, visible, current, onDone, onSubmit, children } = props;
   const intl = useIntl();
 
-  const handleStoreSelect = async (key?: any, keywords?: any) => {
-    if (key === '') {
+  const handleStoreSelect = async (type?: any, keywords?: any) => {
+    //
+    if (type === '') {
       return;
     }
-    const pagination: Pagination = {
+
+    //读取库存列表数据
+    if (type == 'SOTCK') {
+      const options: ProductStockParams = {
+        productId: current?.id,
+      };
+      const { data: stockData } = await queryProductStockSelect({
+        current: 1,
+        pageSize: 1000,
+        ...options,
+      });
+      const stockListOptions = [];
+      if (stockData) {
+        for (let i = 0; i < stockData.length; i += 1) {
+          const item = stockData[i];
+          if (item) {
+            stockListOptions.push({
+              label: item.store.name + '(库存数量:' + item.qty + ')',
+              value: item.id,
+            });
+          }
+        }
+      }
+      return stockListOptions;
+    }
+
+    //读取Store数据
+    const options: StoreParams = {
+      type: type,
+    };
+    const { data: store } = await queryStoreSelect({
       current: 1,
       pageSize: 1000,
-    };
-    const options: StoreParams = {
-      type: key,
-    };
-
-    //读取仓库数据
-    const { data: store } = await queryStoreSelect({
-      ...pagination,
       ...options,
     });
     const storeListOptions = [];
@@ -57,10 +80,6 @@ const ProductStockModel: FC<ProductStockModelProps> = (props) => {
 
   const handleStoreType = async (key?: any) => {
     const storeTypeListOptions = [];
-    storeTypeListOptions.push({
-      label: '入库',
-      value: 'InStore',
-    });
     storeTypeListOptions.push({
       label: '出库',
       value: 'OutStore',
@@ -151,20 +170,8 @@ const ProductStockModel: FC<ProductStockModelProps> = (props) => {
           placeholder={intl.formatMessage({
             id: 'pages.product.log.out.store.placeholder',
           })}
-          request={async () => {
-            return queryProductStockSelect({
-              current: 1,
-              pageSize: 1000,
-              productId: current?.id,
-            }).then(({ data }) => {
-              return data.map((item) => {
-                return {
-                  label: item.store.name + '(库存数量:' + item.qty + ')',
-                  value: item.id + '',
-                  id: item.id ,
-                };
-              });
-            });
+          request={async (params) => {
+            return handleStoreSelect('SOTCK', params.keyWords);
           }}
         />
 

@@ -100,12 +100,11 @@ export type ProductStockItem = {
   store: StoreItem;
   qty: number;
   action:string;
+  productId:string;
 };
 
- 
-	
-
-export type ProductStockParams={
-
-  
-}
+export type ProductStockParams = {
+  keywords?: string;
+  filter?: Record<string, any[]>;
+  sorter?: Record<string, any>;
+} & Partial<ProductStockItem>;

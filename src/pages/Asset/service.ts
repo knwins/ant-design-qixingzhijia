@@ -275,7 +275,7 @@ export async function createProductLog(
  * @param options
  * @returns
  */
- export async function createProductStockCreate(
+ export async function createProductStock(
   data: { [id: string]: any },
   options?: { [id: string]: any },
 ) {
@@ -283,6 +283,27 @@ export async function createProductLog(
     success?: boolean;
     errorMessage?: string;
   }>(host.api + 'api/manage/product/stock/create', {
+    data,
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
+
+/**
+ * 库存添加
+ * @param data
+ * @param options
+ * @returns
+ */
+ export async function addProductStock(
+  data: { [id: string]: any },
+  options?: { [id: string]: any },
+) {
+  return request<{
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/manage/product/stock/add', {
     data,
     method: 'POST',
     ...(options || {}),

@@ -16,8 +16,8 @@ import React, { useRef, useState } from 'react';
 import host from '../../host';
 import { queryOptionSelect } from '../Setting/service';
 import BatchProductLogModel from './components/BatchProductLogModel';
-import ProductLogModel from './components/ProductLogModel';
 import ProductModel from './components/CellModel';
+import ProductLogModel from './components/ProductLogModel';
 import { ProductItem, ProductLogBatchItem, ProductLogItem, ProductLogParams } from './data';
 import {
   addProduct,
@@ -215,10 +215,10 @@ const Spot: React.FC = () => {
           if (success) {
             loadingHidde();
             message.success(
-          intl.formatMessage({
-            id: 'pages.tip.success',
-          }),
-        );
+              intl.formatMessage({
+                id: 'pages.tip.success',
+              }),
+            );
             if (actionRef.current) {
               actionRef.current.reload();
             }
@@ -300,10 +300,10 @@ const Spot: React.FC = () => {
           if (success) {
             loadingHidde();
             message.success(
-          intl.formatMessage({
-            id: 'pages.tip.success',
-          }),
-        );
+              intl.formatMessage({
+                id: 'pages.tip.success',
+              }),
+            );
             if (actionRef.current) {
               actionRef.current.reload();
             }
@@ -386,7 +386,7 @@ const Spot: React.FC = () => {
     // console.log(tableData);
 
     const option = {
-      fileName: '电池数据'+new Date(),
+      fileName: '电池数据' + new Date(),
       datas: [
         {
           sheetData: tableData, // 要导出的原数据
@@ -435,6 +435,18 @@ const Spot: React.FC = () => {
       hideInForm: true,
       hideInSearch: true,
       valueType: 'text',
+      render: (dom, entity) => {
+        return (
+          <a
+            onClick={() => {
+              setCurrentRow(entity);
+              setShowDetail(true);
+            }}
+          >
+            {dom}
+          </a>
+        );
+      },
     },
 
     {
@@ -483,17 +495,6 @@ const Spot: React.FC = () => {
       hideInSearch: true,
     },
 
-    // {
-    //   title: <FormattedMessage id="pages.product.spec" />,
-    //   dataIndex: 'specId',
-    //   valueType: 'select',
-    //   width:'80px',
-    //   hideInForm: true,
-    //   hideInTable:true,
-    //   valueEnum:specListOptions
-
-    // },
-
     {
       title: <FormattedMessage id="pages.product.spec" />,
       dataIndex: ['spec', 'name'],
@@ -508,6 +509,7 @@ const Spot: React.FC = () => {
       valueType: 'text',
       hideInSearch: true,
       hideInForm: true,
+      hideInTable:true,
     },
 
     {
@@ -516,6 +518,7 @@ const Spot: React.FC = () => {
       valueType: 'text',
       hideInSearch: true,
       hideInForm: true,
+      hideInTable:true,
     },
 
     {
@@ -525,24 +528,7 @@ const Spot: React.FC = () => {
       hideInDescriptions: true,
       render: (_, record) => {
         return [
-          <a
-            key="detail"
-            onClick={() => {
-              setCurrentRow(record);
-              setShowDetail(true);
-            }}
-          >
-            <FormattedMessage id="pages.detail" />
-          </a>,
-          <a
-            key="edit"
-            onClick={() => {
-              setCurrentRow(record);
-              setVisible(true);
-            }}
-          >
-            <FormattedMessage id="pages.edit" />
-          </a>,
+        
           <a
             key="create"
             onClick={() => {
@@ -551,6 +537,15 @@ const Spot: React.FC = () => {
             }}
           >
             <FormattedMessage id="pages.product.log.create" />
+          </a>,
+            <a
+            key="edit"
+            onClick={() => {
+              setCurrentRow(record);
+              setVisible(true);
+            }}
+          >
+            <FormattedMessage id="pages.edit" />
           </a>,
           <a
             key="delete"
@@ -821,7 +816,7 @@ const Spot: React.FC = () => {
 
       <Drawer
         width={600}
-        visible={showDetail}
+        open={showDetail}
         onClose={() => {
           setCurrentRow(undefined);
           setShowDetail(false);
