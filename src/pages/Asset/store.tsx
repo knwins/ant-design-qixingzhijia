@@ -236,6 +236,7 @@ const Spot: React.FC = () => {
       dataIndex: 'name',
       hideInForm: true,
       hideInSearch: true,
+      copyable:true,
       valueType: 'text',
       width: 'md',
       fieldProps: { placeholder: intl.formatMessage({ id: 'pages.store.name.placeholder' }) },
@@ -285,6 +286,7 @@ const Spot: React.FC = () => {
       dataIndex: 'address',
       valueType: 'text',
       hideInSearch: true,
+      
       hideInForm: true,
     },
     {

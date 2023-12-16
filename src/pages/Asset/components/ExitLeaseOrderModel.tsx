@@ -253,6 +253,10 @@ const ExitLeaseOrderModel: FC<ExitLeaseOrderModelProps> = (props) => {
               //1.计算时间(天/月)
               let days = TimeDiff(endTime).all[2]; //获取天数
 
+              //如何时间小于当前时间已经逾期为负数
+              if(endTime<new Date()){
+                days=-days;
+              }
               //2.计算金额
               let diffAmount = 0;
               if (payType === 'DAY') {
@@ -264,7 +268,7 @@ const ExitLeaseOrderModel: FC<ExitLeaseOrderModelProps> = (props) => {
               return (
                 <ProFormDigit
                   name="exitAmount"
-                  label={`实际退款${days}天${diffAmount}元，保证金${deposit}元`}
+                  label={`实际${days>0?'剩余':'逾期'}${days}天，${days>0?'退款':'扣除'}${diffAmount}元，退回保证金${deposit}元`}
                   width="xs"
                   fieldProps={{ addonAfter: '元', value: exitAmount }}
                   disabled

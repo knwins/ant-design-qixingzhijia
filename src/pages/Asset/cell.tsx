@@ -433,6 +433,7 @@ const Spot: React.FC = () => {
       dataIndex: 'number',
       hideInForm: true,
       hideInSearch: true,
+      copyable:true,
       valueType: 'text',
       render: (dom, entity) => {
         return (

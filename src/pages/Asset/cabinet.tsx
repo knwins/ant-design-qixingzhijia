@@ -435,6 +435,7 @@ const Spot: React.FC = () => {
       hideInForm: true,
       hideInSearch: true,
       valueType: 'text',
+      copyable:true,
       render: (dom, entity) => {
         return (
           <a

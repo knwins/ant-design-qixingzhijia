@@ -282,6 +282,7 @@ const ProductLease: React.FC = () => {
       dataIndex: ['product', 'number'],
       hideInForm: true,
       hideInSearch: true,
+      copyable: true,
       valueType: 'text',
       render: (dom, entity) => {
         return (

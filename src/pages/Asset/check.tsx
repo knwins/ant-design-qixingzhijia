@@ -120,6 +120,7 @@ const Spot: React.FC = () => {
       valueType: 'text',
       hideInSearch: true,
       hideInForm: true,
+      copyable:true,
     },
     {
       title: <FormattedMessage id="pages.cabinet.number.search.keywords" />,
@@ -213,7 +214,7 @@ const Spot: React.FC = () => {
           {currentRow?.id && (
             <ProDescriptions<ProductCheckItem>
               column={1}
-              title={currentRow?.product.name}
+              // title={currentRow?.product.name}
               request={async () => ({
                 data: currentRow || {},
               })}
