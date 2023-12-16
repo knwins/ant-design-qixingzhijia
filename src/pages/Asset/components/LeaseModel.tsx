@@ -73,7 +73,7 @@ const LeaseModel: FC<LeaseModelProps> = (props) => {
               current: 1,
               pageSize: 1000,
               category: 'ELECTRIC',
-              state:'STORE'
+              state: 'STORE',
             }).then(({ data }) => {
               return data.map((item) => {
                 return {
@@ -148,7 +148,7 @@ const LeaseModel: FC<LeaseModelProps> = (props) => {
               required: true,
             },
           ]}
-          fieldProps={{ addonAfter: '元' }}
+          fieldProps={{ addonAfter: '元',addonBefore:'￥'  }}
           disabled={current?.id ? true : false}
         />
 
@@ -161,36 +161,11 @@ const LeaseModel: FC<LeaseModelProps> = (props) => {
               required: true,
             },
           ]}
-          fieldProps={{ addonAfter: '元' }}
-
+          fieldProps={{ addonAfter: '元',addonBefore:'￥' }}
           disabled={current?.id ? true : false}
         />
 
-        <ProFormSelect
-          name="state"
-          width="xs"
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-          label="状态"
-          options={[
-            {
-              label: '退租完成',
-              value: 'FINISH',
-            },
-            {
-              label: '租赁中',
-              value: 'NORMAL',
-            },
-            {
-              label: '已逾期',
-              value: 'LATE',
-            },
-          ]}
-          disabled={current?.id ? true : false}
-        />
+        <ProFormSelect name="state" initialValue={'NORMAL'} hidden />
       </>
     </ModalForm>
   );
