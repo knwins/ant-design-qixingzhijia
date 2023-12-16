@@ -148,7 +148,7 @@ const LeaseModel: FC<LeaseModelProps> = (props) => {
               required: true,
             },
           ]}
-          fieldProps={{ addonAfter: '元',addonBefore:'￥'  }}
+          fieldProps={{ addonAfter: '元'}}
           disabled={current?.id ? true : false}
         />
 
@@ -161,7 +161,7 @@ const LeaseModel: FC<LeaseModelProps> = (props) => {
               required: true,
             },
           ]}
-          fieldProps={{ addonAfter: '元',addonBefore:'￥' }}
+          fieldProps={{ addonAfter: '元' }}
           disabled={current?.id ? true : false}
         />
 

@@ -100,9 +100,28 @@ export async function queryStoreList(
   return request<{
     data: StoreItem[];
     total?: number;
-    totalPage?: number;
     success?: boolean;
   }>(host.api + 'api/manage/store/list', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+export async function exportStoreList(
+  params: {
+    current?: number;
+    pageSize?: number;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{
+    data: StoreItem[];
+    total?: number;
+    success?: boolean;
+  }>(host.api + 'api/manage/store/export', {
     method: 'POST',
     params: {
       ...params,
@@ -206,6 +225,27 @@ export async function queryProductList(
     totalPage?: number; //总页数
     success?: boolean;
   }>(host.api + 'api/manage/product/list', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+export async function exportProductList(
+  params: {
+    current?: number;
+    pageSize?: number;
+    category?: string;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{
+    data: ProductItem[];
+    total?: number; 
+    success?: boolean;
+  }>(host.api + 'api/manage/product/export', {
     method: 'POST',
     params: {
       ...params,

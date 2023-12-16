@@ -1,4 +1,3 @@
-import NoticeIconView from '@/components/NoticeIcon';
 import { SelectLang, useModel } from '@umijs/max';
 import { Space } from 'antd';
 import React from 'react';
@@ -21,7 +20,7 @@ const GlobalHeaderRight: React.FC = () => {
   }
   return (
     <Space className={className}>
-      <NoticeIconView />
+      {/* <NoticeIconView /> */}
       <Avatar />
       <SelectLang className={styles.action} />
     </Space>

@@ -334,7 +334,7 @@ const Spot: React.FC = () => {
   //导出数据
   const exportExcel = async () => {
     //console.log(exportParams);
-    const { data: dataList } = await queryProductList({ ...exportParams });
+    const { data: dataList } = await exportProductList({ ...exportParams });
     const columns = [
       'number',
       'store',

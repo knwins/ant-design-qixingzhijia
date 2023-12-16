@@ -100,7 +100,7 @@ const ProductStockModel: FC<ProductStockModelProps> = (props) => {
     <ModalForm<ProductItem>
       visible={visible}
       title={intl.formatMessage({
-        id: 'pages.pages.product.log.create',
+        id: 'pages.product.log.create',
       })}
       width={640}
       onFinish={async (values) => {

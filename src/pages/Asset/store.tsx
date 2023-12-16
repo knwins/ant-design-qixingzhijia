@@ -12,6 +12,7 @@ import StoreModel from './components/StoreModel';
 import { StoreItem } from './data';
 import {
   addStore,
+  exportStoreList,
   queryPCDList,
   queryStoreList,
   removeStore,
@@ -134,7 +135,7 @@ const Spot: React.FC = () => {
 
   //导出数据
   const exportExcel = async () => {
-    const { data: dataList } = await queryStoreList({ ...exportParams });
+    const { data: dataList } = await exportStoreList({ ...exportParams });
     const columns = ['name', 'province', 'city', 'district', 'address', 'type', 'user'];
     const tableItem = {
       name: '名称',
@@ -168,7 +169,6 @@ const Spot: React.FC = () => {
     typeOptions['SITE'] = '站点';
     typeOptions['SITE'] = '地址';
 
-   
     //用户数据
     const { data: userData } = await queryUserList({
       current: 1,
@@ -305,7 +305,6 @@ const Spot: React.FC = () => {
           text: '运行中',
           state: 'NORMAL',
         },
-        
       },
     },
     {
@@ -352,9 +351,20 @@ const Spot: React.FC = () => {
     // 限制类型
     accept: '.xls,.xlsx', // 限制只能上传表格文件
     showUploadList: false,
-    beforeUpload() {
+    beforeUpload: (file) => {
+      const isXlSXOrXLS = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' 
+      || file.type === 'application/vnd.ms-excel';
+      if (!isXlSXOrXLS) {
+        message.error('只允许上传XLSS/XLS格式文件!');
+        return;
+      }
+      const isLt2M = file.size / 1024 / 1024 < 5;
+      if (!isLt2M) {
+        message.error('只允许上传最大5MB文件');
+        return;
+      }
       message.loading('正在导入中...');
-      return true;
+      return isXlSXOrXLS && isLt2M;
     },
     onChange: (info) => {
       if (info.file.status !== 'uploading') {

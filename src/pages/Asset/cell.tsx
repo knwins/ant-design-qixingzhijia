@@ -23,6 +23,7 @@ import {
   addProduct,
   batchCreateProductLog,
   createProductLog,
+  exportProductList,
   queryProductList,
   queryProductLogList,
   queryStoreSelect,
@@ -330,10 +331,8 @@ const Spot: React.FC = () => {
     setCurrentRow(undefined);
   };
 
-  //导出数据
   const exportExcel = async () => {
-    //console.log(exportParams);
-    const { data: dataList } = await queryProductList({ ...exportParams });
+    const { data: dataList } = await exportProductList({ ...exportParams });
     const columns = [
       'number',
       'store',
@@ -509,7 +508,7 @@ const Spot: React.FC = () => {
       valueType: 'text',
       hideInSearch: true,
       hideInForm: true,
-      hideInTable:true,
+      hideInTable: true,
     },
 
     {
@@ -518,7 +517,7 @@ const Spot: React.FC = () => {
       valueType: 'text',
       hideInSearch: true,
       hideInForm: true,
-      hideInTable:true,
+      hideInTable: true,
     },
 
     {
@@ -528,7 +527,6 @@ const Spot: React.FC = () => {
       hideInDescriptions: true,
       render: (_, record) => {
         return [
-        
           <a
             key="create"
             onClick={() => {
@@ -538,7 +536,7 @@ const Spot: React.FC = () => {
           >
             <FormattedMessage id="pages.product.log.create" />
           </a>,
-            <a
+          <a
             key="edit"
             onClick={() => {
               setCurrentRow(record);
@@ -622,9 +620,20 @@ const Spot: React.FC = () => {
     // 限制类型
     accept: '.xls,.xlsx', // 限制只能上传表格文件
     showUploadList: false,
-    beforeUpload() {
+    beforeUpload: (file) => {
+      const isXlSXOrXLS = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' 
+      || file.type === 'application/vnd.ms-excel';
+      if (!isXlSXOrXLS) {
+        message.error('只允许上传XLSS/XLS格式文件!');
+        return;
+      }
+      const isLt2M = file.size / 1024 / 1024 < 5;
+      if (!isLt2M) {
+        message.error('只允许上传最大5MB文件');
+        return;
+      }
       message.loading('正在导入中...');
-      return true;
+      return isXlSXOrXLS && isLt2M;
     },
     onChange: (info) => {
       if (info.file.status !== 'uploading') {

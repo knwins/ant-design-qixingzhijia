@@ -283,6 +283,7 @@ const User: React.FC = () => {
         current={currentRow || {}}
         onDone={handleDone}
         onSubmit={async (value) => {
+          console.log('TEST');
           const success = await handleAction(value as UserItem);
           if (success) {
             setVisible(false);

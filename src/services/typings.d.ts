@@ -5,7 +5,7 @@ declare namespace API {
     nick: string;
     avatar?:string;
     phone?:string;
-    
+    group?:string;
   };
 
   // LoginResult

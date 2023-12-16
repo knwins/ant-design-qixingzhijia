@@ -632,9 +632,20 @@ const Spot: React.FC = () => {
     // 限制类型
     accept: '.xls,.xlsx', // 限制只能上传表格文件
     showUploadList: false,
-    beforeUpload() {
+    beforeUpload: (file) => {
+      const isXlSXOrXLS = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' 
+      || file.type === 'application/vnd.ms-excel';
+      if (!isXlSXOrXLS) {
+        message.error('只允许上传XLSS/XLS格式文件!');
+        return;
+      }
+      const isLt2M = file.size / 1024 / 1024 < 5;
+      if (!isLt2M) {
+        message.error('只允许上传最大5MB文件');
+        return;
+      }
       message.loading('正在导入中...');
-      return true;
+      return isXlSXOrXLS && isLt2M;
     },
     onChange: (info) => {
       if (info.file.status !== 'uploading') {
