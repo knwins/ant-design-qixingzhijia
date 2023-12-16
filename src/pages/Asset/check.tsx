@@ -3,7 +3,7 @@ import { PageContainer } from '@ant-design/pro-layout';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { FormattedMessage, useIntl } from '@umijs/max';
-import { Drawer, message, Modal } from 'antd';
+import { Drawer, Image, message, Modal } from 'antd';
 import React, { useRef, useState } from 'react';
 import { ProductCheckItem } from './data';
 import { queryProductCheckList, removeProductCheck, updateProductCheck } from './service';
@@ -155,138 +155,9 @@ const Spot: React.FC = () => {
       width: 'sm',
       hideInForm: true,
       valueEnum: {
-        Abnormal: {
-          text: '异常',
-          state: 'Abnormal',
-        },
-        Normal: {
-          text: '正常',
-          state: 'Normal',
-        },
+        Abnormal: { text: '异常', status: 'Error' },
+        Normal: { text: '正常', status: 'Processing' },
       },
-    },
-
-    {
-      title: '柜点地面是否符合安装要求',
-      dataIndex: 'inpu0',
-      valueType: 'select',
-      hideInSearch: true,
-      hideInForm: true,
-      hideInTable: true,
-      valueEnum: {
-        true: {
-          text: '是',
-          inpu0: true,
-        },
-        false: {
-          text: '否',
-          inpu0: false,
-        },
-      },
-    },
-    {
-      title: '地线安装是否符合要求',
-      dataIndex: 'inpu1',
-      valueType: 'select',
-      hideInSearch: true,
-      hideInForm: true,
-      hideInTable: true,
-      valueEnum: {
-        true: {
-          text: '是',
-          inpu1: true,
-        },
-        false: {
-          text: '否',
-          inpu1: false,
-        },
-      },
-    },
-    {
-      title: '电线是否完好无破损',
-      dataIndex: 'inpu2',
-      valueType: 'select',
-      hideInSearch: true,
-      hideInForm: true,
-      hideInTable: true,
-      valueEnum: {
-        true: {
-          text: '是',
-          inpu2: true,
-        },
-        false: {
-          text: '否',
-          inpu2: false,
-        },
-      },
-    },
-    {
-      title: '电柜是否稳固',
-      dataIndex: 'inpu3',
-      valueType: 'select',
-      hideInSearch: true,
-      hideInForm: true,
-      hideInTable: true,
-      valueEnum: {
-        true: {
-          text: '是',
-          inpu3: true,
-        },
-        false: {
-          text: '否',
-          inpu3: false,
-        },
-      },
-    },
-    {
-      title: '电柜是否完好无损坏',
-      dataIndex: 'inpu4',
-      valueType: 'select',
-      hideInSearch: true,
-      hideInForm: true,
-      hideInTable: true,
-      valueEnum: {
-        true: {
-          text: '是',
-          inpu4: true,
-        },
-        false: {
-          text: '否',
-          inpu4: false,
-        },
-      },
-    },
-    {
-      title: '巡检图片1',
-      dataIndex: ['imgs', '0'],
-      valueType: 'image',
-      hideInSearch: true,
-      hideInForm: true,
-      hideInTable: true,
-    },
-    {
-      title: '巡检图片2',
-      dataIndex: ['imgs', '1'],
-      valueType: 'image',
-      hideInSearch: true,
-      hideInForm: true,
-      hideInTable: true,
-    },
-    {
-      title: '巡检图片3',
-      dataIndex: ['imgs', '2'],
-      valueType: 'image',
-      hideInSearch: true,
-      hideInForm: true,
-      hideInTable: true,
-    },
-    {
-      title: '备注',
-      dataIndex: 'inro',
-      valueType: 'text',
-      hideInSearch: true,
-      hideInForm: true,
-      hideInTable: true,
     },
     {
       title: <FormattedMessage id="pages.option" />,
@@ -342,7 +213,7 @@ const Spot: React.FC = () => {
           {currentRow?.id && (
             <ProDescriptions<ProductCheckItem>
               column={1}
-              title={currentRow?.name}
+              title={currentRow?.product.name}
               request={async () => ({
                 data: currentRow || {},
               })}
@@ -350,7 +221,115 @@ const Spot: React.FC = () => {
                 id: currentRow?.id,
               }}
               columns={columns as ProDescriptionsItemProps<ProductCheckItem>[]}
-            />
+            >
+              <ProDescriptions.Item
+                span={1}
+                valueType="text"
+                ellipsis
+                label="柜点地面是否符合安装要求"
+              >
+                {currentRow.input0 ? '是' : '否'}
+              </ProDescriptions.Item>
+
+              <ProDescriptions.Item
+                span={1}
+                valueType="text"
+                contentStyle={{
+                  maxWidth: '80%',
+                }}
+                renderText={(_) => {
+                  return _;
+                }}
+                ellipsis
+                label="地线安装是否符合要求"
+              >
+                {currentRow.input1 ? '是' : '否'}
+              </ProDescriptions.Item>
+
+              <ProDescriptions.Item
+                span={1}
+                valueType="text"
+                contentStyle={{
+                  maxWidth: '80%',
+                }}
+                renderText={(_) => {
+                  return _;
+                }}
+                ellipsis
+                label="电线是否完好无破损"
+              >
+                {currentRow.input2 ? '是' : '否'}
+              </ProDescriptions.Item>
+
+              <ProDescriptions.Item
+                span={1}
+                valueType="text"
+                contentStyle={{
+                  maxWidth: '80%',
+                }}
+                renderText={(_) => {
+                  return _;
+                }}
+                ellipsis
+                label="电柜是否稳固"
+              >
+                {currentRow.input3 ? '是' : '否'}
+              </ProDescriptions.Item>
+
+              <ProDescriptions.Item
+                span={1}
+                valueType="text"
+                contentStyle={{
+                  maxWidth: '80%',
+                }}
+                renderText={(_) => {
+                  return _;
+                }}
+                ellipsis
+                label="电柜是否完好无损坏"
+              >
+                {currentRow.input4 ? '是' : '否'}
+              </ProDescriptions.Item>
+
+              <ProDescriptions.Item
+                span={1}
+                valueType="text"
+                contentStyle={{
+                  maxWidth: '80%',
+                }}
+                renderText={(_) => {
+                  return _;
+                }}
+                ellipsis
+                label={`巡检图片${currentRow.imgs.length}张`}
+              >
+                <Image.PreviewGroup
+                  preview={{
+                    onChange: (current, prev) =>
+                      console.log(`current index: ${current}, prev index: ${prev}`),
+                  }}
+                >
+                  <Image width={80} src={currentRow.imgs[0]} />{' '}
+                  <Image width={80} src={currentRow.imgs[1]} />{' '}
+                  <Image width={80} src={currentRow.imgs[2]} />
+                </Image.PreviewGroup>
+              </ProDescriptions.Item>
+
+              <ProDescriptions.Item
+                span={1}
+                valueType="text"
+                contentStyle={{
+                  maxWidth: '80%',
+                }}
+                renderText={(_) => {
+                  return _;
+                }}
+                ellipsis
+                label="备注"
+              >
+                {currentRow.inro ? currentRow.inro : '-'}
+              </ProDescriptions.Item>
+            </ProDescriptions>
           )}
         </Drawer>
       </PageContainer>

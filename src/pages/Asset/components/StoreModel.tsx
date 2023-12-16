@@ -92,7 +92,22 @@ const StoreModel: FC<StoreModelProps> = (props) => {
             { label: '地址', value: 'ADDRESS' },
           ]}
         />
-
+        <ProFormSelect
+          name="state"
+          initialValue="NORMAL"
+          label={intl.formatMessage({
+            id: 'pages.store.state',
+          })}
+          width="xs"
+          placeholder={intl.formatMessage({
+            id: 'pages.store.state.placeholder',
+          })}
+          options={[
+            { label: '申请中', value: 'APPLICATION' },
+            { label: '建设中', value: 'CONSTRUCTION' },
+            { label: '运行中', value: 'NORMAL' },
+          ]}
+        />
         <ProFormSelect
           name="user"
           label={intl.formatMessage({

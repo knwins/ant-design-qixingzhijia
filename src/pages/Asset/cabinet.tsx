@@ -511,19 +511,19 @@ const Spot: React.FC = () => {
       hideInForm: true,
       valueEnum: {
         STORE: {
-          text: '仓库',
+          text: '仓库中',
           state: 'STORE',
         },
         NORMAL: {
-          text: '运行',
+          text: '正常运行',
           state: 'NORMAL',
         },
         INSTALL: {
-          text: '安装',
+          text: '安装中',
           state: 'INSTALL',
         },
         APPLICATION: {
-          text: '申请',
+          text: '申请中',
           state: 'APPLICATION',
         },
       },

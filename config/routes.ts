@@ -52,6 +52,12 @@ export default [
         path: '/asset/check',
         component: './Asset/check',
       },
+      {
+        name: 'lease',
+        icon: 'smile',
+        path: '/asset/lease',
+        component: './Asset/lease',
+      },
     ],
   },
 

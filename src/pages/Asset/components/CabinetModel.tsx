@@ -83,6 +83,10 @@ const ProductModel: FC<ProductModelProps> = (props) => {
           })}
           options={[
             {
+              label: '申请中',
+              value: 'APPLICATION',
+            },
+            {
               label: '仓库中',
               value: 'STORE',
             },

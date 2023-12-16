@@ -99,19 +99,9 @@ const ProductStockModel: FC<ProductStockModelProps> = (props) => {
   return (
     <ModalForm<ProductItem>
       visible={visible}
-      title={
-        done
-          ? null
-          : `${
-              current?.id
-                ? intl.formatMessage({
-                    id: 'pages.edit',
-                  })
-                : intl.formatMessage({
-                    id: 'pages.new',
-                  })
-            }`
-      }
+      title={intl.formatMessage({
+        id: 'pages.pages.product.log.create',
+      })}
       width={640}
       onFinish={async (values) => {
         onSubmit(values);

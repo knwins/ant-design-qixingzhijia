@@ -58,7 +58,7 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
     console.log('key:' + key);
     const storeTypeListOptions = [];
 
-    if (key == 'Store') {
+    if (key == 'STORE') {
       storeTypeListOptions.push({
         label: '调拨',
         value: 'StoreToStore',

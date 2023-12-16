@@ -510,6 +510,7 @@ const Spot: React.FC = () => {
       valueType: 'text',
       hideInSearch: true,
       hideInForm: true,
+      hideInTable:true,
     },
 
     {
@@ -518,6 +519,36 @@ const Spot: React.FC = () => {
       valueType: 'text',
       hideInSearch: true,
       hideInForm: true,
+      hideInTable:true,
+    },
+
+    {
+      title: <FormattedMessage id="pages.product.state" />,
+      dataIndex: 'state',
+      valueType: 'select',
+      hideInForm: true,
+      valueEnum: {
+        STORE: {
+          text: '仓库中',
+          state: 'STORE',
+        },
+        NORMAL: {
+          text: '正常运行',
+          state: 'NORMAL',
+        },
+        INSTALL: {
+          text: '安装中',
+          state: 'INSTALL',
+        },
+        APPLICATION: {
+          text: '申请中',
+          state: 'APPLICATION',
+        },
+        LEASE: {
+          text: '租赁中',
+          state: 'LEASE',
+        },
+      },
     },
 
     {

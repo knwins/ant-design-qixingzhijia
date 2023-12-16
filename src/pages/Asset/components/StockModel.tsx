@@ -82,6 +82,19 @@ const StocksModal: FC<StockModalProps> = (props) => {
       valueType: 'text',
     },
     {
+      title: '类型',
+      dataIndex: ['store', 'type'],
+      valueType: 'select',
+      valueEnum: {
+        STORE: {
+          text: '仓库',
+        },
+        SITE: {
+          text: '站点',
+        },
+      },
+    },
+    {
       title: '库存数量',
       dataIndex: 'qty',
       valueType: 'text',
@@ -120,7 +133,7 @@ const StocksModal: FC<StockModalProps> = (props) => {
               }}
             >
               <PlusOutlined />
-              <FormattedMessage id="pages.new" />
+              <FormattedMessage id="pages.new.stock" />
             </Button>,
           ]}
           request={(params) => {

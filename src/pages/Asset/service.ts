@@ -1,10 +1,10 @@
 import { request } from 'umi';
 import host from '../../host';
 import {
-  CustomOptionData,
-  CustomOptionItem,
   ProductCheckItem,
   ProductItem,
+  ProductLeaseItem,
+  ProductLeaseOrderItem,
   ProductLogItem,
   ProductStockItem,
   ProvinceCityDistrictItem,
@@ -100,7 +100,7 @@ export async function queryStoreList(
   return request<{
     data: StoreItem[];
     total?: number;
-    totalPage?:number;
+    totalPage?: number;
     success?: boolean;
   }>(host.api + 'api/manage/store/list', {
     method: 'POST',
@@ -214,6 +214,29 @@ export async function queryProductList(
   });
 }
 
+export async function queryProductSelect(
+  params: {
+    current?: number;
+    pageSize?: number;
+    category?: string;
+    state?: string;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{
+    data: ProductItem[];
+    total?: number; //总记录数
+    totalPage?: number; //总页数
+    success?: boolean;
+  }>(host.api + 'api/manage/product/select', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
 export async function getProduct(data: { [id: string]: any }, options?: { [id: string]: any }) {
   return request<{
     data: ProductItem;
@@ -268,14 +291,13 @@ export async function createProductLog(
   });
 }
 
-
 /**
  * 库存调拨
  * @param data
  * @param options
  * @returns
  */
- export async function createProductStock(
+export async function createProductStock(
   data: { [id: string]: any },
   options?: { [id: string]: any },
 ) {
@@ -289,14 +311,13 @@ export async function createProductLog(
   });
 }
 
-
 /**
  * 库存添加
  * @param data
  * @param options
  * @returns
  */
- export async function addProductStock(
+export async function addProductStock(
   data: { [id: string]: any },
   options?: { [id: string]: any },
 ) {
@@ -355,7 +376,6 @@ export async function removeProductByIds(
   });
 }
 
-
 /* product stock */
 
 export async function queryProductStockList(
@@ -378,7 +398,6 @@ export async function queryProductStockList(
     ...(options || {}),
   });
 }
-
 
 export async function queryProductStockSelect(
   params: {
@@ -469,6 +488,148 @@ export async function removeproductLog(
     success?: boolean;
     errorMessage?: string;
   }>(host.api + 'api/manage/product/log/delete', {
+    data,
+    method: 'DELETE',
+    ...(options || {}),
+  });
+}
+
+/**Product Lease */
+export async function queryProductLeaseList(
+  params: {
+    current?: number;
+    pageSize?: number;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{
+    data: ProductLeaseItem[];
+    total?: number;
+    success?: boolean;
+  }>(host.api + 'api/manage/product/lease/list', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+export async function getProductLease(
+  data: { [id: string]: any },
+  options?: { [id: string]: any },
+) {
+  return request<{
+    data: ProductLeaseItem;
+    success?: boolean;
+    errorMessage?: number;
+  }>(host.api + 'api/manage/product/lease/get', {
+    data,
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
+export async function updateProductLease(
+  data: { [id: string]: any },
+  options?: { [id: string]: any },
+) {
+  return request<{
+    success?: boolean;
+    errorMessage?: number;
+  }>(host.api + 'api/manage/product/lease/update', {
+    data,
+    method: 'PUT',
+    ...(options || {}),
+  });
+}
+
+export async function addProductLease(
+  data: { [id: string]: any },
+  options?: { [id: string]: any },
+) {
+  return request<{
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/manage/product/lease/add', {
+    data,
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
+export async function removeProductLease(
+  data: { [id: string]: any },
+  options?: { [id: string]: any },
+) {
+  return request<{
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/manage/product/lease/delete', {
+    data,
+    method: 'DELETE',
+    ...(options || {}),
+  });
+}
+
+/**Product Lease order */
+export async function queryProductLeaseOrderList(
+  params: {
+    current?: number;
+    pageSize?: number;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{
+    data: ProductLeaseOrderItem[];
+    total?: number;
+    success?: boolean;
+  }>(host.api + 'api/manage/product/lease/order/list', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+export async function getProductLeaseOrder(
+  data: { [id: string]: any },
+  options?: { [id: string]: any },
+) {
+  return request<{
+    data: ProductLeaseOrderItem;
+    success?: boolean;
+    errorMessage?: number;
+  }>(host.api + 'api/manage/product/lease/order/get', {
+    data,
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
+export async function addProductLeaseOrder(
+  data: { [id: string]: any },
+  options?: { [id: string]: any },
+) {
+  return request<{
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/manage/product/lease/order/add', {
+    data,
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
+export async function removeProductLeaseOrder(
+  data: { [id: string]: any },
+  options?: { [id: string]: any },
+) {
+  return request<{
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/manage/product/lease/order/delete', {
     data,
     method: 'DELETE',
     ...(options || {}),

@@ -305,6 +305,7 @@ const Spot: React.FC = () => {
           text: '运行中',
           state: 'NORMAL',
         },
+        
       },
     },
     {

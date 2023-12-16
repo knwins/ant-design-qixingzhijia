@@ -1,18 +1,9 @@
 import { UserItem } from '../Setting/data';
-import { UserItem } from '../User/data';
 
 export type Pagination = {
   total?: number;
   pageSize: number;
   current: number;
-};
-
-export type ProductCheckItem = {
-  id: string;
-  name: string;
-  createTime: Date;
-  address: string;
-  user: UserItem;
 };
 
 export type StoreItem = {
@@ -35,6 +26,7 @@ export type StoreParams = {
 
 export type ProductItem = {
   id: string;
+  number: number;
   name: number;
   brand: OptionItem; //品牌
   business: OptionItem; //运营商
@@ -78,19 +70,20 @@ export type ProvinceCityDistrictItem = {
   sort: number;
 };
 
-
 export type ProductCheckItem = {
   id: string;
-  input0:boolean;
-  input1:boolean;
-  input2:boolean;
-  input3:boolean;
-  input4:boolean;
+  input0: boolean;
+  input1: boolean;
+  input2: boolean;
+  input3: boolean;
+  input4: boolean;
   content: string;
-  address:string;
-  imglist:string;
+  address: string;
+  imglist: string;
+  inro:string;
+  imgs:string[];
   createTime: Date;
-  Product: ProductItem;
+  product: ProductItem;
   user: UserItem;
 };
 
@@ -99,8 +92,8 @@ export type ProductStockItem = {
   product: ProductItem;
   store: StoreItem;
   qty: number;
-  action:string;
-  productId:string;
+  action: string;
+  productId: string;
 };
 
 export type ProductStockParams = {
@@ -108,3 +101,48 @@ export type ProductStockParams = {
   filter?: Record<string, any[]>;
   sorter?: Record<string, any>;
 } & Partial<ProductStockItem>;
+
+export type ProductLeaseItem = {
+  id: string;
+  product: ProductItem;
+  user: UserItem;
+  inro: string;
+  deductAmount: number;
+  amountTotal: number;
+  deposit: number;
+  numTotal: number;
+  price: number;
+  deposit: number;
+  state: string;
+  payType: string;
+  createTime: Date;
+  startTime: Date;
+  endTime: Date;
+  action:string;
+};
+
+export type ProductLeaseParams = {
+  keywords?: string;
+  filter?: Record<string, any[]>;
+  sorter?: Record<string, any>;
+} & Partial<ProductLeaseItem>;
+
+
+export type ProductLeaseOrderItem = {
+  id: string;
+  productLease: ProductLeaseItem;
+  inro: string;
+  amount: number;
+  num: number;
+  action: string;
+  createTime: Date;
+};
+
+
+export type ProductLeaseOrderParams = {
+  keywords?: string;
+  productLeaseId?:string;
+  filter?: Record<string, any[]>;
+  sorter?: Record<string, any>;
+} & Partial<ProductLeaseOrderItem>;
+

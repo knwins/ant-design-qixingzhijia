@@ -240,13 +240,14 @@ export async function queryUserSelect(
   params: {
     current?: number;
     pageSize?: number;
+    type?:string;
   },
   options?: { [key: string]: any },
 ) {
   return request<{
     data: UserItem[];
     total?: number;
-    status?: boolean;
+    success?: boolean;
   }>(host.api + 'api/system/user/select', {
     method: 'POST',
     params: {

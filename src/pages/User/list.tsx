@@ -226,15 +226,7 @@ const User: React.FC = () => {
       hideInDescriptions: true,
       render: (_, record) => {
         return [
-          <a
-            key="repassword"
-            onClick={() => {
-              record.password = '123456';
-              handleInitPassword(record);
-            }}
-          >
-            <FormattedMessage id="pages.repassword" />
-          </a>,
+          
           <a
             key="edit"
             onClick={() => {

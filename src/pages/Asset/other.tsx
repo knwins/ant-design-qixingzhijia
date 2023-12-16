@@ -590,6 +590,10 @@ const Spot: React.FC = () => {
       hideInSearch: true,
       ellipsis: true,
       valueEnum: {
+        AddStore: {
+          text: '添库存',
+          type: 'AddStore',
+        },
         InStore: {
           text: '入库',
           type: 'InStore',
