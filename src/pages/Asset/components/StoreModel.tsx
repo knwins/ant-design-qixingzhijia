@@ -78,7 +78,7 @@ const StoreModel: FC<StoreModelProps> = (props) => {
         />
         <ProFormSelect
           name="type"
-          initialValue="Store"
+          initialValue="STORE"
           label={intl.formatMessage({
             id: 'pages.store.type',
           })}

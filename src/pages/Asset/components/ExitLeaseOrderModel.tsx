@@ -276,7 +276,7 @@ const ExitLeaseOrderModel: FC<ExitLeaseOrderModelProps> = (props) => {
                     // }${diffAmount}元，退回保证金${deposit}元，车损及折旧扣除金额${amount},实际退款${exitAmount}元。`}
                     width="md"
                     fieldProps={{
-                      value: `实际${days > 0 ? '剩余' : '逾期'}${days}天，${
+                      value: `电动车租赁${days > 0 ? '剩余' : '逾期'}${days}天，${
                         days > 0 ? '退款' : '扣除'
                       }${diffAmount}元，退回保证金${deposit}元，车损及折旧扣除金额${amount}元，实际退款${exitAmount}元。`,
                     }}
