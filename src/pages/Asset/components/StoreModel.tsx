@@ -109,7 +109,7 @@ const StoreModel: FC<StoreModelProps> = (props) => {
           ]}
         />
 
-        {current ? (
+        {current?.id ? (
           <ProFormSelect
             name="user"
             label={intl.formatMessage({
