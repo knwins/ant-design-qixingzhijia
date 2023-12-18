@@ -245,6 +245,10 @@ const ProductLease: React.FC = () => {
           text: '退租',
           action: 'EXITLEASE',
         },
+        ADDDEPOSIT: {
+          text: '增保证金',
+          action: 'ADDDEPOSIT',
+        },
       },
     },
     {
@@ -325,7 +329,7 @@ const ProductLease: React.FC = () => {
     },
 
     {
-      title: '累计租期',
+      title: '累计租期(天)',
       dataIndex: 'numTotal',
       valueType: 'digit',
       hideInForm: true,

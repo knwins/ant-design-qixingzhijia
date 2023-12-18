@@ -1,4 +1,4 @@
-import { queryUserSelect } from '@/pages/Setting/service';
+import { queryUserSelect } from '../../Setting/service';
 import { ModalForm, ProFormDigit, ProFormRadio, ProFormSelect } from '@ant-design/pro-form';
 import { useIntl } from '@umijs/max';
 import type { FC } from 'react';
@@ -57,23 +57,20 @@ const LeaseModel: FC<LeaseModelProps> = (props) => {
 
         <ProFormSelect
           name="product"
-          width="lg"
-          rules={[
-            {
-              required: true,
-            },
-          ]}
+          width="md"
+          showSearch
           fieldProps={{
             labelInValue: true,
           }}
           label="电动车编号"
           placeholder="请选择电动车编号"
-          request={async () => {
+          request={async (params) => {
             return queryProductSelect({
               current: 1,
               pageSize: 1000,
               category: 'ELECTRIC',
               state: 'STORE',
+              keywords: params.keyWords,
             }).then(({ data }) => {
               return data.map((item) => {
                 return {
@@ -84,11 +81,11 @@ const LeaseModel: FC<LeaseModelProps> = (props) => {
               });
             });
           }}
-          disabled={current?.id ? true : false}
         />
         <ProFormSelect
           name="user"
-          width="lg"
+          width="md"
+          showSearch
           rules={[
             {
               required: true,
@@ -99,11 +96,12 @@ const LeaseModel: FC<LeaseModelProps> = (props) => {
           }}
           label="租赁人"
           placeholder="请选择租赁人"
-          request={async () => {
+          request={async (params) => {
             return queryUserSelect({
               current: 1,
               pageSize: 1000,
               type: 'USER',
+              keywords: params.keyWords,
             }).then(({ data }) => {
               return data.map((item) => {
                 return {
@@ -148,7 +146,7 @@ const LeaseModel: FC<LeaseModelProps> = (props) => {
               required: true,
             },
           ]}
-          fieldProps={{ addonAfter: '元'}}
+          fieldProps={{ addonAfter: '元' }}
           disabled={current?.id ? true : false}
         />
 

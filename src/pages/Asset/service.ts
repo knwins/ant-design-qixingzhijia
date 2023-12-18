@@ -260,6 +260,7 @@ export async function queryProductSelect(
     pageSize?: number;
     category?: string;
     state?: string;
+    keywords?:string;
   },
   options?: { [key: string]: any },
 ) {

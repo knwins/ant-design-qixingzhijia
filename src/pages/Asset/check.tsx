@@ -156,8 +156,8 @@ const Spot: React.FC = () => {
       width: 'sm',
       hideInForm: true,
       valueEnum: {
-        Abnormal: { text: '异常', status: 'Error' },
-        Normal: { text: '正常', status: 'Processing' },
+        ABNORMAL: { text: '异常', status: 'Error' },
+        NORMAL: { text: '正常', status: 'Processing' },
       },
     },
     {

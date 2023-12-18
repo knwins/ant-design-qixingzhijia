@@ -142,6 +142,14 @@ const RoleList: React.FC = () => {
       hideInForm: true,
       fieldProps: { precision: 6 },
     },
+     {
+      title: <FormattedMessage id="pages.role.group" />,
+      dataIndex: 'group',
+      valueType: 'text',
+      hideInSearch: true,
+      hideInForm: true,
+      fieldProps: { precision: 6 },
+    },
     {
       title: <FormattedMessage id="pages.option" />,
       dataIndex: 'option',

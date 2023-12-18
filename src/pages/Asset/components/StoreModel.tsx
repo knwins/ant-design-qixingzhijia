@@ -1,4 +1,4 @@
-import { queryUserSelect } from '@/pages/Setting/service';
+import { queryUserSelect } from '../../Setting/service';
 import ProForm, {
   ModalForm,
   ProFormDependency,
@@ -116,6 +116,7 @@ const StoreModel: FC<StoreModelProps> = (props) => {
           fieldProps={{
             labelInValue: true,
           }}
+          showSearch
           width="md"
           rules={[
             {
@@ -125,15 +126,18 @@ const StoreModel: FC<StoreModelProps> = (props) => {
           placeholder={intl.formatMessage({
             id: 'pages.store.user.name.placeholder',
           })}
-          request={async () => {
+          request={async (params) => {
             return queryUserSelect({
               current: 1,
               pageSize: 1000,
+              type:'SYSTEM',
+              keywords:params.keyWords,
             }).then(({ data }) => {
               return data.map((item) => {
                 return {
                   label: item.username + '-' + item.nick,
                   value: item.id + '',
+                  id: item.id,
                 };
               });
             });

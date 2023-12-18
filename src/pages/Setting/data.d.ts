@@ -54,6 +54,7 @@ export type PrivilegeParams = {
 export type RoleItem = {
   id: string;
   name?: string;
+  group?:string;
   privileges?: PrivilegeItem[];
   privilegeIds?:any[];
 };
@@ -81,6 +82,7 @@ export type UserItem = {
   description?: string;
   role?:RoleItem;
   store?:StoreItem;
+  key?:string;
 };
 
 export type UserParams = {

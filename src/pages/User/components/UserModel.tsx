@@ -1,5 +1,5 @@
 import { StoreParams } from '@/pages/Asset/data';
-import { queryStoreSelect } from '@/pages/Asset/service';
+import { queryStoreSelect } from '../../Asset/service';
 import { ModalForm, ProFormDigit, ProFormSelect, ProFormText } from '@ant-design/pro-form';
 import { useIntl } from '@umijs/max';
 import type { FC } from 'react';
@@ -21,8 +21,8 @@ const UserModel: FC<UserModelProps> = (props) => {
     return null;
   }
 
-  const handleStoreSelect = async (key?: any) => {
-    if (key === '') {
+  const handleStoreSelect = async (type?: any,keywords?:any) => {
+    if (type === '') {
       return;
     }
     const pagination: pagination = {
@@ -31,7 +31,8 @@ const UserModel: FC<UserModelProps> = (props) => {
       total: 100,
     };
     const options: StoreParams = {
-      type: key,
+      type: type,
+      keywords:keywords,
     };
     //读取仓库数据
     const { data: storeData } = await queryStoreSelect({
@@ -152,6 +153,7 @@ const UserModel: FC<UserModelProps> = (props) => {
         <ProFormSelect
           name="store"
           width="lg"
+          showSearch
           fieldProps={{
             labelInValue: true,
           }}
@@ -161,9 +163,8 @@ const UserModel: FC<UserModelProps> = (props) => {
             },
           ]}
           label="默认位置"
-          dependencies={['type']}
           request={async (params) => {
-            return handleStoreSelect('ADDRESS');
+            return handleStoreSelect('ADDRESS',params.keyWords);
           }}
         />
 

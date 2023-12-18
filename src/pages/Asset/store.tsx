@@ -40,6 +40,7 @@ const Spot: React.FC = () => {
     loadingHidde();
     try {
       if (fields.id != null) {
+        fields.userId = fields.user.key;
         const { success } = await updateStore({
           ...fields,
         });
@@ -53,6 +54,7 @@ const Spot: React.FC = () => {
           return true;
         }
       } else {
+        fields.userId = fields.user.key;
         const { success } = await addStore({
           ...fields,
         });
@@ -236,7 +238,7 @@ const Spot: React.FC = () => {
       dataIndex: 'name',
       hideInForm: true,
       hideInSearch: true,
-      copyable:true,
+      copyable: true,
       valueType: 'text',
       width: 'md',
       fieldProps: { placeholder: intl.formatMessage({ id: 'pages.store.name.placeholder' }) },
@@ -286,7 +288,7 @@ const Spot: React.FC = () => {
       dataIndex: 'address',
       valueType: 'text',
       hideInSearch: true,
-      
+
       hideInForm: true,
     },
     {
@@ -354,8 +356,9 @@ const Spot: React.FC = () => {
     accept: '.xls,.xlsx', // 限制只能上传表格文件
     showUploadList: false,
     beforeUpload: (file) => {
-      const isXlSXOrXLS = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' 
-      || file.type === 'application/vnd.ms-excel';
+      const isXlSXOrXLS =
+        file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+        file.type === 'application/vnd.ms-excel';
       if (!isXlSXOrXLS) {
         message.error('只允许上传XLSS/XLS格式文件!');
         return;

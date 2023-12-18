@@ -456,7 +456,7 @@ const Spot: React.FC = () => {
       hideInForm: true,
       hideInTable: true,
       hideInDescriptions: true,
-      width: '80px',
+      fieldProps:{width:'60px'},
       valueEnum: brandListOptions,
     },
 
@@ -480,9 +480,9 @@ const Spot: React.FC = () => {
       title: <FormattedMessage id="pages.product.business" />,
       dataIndex: 'businessId',
       valueType: 'select',
-      width: '80px',
       hideInForm: true,
       hideInTable: true,
+      fieldProps:{width:'60px'},
       hideInDescriptions: true,
       valueEnum: businessListOptions,
     },
@@ -493,6 +493,7 @@ const Spot: React.FC = () => {
       valueType: 'text',
       hideInForm: true,
       hideInSearch: true,
+      hideInTable: true,
     },
 
     {
@@ -501,6 +502,7 @@ const Spot: React.FC = () => {
       valueType: 'text',
       hideInForm: true,
       hideInSearch: true,
+      hideInTable: true,
     },
 
     {
@@ -519,6 +521,32 @@ const Spot: React.FC = () => {
       hideInSearch: true,
       hideInForm: true,
       hideInTable: true,
+      
+    },
+    {
+      title: <FormattedMessage id="pages.product.state" />,
+      dataIndex: 'state',
+      valueType: 'select',
+      hideInForm: true,
+      fieldProps:{width:'60px'},
+      valueEnum: {
+        STORE: {
+          text: '仓库中',
+          state: 'STORE',
+        },
+        NORMAL: {
+          text: '正常运行',
+          state: 'NORMAL',
+        },
+        INSTALL: {
+          text: '安装中',
+          state: 'INSTALL',
+        },
+        APPLICATION: {
+          text: '申请中',
+          state: 'APPLICATION',
+        },
+      },
     },
 
     {

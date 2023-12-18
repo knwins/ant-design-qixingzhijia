@@ -12,6 +12,7 @@ export type StoreItem = {
   type: string;
   address?: string;
   user: UserItem;
+  userId?: string;
   province: ProvinceCityDistrictItem;
   city: ProvinceCityDistrictItem;
   district: ProvinceCityDistrictItem;

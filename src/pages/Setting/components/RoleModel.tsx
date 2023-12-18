@@ -1,4 +1,4 @@
-import { ModalForm, ProFormDigit, ProFormText } from '@ant-design/pro-form';
+import { ModalForm, ProFormDigit, ProFormSelect, ProFormText } from '@ant-design/pro-form';
 import { useIntl } from '@umijs/max';
 import { Tree } from 'antd';
 import { FC, useEffect, useState } from 'react';
@@ -125,23 +125,32 @@ const RoleModel: FC<RoleModelProps> = (props) => {
           })}
         />
 
-        <ProFormText
-          name="group"
+        <ProFormSelect
           label={intl.formatMessage({
             id: 'pages.role.group',
           })}
-          width="lg"
-          rules={[
-            {
-              required: true,
-              message: intl.formatMessage({
-                id: 'pages.role.group.required',
-              }),
-            },
-          ]}
           placeholder={intl.formatMessage({
             id: 'pages.role.group.placeholder',
           })}
+          name="group"
+          options={[
+            {
+              label: '系统用户',
+              value: 'SystemUser',
+            },
+            {
+              label: '仓库用户',
+              value: 'StoreUser',
+            },
+            {
+              label: '巡检用户',
+              value: 'CheckUser',
+            },
+            {
+              label: '租赁用户',
+              value: 'LeaseUser',
+            },
+          ]}
         />
         <label style={{ padding: '10px 0' }}> 权限配置</label>
 

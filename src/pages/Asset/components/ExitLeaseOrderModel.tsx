@@ -7,6 +7,7 @@ import ProForm, {
   ProFormRadio,
   ProFormSelect,
   ProFormTextArea,
+  ProFormMoney
 } from '@ant-design/pro-form';
 import { useIntl } from '@umijs/max';
 import type { FC } from 'react';
@@ -226,7 +227,9 @@ const ExitLeaseOrderModel: FC<ExitLeaseOrderModelProps> = (props) => {
 
           <ProFormDigit
             name="amount"
+            initialValue={0}
             label="车损及折旧扣除金额"
+            
             rules={[
               {
                 required: true,
@@ -234,17 +237,6 @@ const ExitLeaseOrderModel: FC<ExitLeaseOrderModelProps> = (props) => {
             ]}
             width="xs"
             fieldProps={{ addonAfter: '元' }}
-          />
-          <ProFormTextArea
-            name="inro"
-            label="备注"
-            placeholder="车辆损坏或其他原因请备注说明"
-            width="md"
-            rules={[
-              {
-                required: true,
-              },
-            ]}
           />
 
           <ProFormDependency name={['amount', 'deposit', 'endTime', 'payType', 'price']}>
@@ -254,8 +246,8 @@ const ExitLeaseOrderModel: FC<ExitLeaseOrderModelProps> = (props) => {
               let days = TimeDiff(endTime).all[2]; //获取天数
 
               //如何时间小于当前时间已经逾期为负数
-              if(endTime<new Date()){
-                days=-days;
+              if (endTime < new Date()) {
+                days = -days;
               }
               //2.计算金额
               let diffAmount = 0;
@@ -266,13 +258,35 @@ const ExitLeaseOrderModel: FC<ExitLeaseOrderModelProps> = (props) => {
               }
               const exitAmount = deposit - amount + diffAmount;
               return (
-                <ProFormDigit
-                  name="exitAmount"
-                  label={`实际${days>0?'剩余':'逾期'}${days}天，${days>0?'退款':'扣除'}${diffAmount}元，退回保证金${deposit}元`}
-                  width="xs"
-                  fieldProps={{ addonAfter: '元', value: exitAmount }}
-                  disabled
-                />
+                <>
+                  <ProFormMoney
+                    name="exitAmount"
+                    initialValue={0}
+                    label="计算实际退款"
+                    fieldProps={{ addonAfter: '元', value: exitAmount,size:'large' }}
+                    readonly
+                  />
+
+                  <ProFormTextArea
+                    name="inro"
+                    label="车辆损坏或其他原因请备注说明"
+                    placeholder="车辆损坏或其他原因请备注说明"
+                    // initialValue={`实际${days > 0 ? '剩余' : '逾期'}${days}天，${
+                    //   days > 0 ? '退款' : '扣除'
+                    // }${diffAmount}元，退回保证金${deposit}元，车损及折旧扣除金额${amount},实际退款${exitAmount}元。`}
+                    width="md"
+                    fieldProps={{
+                      value: `实际${days > 0 ? '剩余' : '逾期'}${days}天，${
+                        days > 0 ? '退款' : '扣除'
+                      }${diffAmount}元，退回保证金${deposit}元，车损及折旧扣除金额${amount}元，实际退款${exitAmount}元。`,
+                    }}
+                    rules={[
+                      {
+                        required: true,
+                      },
+                    ]}
+                  />
+                </>
               );
             }}
           </ProFormDependency>
