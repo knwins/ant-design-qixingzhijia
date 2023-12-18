@@ -1,4 +1,3 @@
-import { queryUserSelect } from '../../Setting/service';
 import ProForm, {
   ModalForm,
   ProFormDependency,
@@ -8,6 +7,7 @@ import ProForm, {
 } from '@ant-design/pro-form';
 import { useIntl } from '@umijs/max';
 import type { FC } from 'react';
+import { queryUserSelect } from '../../Setting/service';
 import { StoreItem } from '../data';
 import { queryPCDList } from '../service';
 
@@ -108,41 +108,46 @@ const StoreModel: FC<StoreModelProps> = (props) => {
             { label: '运行中', value: 'NORMAL' },
           ]}
         />
-        <ProFormSelect
-          name="user"
-          label={intl.formatMessage({
-            id: 'pages.store.user.name',
-          })}
-          fieldProps={{
-            labelInValue: true,
-          }}
-          showSearch
-          width="md"
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-          placeholder={intl.formatMessage({
-            id: 'pages.store.user.name.placeholder',
-          })}
-          request={async (params) => {
-            return queryUserSelect({
-              current: 1,
-              pageSize: 1000,
-              type:'SYSTEM',
-              keywords:params.keyWords,
-            }).then(({ data }) => {
-              return data.map((item) => {
-                return {
-                  label: item.username + '-' + item.nick,
-                  value: item.id + '',
-                  id: item.id,
-                };
+
+        {current ? (
+          <ProFormSelect
+            name="user"
+            label={intl.formatMessage({
+              id: 'pages.store.user.name',
+            })}
+            fieldProps={{
+              labelInValue: true,
+            }}
+            showSearch
+            width="md"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+            placeholder={intl.formatMessage({
+              id: 'pages.store.user.name.placeholder',
+            })}
+            request={async (params) => {
+              return queryUserSelect({
+                current: 1,
+                pageSize: 1000,
+                type: 'SYSTEM',
+                keywords: params.keyWords,
+              }).then(({ data }) => {
+                return data.map((item) => {
+                  return {
+                    label: item.username + '-' + item.nick,
+                    value: item.id + '',
+                    id: item.id,
+                  };
+                });
               });
-            });
-          }}
-        />
+            }}
+          />
+        ) : (
+          ''
+        )}
 
         <ProForm.Group title="所在省市区" size={8}>
           <ProFormSelect
