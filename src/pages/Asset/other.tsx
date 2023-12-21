@@ -8,6 +8,7 @@ import { Button, Drawer, message, Modal, Space, Table, Upload, UploadProps } fro
 import ExportJsonExcel from 'js-export-excel';
 import React, { useRef, useState } from 'react';
 import host from '../../host';
+import { queryStoreSelect } from '../Operation/service';
 import { queryOptionSelect } from '../Setting/service';
 import ProductModel from './components/OtherModel';
 import ProductStockModel from './components/ProductStockModel';
@@ -19,7 +20,6 @@ import {
   createProductStock,
   queryProductList,
   queryProductLogList,
-  queryStoreSelect,
   removeProduct,
   removeProductByIds,
   updateProduct,
@@ -633,8 +633,9 @@ const Spot: React.FC = () => {
     accept: '.xls,.xlsx', // 限制只能上传表格文件
     showUploadList: false,
     beforeUpload: (file) => {
-      const isXlSXOrXLS = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' 
-      || file.type === 'application/vnd.ms-excel';
+      const isXlSXOrXLS =
+        file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+        file.type === 'application/vnd.ms-excel';
       if (!isXlSXOrXLS) {
         message.error('只允许上传XLSS/XLS格式文件!');
         return;

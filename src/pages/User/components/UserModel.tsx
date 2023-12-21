@@ -1,5 +1,5 @@
-import { StoreParams } from '@/pages/Asset/data';
-import { queryStoreSelect } from '../../Asset/service';
+import { StoreParams } from '@/pages/Operation/data';
+import { queryStoreSelect } from '@/pages/Operation/service';
 import { ModalForm, ProFormDigit, ProFormSelect, ProFormText } from '@ant-design/pro-form';
 import { useIntl } from '@umijs/max';
 import type { FC } from 'react';

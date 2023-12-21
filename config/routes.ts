@@ -40,23 +40,35 @@ export default [
         path: '/asset/other',
         component: './Asset/other',
       },
+    ],
+  },
+
+  {
+    path: '/operation',
+    name: 'operation',
+    icon: 'user',
+    routes: [
+      {
+        path: '/operation',
+        redirect: '/operation/store',
+      },
       {
         name: 'store',
         icon: 'smile',
-        path: '/asset/store',
-        component: './Asset/store',
+        path: '/operation/store',
+        component: './Operation/store',
       },
       {
         name: 'check',
         icon: 'smile',
-        path: '/asset/check',
-        component: './Asset/check',
+        path: '/operation/check',
+        component: './Operation/check',
       },
       {
         name: 'lease',
         icon: 'smile',
-        path: '/asset/lease',
-        component: './Asset/lease',
+        path: '/operation/lease',
+        component: './Operation/lease',
       },
     ],
   },

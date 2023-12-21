@@ -1,3 +1,4 @@
+import { queryPCDList } from '@/pages/Asset/service';
 import ProForm, {
   ModalForm,
   ProFormDependency,
@@ -8,8 +9,8 @@ import ProForm, {
 import { useIntl } from '@umijs/max';
 import type { FC } from 'react';
 import { queryUserSelect } from '../../Setting/service';
+
 import { StoreItem } from '../data';
-import { queryPCDList } from '../service';
 
 type StoreModelProps = {
   done: boolean;

@@ -1,8 +1,9 @@
+import { StoreParams } from '@/pages/Operation/data';
+import { queryStoreSelect } from '@/pages/Operation/service';
 import { ModalForm, ProFormRadio, ProFormSelect, ProFormText } from '@ant-design/pro-form';
 import { useIntl } from '@umijs/max';
 import type { FC } from 'react';
-import { ProductLogBatchItem, Pagination, StoreParams } from '../data';
-import { queryStoreSelect } from '../service';
+import { Pagination, ProductLogBatchItem } from '../../Asset/data';
 
 type ProductLogAllModelProps = {
   done: boolean;
@@ -17,8 +18,7 @@ const ProductLogAllModel: FC<ProductLogAllModelProps> = (props) => {
   const intl = useIntl();
 
   const handleStoreSelect = async (type?: any, keywords?: any) => {
-
-    console.log("keywords",keywords);
+    console.log('keywords', keywords);
     if (type === '') {
       return;
     }

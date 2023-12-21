@@ -1,18 +1,19 @@
+import { queryProductSelect } from '@/pages/Asset/service';
 import { queryUserSelect } from '@/pages/Setting/service';
 import ProForm, {
   ModalForm,
   ProFormDatePicker,
   ProFormDependency,
   ProFormDigit,
+  ProFormMoney,
   ProFormRadio,
   ProFormSelect,
   ProFormTextArea,
-  ProFormMoney
 } from '@ant-design/pro-form';
 import { useIntl } from '@umijs/max';
 import type { FC } from 'react';
 import { ProductLeaseItem } from '../data';
-import { queryProductSelect } from '../service';
+
 import styles from './style.less';
 
 type ExitLeaseOrderModelProps = {
@@ -229,7 +230,6 @@ const ExitLeaseOrderModel: FC<ExitLeaseOrderModelProps> = (props) => {
             name="amount"
             initialValue={0}
             label="车损及折旧扣除金额"
-            
             rules={[
               {
                 required: true,
@@ -263,7 +263,7 @@ const ExitLeaseOrderModel: FC<ExitLeaseOrderModelProps> = (props) => {
                     name="exitAmount"
                     initialValue={0}
                     label="计算实际退款"
-                    fieldProps={{ addonAfter: '元', value: exitAmount,size:'large' }}
+                    fieldProps={{ addonAfter: '元', value: exitAmount, size: 'large' }}
                     readonly
                   />
 

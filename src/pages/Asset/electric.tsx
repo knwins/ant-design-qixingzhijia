@@ -14,6 +14,7 @@ import { Button, Drawer, message, Modal, Space, Table, Upload, UploadProps } fro
 import ExportJsonExcel from 'js-export-excel';
 import React, { useRef, useState } from 'react';
 import host from '../../host';
+import { queryStoreSelect } from '../Operation/service';
 import { queryOptionSelect } from '../Setting/service';
 import BatchProductLogModel from './components/BatchProductLogModel';
 import ProductModel from './components/ElectricModel';
@@ -23,9 +24,9 @@ import {
   addProduct,
   batchCreateProductLog,
   createProductLog,
+  exportProductList,
   queryProductList,
   queryProductLogList,
-  queryStoreSelect,
   removeProduct,
   removeProductByIds,
   updateProduct,

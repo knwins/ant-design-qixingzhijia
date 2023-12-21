@@ -1,3 +1,4 @@
+import { StoreParams } from '@/pages/Operation/data';
 import {
   ModalForm,
   ProFormDigit,
@@ -7,8 +8,8 @@ import {
 } from '@ant-design/pro-form';
 import { useIntl } from '@umijs/max';
 import type { FC } from 'react';
-import { ProductItem, Pagination, StoreParams } from '../data';
-import { queryStoreSelect } from '../service';
+import { queryStoreSelect } from '../../Operation/service';
+import { Pagination, ProductItem } from '../data';
 
 type ProductLogModelProps = {
   done: boolean;
@@ -22,7 +23,7 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
   const { done, visible, current, onDone, onSubmit, children } = props;
   const intl = useIntl();
 
-  const handleStoreSelect = async (key?: any,keywords?:any) => {
+  const handleStoreSelect = async (key?: any, keywords?: any) => {
     if (key === '') {
       return;
     }
@@ -186,7 +187,7 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
                 key = 'STORE';
               }
             }
-            return handleStoreSelect(key,params.keyWords);
+            return handleStoreSelect(key, params.keyWords);
           }}
         />
 

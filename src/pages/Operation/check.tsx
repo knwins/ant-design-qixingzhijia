@@ -7,7 +7,6 @@ import { Drawer, Image, message, Modal } from 'antd';
 import React, { useRef, useState } from 'react';
 import { ProductCheckItem } from './data';
 import { queryProductCheckList, removeProductCheck, updateProductCheck } from './service';
-
 const Spot: React.FC = () => {
   const actionRef = useRef<ActionType>();
 
@@ -120,7 +119,7 @@ const Spot: React.FC = () => {
       valueType: 'text',
       hideInSearch: true,
       hideInForm: true,
-      copyable:true,
+      copyable: true,
     },
     {
       title: <FormattedMessage id="pages.cabinet.number.search.keywords" />,

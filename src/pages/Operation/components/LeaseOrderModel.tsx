@@ -1,3 +1,4 @@
+import { queryProductSelect } from '@/pages/Asset/service';
 import { queryUserSelect } from '@/pages/Setting/service';
 import ProForm, {
   ModalForm,
@@ -9,7 +10,6 @@ import ProForm, {
 import { useIntl } from '@umijs/max';
 import type { FC } from 'react';
 import { ProductLeaseItem } from '../data';
-import { queryProductSelect } from '../service';
 import styles from './style.less';
 
 type LeaseOrderModelProps = {

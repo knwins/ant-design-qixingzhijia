@@ -14,8 +14,8 @@ import { Button, Drawer, message, Modal, Space, Table, Upload, UploadProps } fro
 import ExportJsonExcel from 'js-export-excel';
 import React, { useRef, useState } from 'react';
 import host from '../../host';
-import { queryOptionSelect } from '../Setting/service';
 import BatchProductLogModel from './components/BatchProductLogModel';
+import { queryOptionSelect } from '../Setting/service';
 import ProductModel from './components/CellModel';
 import ProductLogModel from './components/ProductLogModel';
 import { ProductItem, ProductLogBatchItem, ProductLogItem, ProductLogParams } from './data';
@@ -26,11 +26,11 @@ import {
   exportProductList,
   queryProductList,
   queryProductLogList,
-  queryStoreSelect,
   removeProduct,
   removeProductByIds,
   updateProduct,
 } from './service';
+import { queryStoreSelect } from '../Operation/service';
 
 const Spot: React.FC = () => {
   //const inpRef = useRef();
@@ -433,7 +433,7 @@ const Spot: React.FC = () => {
       dataIndex: 'number',
       hideInForm: true,
       hideInSearch: true,
-      copyable:true,
+      copyable: true,
       valueType: 'text',
       render: (dom, entity) => {
         return (
@@ -456,7 +456,7 @@ const Spot: React.FC = () => {
       hideInForm: true,
       hideInTable: true,
       hideInDescriptions: true,
-      fieldProps:{width:'60px'},
+      fieldProps: { width: '60px' },
       valueEnum: brandListOptions,
     },
 
@@ -482,7 +482,7 @@ const Spot: React.FC = () => {
       valueType: 'select',
       hideInForm: true,
       hideInTable: true,
-      fieldProps:{width:'60px'},
+      fieldProps: { width: '60px' },
       hideInDescriptions: true,
       valueEnum: businessListOptions,
     },
@@ -521,14 +521,13 @@ const Spot: React.FC = () => {
       hideInSearch: true,
       hideInForm: true,
       hideInTable: true,
-      
     },
     {
       title: <FormattedMessage id="pages.product.state" />,
       dataIndex: 'state',
       valueType: 'select',
       hideInForm: true,
-      fieldProps:{width:'60px'},
+      fieldProps: { width: '60px' },
       valueEnum: {
         STORE: {
           text: '仓库中',
@@ -650,8 +649,9 @@ const Spot: React.FC = () => {
     accept: '.xls,.xlsx', // 限制只能上传表格文件
     showUploadList: false,
     beforeUpload: (file) => {
-      const isXlSXOrXLS = file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' 
-      || file.type === 'application/vnd.ms-excel';
+      const isXlSXOrXLS =
+        file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+        file.type === 'application/vnd.ms-excel';
       if (!isXlSXOrXLS) {
         message.error('只允许上传XLSS/XLS格式文件!');
         return;

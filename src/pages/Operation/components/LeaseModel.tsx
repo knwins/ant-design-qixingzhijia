@@ -3,7 +3,7 @@ import { ModalForm, ProFormDigit, ProFormRadio, ProFormSelect } from '@ant-desig
 import { useIntl } from '@umijs/max';
 import type { FC } from 'react';
 import { ProductLeaseItem } from '../data';
-import { queryProductSelect } from '../service';
+import { queryProductSelect } from '@/pages/Asset/service';
 
 type LeaseModelProps = {
   done: boolean;

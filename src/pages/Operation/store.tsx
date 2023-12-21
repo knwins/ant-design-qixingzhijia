@@ -7,13 +7,13 @@ import { Button, message, Modal, Space, Table, Upload, UploadProps } from 'antd'
 import ExportJsonExcel from 'js-export-excel';
 import React, { useRef, useState } from 'react';
 import host from '../../host';
+import { queryPCDList } from '../Asset/service';
 import { queryUserList } from '../Setting/service';
 import StoreModel from './components/StoreModel';
 import { StoreItem } from './data';
 import {
   addStore,
   exportStoreList,
-  queryPCDList,
   queryStoreList,
   removeStore,
   removeStoreByIds,

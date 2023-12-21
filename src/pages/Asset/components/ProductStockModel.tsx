@@ -7,8 +7,10 @@ import {
 } from '@ant-design/pro-form';
 import { useIntl } from '@umijs/max';
 import type { FC } from 'react';
-import { ProductItem, ProductStockItem, ProductStockParams, StoreParams } from '../data';
-import { queryProductStockSelect, queryStoreSelect } from '../service';
+import { StoreParams } from '../../Operation/data';
+import { queryStoreSelect } from '../../Operation/service';
+import { ProductItem, ProductStockItem, ProductStockParams } from '../data';
+import { queryProductStockSelect } from '../service';
 
 type ProductStockModelProps = {
   done: boolean;

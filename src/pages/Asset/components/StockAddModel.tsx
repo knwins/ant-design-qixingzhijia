@@ -1,6 +1,7 @@
 import { ModalForm, ProFormDigit, ProFormText } from '@ant-design/pro-form';
 import { useIntl } from '@umijs/max';
 import type { FC } from 'react';
+
 import { ProductItem, ProductStockItem } from '../data';
 
 type StockAddModelProps = {
@@ -12,7 +13,7 @@ type StockAddModelProps = {
 };
 
 const StockAddModel: FC<StockAddModelProps> = (props) => {
-  const { done, visible,current, onDone, onSubmit, children } = props;
+  const { done, visible, current, onDone, onSubmit, children } = props;
   const intl = useIntl();
 
   if (!visible) {
