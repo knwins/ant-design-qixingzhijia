@@ -352,10 +352,10 @@ const Spot: React.FC = () => {
       store: '站点',
       brand: '品牌',
       business: '运营商名称',
-      spec: '规格',
-      size: '尺寸',
-      weight: '重量',
-      material: '材质',
+      spec: '车辆型号',
+      size: '车架号',
+      weight: '车牌号',
+      material: '颜色',
       category: '类别',
     };
 
@@ -499,7 +499,7 @@ const Spot: React.FC = () => {
     },
 
     {
-      title: <FormattedMessage id="pages.product.spec" />,
+      title: <FormattedMessage id="pages.electric.model" />,
       dataIndex: ['spec', 'name'],
       valueType: 'text',
       hideInForm: true,
@@ -507,7 +507,7 @@ const Spot: React.FC = () => {
     },
 
     {
-      title: <FormattedMessage id="pages.product.weight" />,
+      title: <FormattedMessage id="pages.electric.chejiahao" />,
       dataIndex: 'weight',
       valueType: 'text',
       hideInSearch: true,
@@ -516,7 +516,16 @@ const Spot: React.FC = () => {
     },
 
     {
-      title: <FormattedMessage id="pages.product.material" />,
+      title: <FormattedMessage id="pages.electric.chepaihao" />,
+      dataIndex: 'weight',
+      valueType: 'text',
+      hideInSearch: true,
+      hideInForm: true,
+      hideInTable:true,
+    },
+
+    {
+      title: <FormattedMessage id="pages.electric.color" />,
       dataIndex: 'material',
       valueType: 'text',
       hideInSearch: true,

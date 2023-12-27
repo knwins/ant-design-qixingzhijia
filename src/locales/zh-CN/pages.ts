@@ -453,4 +453,12 @@ export default {
   'pages.cabinet.state':'状态',
   'pages.cabinet.address':'巡检位置',
 
+  'pages.electric.model':'车辆型号',
+  'pages.electric.model.placeholder':'请选择车辆型号',
+  'pages.electric.chejiahao':'车架号',
+  'pages.electric.chejiahao.placeholder':'请输入车架号',
+  'pages.electric.chepaihao':'车牌号',
+  'pages.electric.chepaihao.placeholder':'请输入车牌号',
+  'pages.electric.color':'车辆颜色',
+  'pages.electric.color.placeholder':'请输入车辆颜色',
 };

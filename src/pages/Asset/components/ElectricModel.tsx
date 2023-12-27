@@ -164,11 +164,11 @@ const ProductModel: FC<ProductModelProps> = (props) => {
             },
           ]}
           label={intl.formatMessage({
-            id: 'pages.product.spec',
+            id: 'pages.electric.model',
           })}
           // valueEnum={specListOptions}
           placeholder={intl.formatMessage({
-            id: 'pages.product.spec.placeholder',
+            id: 'pages.electric.model.placeholder',
           })}
           request={async () => {
             return queryOptionSelect({
@@ -187,36 +187,46 @@ const ProductModel: FC<ProductModelProps> = (props) => {
         />
 
         <ProFormText
-          tooltip="尺寸示例(mm): 380*260*50"
+          tooltip="车辆唯一车架号"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
           name="size"
           label={intl.formatMessage({
-            id: 'pages.product.size',
+            id: 'pages.electric.chejiahao',
           })}
           width="lg"
           placeholder={intl.formatMessage({
-            id: 'pages.product.size.placeholder',
+            id: 'pages.electric.chejiahao.placeholder',
           })}
         />
 
         <ProFormText
           name="weight"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
           label={intl.formatMessage({
-            id: 'pages.product.weight',
+            id: 'pages.electric.chepaihao',
           })}
           width="lg"
           placeholder={intl.formatMessage({
-            id: 'pages.product.weight.placeholder',
+            id: 'pages.electric.chepaihao.placeholder',
           })}
         />
 
         <ProFormText
           name="material"
           label={intl.formatMessage({
-            id: 'pages.product.material',
+            id: 'pages.electric.color',
           })}
           width="lg"
           placeholder={intl.formatMessage({
-            id: 'pages.product.material.placeholder',
+            id: 'pages.electric.color.placeholder',
           })}
         />
       </>
