@@ -98,6 +98,11 @@ const ProductModel: FC<ProductModelProps> = (props) => {
             id: 'pages.product.state',
           })}
           options={[
+           
+            {
+              label: '正常',
+              value: 'NORMAL',
+            },
             {
               label: '仓库中',
               value: 'STORE',
@@ -105,10 +110,6 @@ const ProductModel: FC<ProductModelProps> = (props) => {
             {
               label: '异常',
               value: 'ABNORMAL',
-            },
-            {
-              label: '正常',
-              value: 'NORMAL',
             },
           ]}
         />

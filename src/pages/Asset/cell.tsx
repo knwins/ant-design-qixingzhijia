@@ -529,6 +529,12 @@ const Spot: React.FC = () => {
       hideInForm: true,
       fieldProps: { width: '60px' },
       valueEnum: {
+        
+        
+        NORMAL: {
+          text: '正常',
+          state: 'NORMAL',
+        },
         STORE: {
           text: '仓库中',
           state: 'STORE',
@@ -536,10 +542,6 @@ const Spot: React.FC = () => {
         ABNORMAL: {
           text: '异常',
           state: 'ABNORMAL',
-        },
-        NORMAL: {
-          text: '正常',
-          state: 'NORMAL',
         },
       },
     },

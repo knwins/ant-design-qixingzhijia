@@ -102,14 +102,15 @@ const ProductModel: FC<ProductModelProps> = (props) => {
               value: 'STORE',
             },
 
-            {
-              label: '异常',
-              value: 'ABNORMAL',
-            },
+            
 
             {
               label: '租赁中',
               value: 'LEASE',
+            },
+            {
+              label: '异常',
+              value: 'ABNORMAL',
             },
           ]}
         />
