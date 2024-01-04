@@ -543,17 +543,9 @@ const Spot: React.FC = () => {
           text: '仓库中',
           state: 'STORE',
         },
-        NORMAL: {
-          text: '正常运行',
-          state: 'NORMAL',
-        },
-        INSTALL: {
-          text: '安装中',
-          state: 'INSTALL',
-        },
-        APPLICATION: {
-          text: '申请中',
-          state: 'APPLICATION',
+        ABNORMAL: {
+          text: '异常',
+          state: 'ABNORMAL',
         },
         LEASE: {
           text: '租赁中',

@@ -533,17 +533,13 @@ const Spot: React.FC = () => {
           text: '仓库中',
           state: 'STORE',
         },
+        ABNORMAL: {
+          text: '异常',
+          state: 'ABNORMAL',
+        },
         NORMAL: {
-          text: '正常运行',
+          text: '正常',
           state: 'NORMAL',
-        },
-        INSTALL: {
-          text: '安装中',
-          state: 'INSTALL',
-        },
-        APPLICATION: {
-          text: '申请中',
-          state: 'APPLICATION',
         },
       },
     },
@@ -748,7 +744,7 @@ const Spot: React.FC = () => {
                 }}
               >
                 <ShareAltOutlined />
-                调配
+                批量操作
               </Button>
               <Button
                 type="primary"
@@ -776,7 +772,7 @@ const Spot: React.FC = () => {
         toolBarRender={() => [
           <a
             onClick={() => {
-              jumpToTemplate(`${host.api}static/template/product.xlsx`);
+              jumpToTemplate(`${host.api}static/template/cell.xlsx`);
             }}
             style={{ fontSize: '12px', verticalAlign: 'center' }}
           >

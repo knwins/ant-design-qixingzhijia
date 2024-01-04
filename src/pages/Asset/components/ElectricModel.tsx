@@ -53,7 +53,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
     >
       <>
         <ProFormDigit name="id" hidden />
-        <ProFormDigit name="category" hidden initialValue={"ELECTRIC"}/>
+        <ProFormDigit name="category" hidden initialValue={'ELECTRIC'} />
         <ProFormText
           name="number"
           label={intl.formatMessage({
@@ -84,6 +84,36 @@ const ProductModel: FC<ProductModelProps> = (props) => {
           })}
           valueEnum={storeListOptions}
         /> */}
+
+        <ProFormSelect
+          name="state"
+          width="lg"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          label={intl.formatMessage({
+            id: 'pages.product.state',
+          })}
+          options={[
+            {
+              label: '仓库中',
+              value: 'STORE',
+            },
+
+            {
+              label: '异常',
+              value: 'ABNORMAL',
+            },
+
+            {
+              label: '租赁中',
+              value: 'LEASE',
+            },
+          ]}
+        />
+
         <ProFormSelect
           name="business"
           width="lg"

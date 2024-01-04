@@ -516,7 +516,7 @@ const Spot: React.FC = () => {
           state: 'STORE',
         },
         NORMAL: {
-          text: '正常运行',
+          text: '正常',
           state: 'NORMAL',
         },
         INSTALL: {

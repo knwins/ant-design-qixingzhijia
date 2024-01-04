@@ -95,7 +95,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
               value: 'INSTALL',
             },
             {
-              label: '使用中',
+              label: '正常',
               value: 'NORMAL',
             },
           ]}
