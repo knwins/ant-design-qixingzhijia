@@ -69,12 +69,17 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
         value: 'OutStore',
       });
       return storeTypeListOptions;
-    } else {
-      //if (key == 'Site')
+    } else if (key == 'SITE') {
       storeTypeListOptions.push({
         label: '入库',
         value: 'InStore',
       });
+      storeTypeListOptions.push({
+        label: '调拨',
+        value: 'StoreToStore',
+      });
+      return storeTypeListOptions;
+    } else {
       storeTypeListOptions.push({
         label: '调拨',
         value: 'StoreToStore',
@@ -130,7 +135,6 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
           width="md"
           disabled
         />
-
         <ProFormRadio.Group
           name="type"
           initialValue="StoreToStore"
@@ -155,7 +159,6 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
           initialValue={current ? current?.store?.name : ''}
           disabled
         />
-
         <ProFormSelect
           name="storeId"
           width="md"
@@ -190,7 +193,6 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
             return handleStoreSelect(key, params.keyWords);
           }}
         />
-
         <ProFormText
           name="inro"
           label={intl.formatMessage({

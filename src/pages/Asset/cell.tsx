@@ -14,8 +14,9 @@ import { Button, Drawer, message, Modal, Space, Table, Upload, UploadProps } fro
 import ExportJsonExcel from 'js-export-excel';
 import React, { useRef, useState } from 'react';
 import host from '../../host';
-import BatchProductLogModel from './components/BatchProductLogModel';
+import { queryStoreSelect } from '../Operation/service';
 import { queryOptionSelect } from '../Setting/service';
+import BatchProductLogModel from './components/BatchProductLogModel';
 import ProductModel from './components/CellModel';
 import ProductLogModel from './components/ProductLogModel';
 import { ProductItem, ProductLogBatchItem, ProductLogItem, ProductLogParams } from './data';
@@ -30,7 +31,6 @@ import {
   removeProductByIds,
   updateProduct,
 } from './service';
-import { queryStoreSelect } from '../Operation/service';
 
 const Spot: React.FC = () => {
   //const inpRef = useRef();
@@ -429,6 +429,25 @@ const Spot: React.FC = () => {
     },
 
     {
+      title: '类型',
+      dataIndex: 'storeType',
+      valueType: 'select',
+      width:'sm',
+      hideInForm: true,
+      hideInTable: true,
+      valueEnum: {
+        SITE: {
+          text: '站点',
+          state: 'SITE',
+        },
+        STORE: {
+          text: '仓库',
+          state: 'STORE',
+        },
+      },
+    },
+
+    {
       title: <FormattedMessage id="pages.product.number" />,
       dataIndex: 'number',
       hideInForm: true,
@@ -461,7 +480,7 @@ const Spot: React.FC = () => {
     },
 
     {
-      title: <FormattedMessage id="pages.product.store" />,
+      title: '所在位置',
       dataIndex: ['store', 'name'],
       valueType: 'text',
       hideInForm: true,
@@ -522,6 +541,27 @@ const Spot: React.FC = () => {
       hideInForm: true,
       hideInTable: true,
     },
+
+    {
+      title: <FormattedMessage id="pages.product.store" />,
+      dataIndex: ['store', 'type'],
+      valueType: 'text',
+      hideInForm: true,
+      hideInSearch: true,
+      valueEnum: {
+        SITE: {
+          text: '站点',
+          state: 'SITE',
+        },
+        STORE: {
+          text: '仓库',
+          state: 'STORE',
+        },
+      },
+    },
+
+    
+
     {
       title: <FormattedMessage id="pages.product.state" />,
       dataIndex: 'state',
@@ -529,15 +569,9 @@ const Spot: React.FC = () => {
       hideInForm: true,
       fieldProps: { width: '60px' },
       valueEnum: {
-        
-        
         NORMAL: {
           text: '正常',
           state: 'NORMAL',
-        },
-        STORE: {
-          text: '仓库中',
-          state: 'STORE',
         },
         ABNORMAL: {
           text: '异常',

@@ -87,10 +87,6 @@ const ProductModel: FC<ProductModelProps> = (props) => {
               value: 'APPLICATION',
             },
             {
-              label: '仓库中',
-              value: 'STORE',
-            },
-            {
               label: '安装中',
               value: 'INSTALL',
             },
@@ -98,6 +94,10 @@ const ProductModel: FC<ProductModelProps> = (props) => {
               label: '正常',
               value: 'NORMAL',
             },
+            {
+              label: '异常',
+              value: 'ABNORMAL',
+            }
           ]}
         />
         <ProFormSelect

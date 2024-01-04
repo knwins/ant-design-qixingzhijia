@@ -104,10 +104,6 @@ const ProductModel: FC<ProductModelProps> = (props) => {
               value: 'NORMAL',
             },
             {
-              label: '仓库中',
-              value: 'STORE',
-            },
-            {
               label: '异常',
               value: 'ABNORMAL',
             },
@@ -131,7 +127,6 @@ const ProductModel: FC<ProductModelProps> = (props) => {
           placeholder={intl.formatMessage({
             id: 'pages.product.business.placeholder',
           })}
-          // valueEnum={businessListOptions}
           request={async () => {
             return queryOptionSelect({
               current: 1,
@@ -196,7 +191,6 @@ const ProductModel: FC<ProductModelProps> = (props) => {
           label={intl.formatMessage({
             id: 'pages.product.spec',
           })}
-          // valueEnum={specListOptions}
           placeholder={intl.formatMessage({
             id: 'pages.product.spec.placeholder',
           })}

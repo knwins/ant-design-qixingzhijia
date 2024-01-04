@@ -543,7 +543,6 @@ const Spot: React.FC = () => {
           text: '仓库中',
           state: 'STORE',
         },
-       
         LEASE: {
           text: '租赁中',
           state: 'LEASE',

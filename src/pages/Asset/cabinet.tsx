@@ -429,6 +429,25 @@ const Spot: React.FC = () => {
       },
     },
 
+
+    {
+      title: '类型',
+      dataIndex: 'storeType',
+      valueType: 'select',
+      width:'sm',
+      hideInForm: true,
+      hideInTable: true,
+      valueEnum: {
+        SITE: {
+          text: '站点',
+          state: 'SITE',
+        },
+        STORE: {
+          text: '仓库',
+          state: 'STORE',
+        },
+      },
+    },
     {
       title: <FormattedMessage id="pages.product.number" />,
       dataIndex: 'number',
@@ -462,12 +481,13 @@ const Spot: React.FC = () => {
     },
 
     {
-      title: <FormattedMessage id="pages.product.store" />,
+      title: "所在位置",
       dataIndex: ['store', 'name'],
       valueType: 'text',
       hideInForm: true,
       hideInSearch: true,
     },
+    
 
     {
       title: <FormattedMessage id="pages.product.brand" />,
@@ -505,19 +525,38 @@ const Spot: React.FC = () => {
       hideInSearch: true,
     },
 
+
+    {
+      title: <FormattedMessage id="pages.product.store" />,
+      dataIndex: ['store', 'type'],
+      valueType: 'text',
+      hideInForm: true,
+      hideInSearch: true,
+      valueEnum: {
+        SITE: {
+          text: '站点',
+          state: 'SITE',
+        },
+        STORE: {
+          text: '仓库',
+          state: 'STORE',
+        },
+      },
+    },
+    
     {
       title: <FormattedMessage id="pages.product.state" />,
       dataIndex: 'state',
       valueType: 'select',
       hideInForm: true,
       valueEnum: {
-        STORE: {
-          text: '仓库中',
-          state: 'STORE',
-        },
         NORMAL: {
           text: '正常',
           state: 'NORMAL',
+        },
+        ABNORMAL: {
+          text: '异常',
+          state: 'ABNORMAL',
         },
         INSTALL: {
           text: '安装中',
@@ -527,6 +566,7 @@ const Spot: React.FC = () => {
           text: '申请中',
           state: 'APPLICATION',
         },
+
       },
     },
 
