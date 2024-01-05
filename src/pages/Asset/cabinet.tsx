@@ -336,6 +336,7 @@ const Spot: React.FC = () => {
     const { data: dataList } = await exportProductList({ ...exportParams });
     const columns = [
       'number',
+      'name',
       'store',
       'brand',
       'business',
@@ -344,9 +345,11 @@ const Spot: React.FC = () => {
       'weight',
       'material',
       'category',
+      'iccid',
     ];
     const tableItem = {
       number: '编号',
+      name: '名称',
       store: '站点',
       brand: '品牌',
       business: '运营商名称',
@@ -355,6 +358,7 @@ const Spot: React.FC = () => {
       weight: '重量',
       material: '材质',
       category: '类别',
+      iccid: 'ICCID',
     };
 
     const headerColumns = columns.map((k) => tableItem[k]);
@@ -368,7 +372,7 @@ const Spot: React.FC = () => {
       Object.keys(item).map((vv) => {
         if (columns.includes(vv)) {
           if (vv === 'store') {
-            kv[vv] = storeListData[item.store.id];
+            kv[vv] = storeListData[item.store.id]|| '';
           } else if (vv === 'brand') {
             kv[vv] = brandListData[item.brand.id] || '';
           } else if (vv === 'business') {

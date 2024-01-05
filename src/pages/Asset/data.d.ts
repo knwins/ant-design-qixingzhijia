@@ -17,6 +17,7 @@ export type ProductItem = {
   createTime: Date;
   store: StoreItem;
   action: string;
+  iccid:string;
 };
 
 export type ProductLogItem = {

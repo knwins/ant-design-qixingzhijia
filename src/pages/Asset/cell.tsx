@@ -336,17 +336,19 @@ const Spot: React.FC = () => {
     const columns = [
       'number',
       'store',
+      'name',
       'brand',
       'business',
       'spec',
       'size',
       'weight',
       'material',
-      'category',
+      'iccid',
     ];
     const tableItem = {
       number: '编号',
       store: '站点',
+      name: '名称',
       brand: '品牌',
       business: '运营商名称',
       spec: '规格',
@@ -354,6 +356,7 @@ const Spot: React.FC = () => {
       weight: '重量',
       material: '材质',
       category: '类别',
+      iccid: 'ICCID',
     };
 
     const headerColumns = columns.map((k) => tableItem[k]);
