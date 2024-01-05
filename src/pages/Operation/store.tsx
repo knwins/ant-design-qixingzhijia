@@ -54,7 +54,7 @@ const Spot: React.FC = () => {
           return true;
         }
       } else {
-        fields.userId = fields.user.key;
+        
         const { success } = await addStore({
           ...fields,
         });
@@ -69,6 +69,7 @@ const Spot: React.FC = () => {
       }
       return false;
     } catch (error) {
+      console.log(error);
       message.error(
         intl.formatMessage({
           id: 'pages.tip.error',

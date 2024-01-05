@@ -387,6 +387,7 @@ export default {
   'pages.store.name': '名称',
   'pages.store.name.placeholder': '请输入名称',
   'pages.store.state': '状态',
+  'pages.store.state.placeholder':'请选择状态',
   'pages.store.type': '类型',
   'pages.store.type.placeholder': '请选择类型',
   'pages.store.address': '地址',
