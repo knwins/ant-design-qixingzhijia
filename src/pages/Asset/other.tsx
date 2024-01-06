@@ -366,13 +366,25 @@ const Spot: React.FC = () => {
       Object.keys(item).map((vv) => {
         if (columns.includes(vv)) {
           if (vv === 'store') {
-            kv[vv] = storeListData[item.store.id];
+            kv[vv] = storeListData[item.store.id] || '';
           } else if (vv === 'brand') {
             kv[vv] = brandListData[item.brand.id] || '';
           } else if (vv === 'business') {
             kv[vv] = businessListData[item.business.id] || '';
           } else if (vv === 'spec') {
             kv[vv] = specListData[item.spec.id] || '';
+          } else if (vv === 'category') {
+            let category = '';
+            if (item[vv] == 'CABINET') {
+              category = '电柜';
+            } else if (item[vv] == 'CELL') {
+              category = '电池';
+            } else if (item[vv] == 'ELECTRIC') {
+              category = '电动机';
+            } else {
+              category = '其他';
+            }
+            kv[vv] = category || '';
           } else {
             kv[vv] = item[vv];
           }

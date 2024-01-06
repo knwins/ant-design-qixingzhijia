@@ -32,7 +32,7 @@ import {
   updateProduct,
 } from './service';
 
-const Spot: React.FC = () => {
+const Cabinet: React.FC = () => {
   //const inpRef = useRef();
   const actionRef = useRef<ActionType>();
   const [done, setDone] = useState<boolean>(false);
@@ -108,18 +108,14 @@ const Spot: React.FC = () => {
   const { data: store } = useRequest(() => {
     return queryStoreSelect({
       current: 1,
-      pageSize: 100,
+      pageSize: 100000,
     });
   });
-  const storeListOptions = {};
+  // const storeListOptions = {};
   const storeListData = {};
   const storeData = store || [];
   if (storeData) {
     storeData.map((item) => {
-      storeListOptions[item.id] = {
-        text: item.name,
-        value: item.id,
-      };
       storeListData[item.id] = item.name;
     });
   }
@@ -336,7 +332,6 @@ const Spot: React.FC = () => {
     const { data: dataList } = await exportProductList({ ...exportParams });
     const columns = [
       'number',
-      'name',
       'store',
       'brand',
       'business',
@@ -349,7 +344,6 @@ const Spot: React.FC = () => {
     ];
     const tableItem = {
       number: '编号',
-      name: '名称',
       store: '站点',
       brand: '品牌',
       business: '运营商名称',
@@ -372,13 +366,27 @@ const Spot: React.FC = () => {
       Object.keys(item).map((vv) => {
         if (columns.includes(vv)) {
           if (vv === 'store') {
-            kv[vv] = storeListData[item.store.id]|| '';
+            console.log(item.store.id);
+            console.log(storeListData[item.store.id]);
+            kv[vv] = storeListData[item.store.id] || '';
           } else if (vv === 'brand') {
             kv[vv] = brandListData[item.brand.id] || '';
           } else if (vv === 'business') {
             kv[vv] = businessListData[item.business.id] || '';
           } else if (vv === 'spec') {
             kv[vv] = specListData[item.spec.id] || '';
+          } else if (vv === 'category') {
+            let category = '';
+            if (item[vv] == 'CABINET') {
+              category = '电柜';
+            } else if (item[vv] == 'CELL') {
+              category = '电池';
+            } else if (item[vv] == 'ELECTRIC') {
+              category = '电动车';
+            } else {
+              category = '其他';
+            }
+            kv[vv] = category || '';
           } else {
             kv[vv] = item[vv];
           }
@@ -433,12 +441,11 @@ const Spot: React.FC = () => {
       },
     },
 
-
     {
       title: '类型',
       dataIndex: 'storeType',
       valueType: 'select',
-      width:'sm',
+      width: 'sm',
       hideInForm: true,
       hideInTable: true,
       valueEnum: {
@@ -485,13 +492,20 @@ const Spot: React.FC = () => {
     },
 
     {
-      title: "所在位置",
+      title: '所在位置',
       dataIndex: ['store', 'name'],
       valueType: 'text',
       hideInForm: true,
       hideInSearch: true,
     },
-    
+
+    {
+      title: '所在位置',
+      dataIndex: ['store', 'id'],
+      valueType: 'text',
+      hideInForm: true,
+      hideInSearch: true,
+    },
 
     {
       title: <FormattedMessage id="pages.product.brand" />,
@@ -529,7 +543,6 @@ const Spot: React.FC = () => {
       hideInSearch: true,
     },
 
-
     {
       title: <FormattedMessage id="pages.product.store" />,
       dataIndex: ['store', 'type'],
@@ -547,7 +560,7 @@ const Spot: React.FC = () => {
         },
       },
     },
-    
+
     {
       title: <FormattedMessage id="pages.product.state" />,
       dataIndex: 'state',
@@ -570,7 +583,6 @@ const Spot: React.FC = () => {
           text: '申请中',
           state: 'APPLICATION',
         },
-
       },
     },
 
@@ -939,4 +951,4 @@ const Spot: React.FC = () => {
     </PageContainer>
   );
 };
-export default Spot;
+export default Cabinet;
