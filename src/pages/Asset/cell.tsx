@@ -350,7 +350,7 @@ const Spot: React.FC = () => {
       store: '站点',
       name: '名称',
       brand: '品牌',
-      business: '运营商名称',
+      business: '运营商',
       spec: '规格',
       size: '尺寸',
       weight: '重量',
@@ -823,7 +823,7 @@ const Spot: React.FC = () => {
         toolBarRender={() => [
           <a
             onClick={() => {
-              jumpToTemplate(`${host.api}static/template/cell.xlsx`);
+              jumpToTemplate(`${host.api}static/template/product.xlsx`);
             }}
             style={{ fontSize: '12px', verticalAlign: 'center' }}
           >

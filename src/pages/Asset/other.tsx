@@ -342,17 +342,19 @@ const Spot: React.FC = () => {
       'weight',
       'material',
       'category',
+      'iccid',
     ];
     const tableItem = {
       number: '编号',
       store: '站点',
       brand: '品牌',
-      business: '运营商名称',
+      business: '运营商',
       spec: '规格',
       size: '尺寸',
       weight: '重量',
       material: '材质',
       category: '类别',
+      iccid: 'ICCID',
     };
 
     const headerColumns = columns.map((k) => tableItem[k]);
@@ -380,7 +382,7 @@ const Spot: React.FC = () => {
             } else if (item[vv] == 'CELL') {
               category = '电池';
             } else if (item[vv] == 'ELECTRIC') {
-              category = '电动机';
+              category = '电动车';
             } else {
               category = '其他';
             }
@@ -758,7 +760,7 @@ const Spot: React.FC = () => {
         toolBarRender={() => [
           <a
             onClick={() => {
-              jumpToTemplate(`${host.api}static/template/other.xlsx`);
+              jumpToTemplate(`${host.api}static/template/product.xlsx`);
             }}
             style={{ fontSize: '12px', verticalAlign: 'center' }}
           >

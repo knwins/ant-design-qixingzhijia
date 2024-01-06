@@ -346,17 +346,19 @@ const Spot: React.FC = () => {
       'weight',
       'material',
       'category',
+      'iccid',
     ];
     const tableItem = {
       number: '编号',
       store: '站点',
       brand: '品牌',
-      business: '运营商名称',
+      business: '运营商',
       spec: '车辆型号',
       size: '车架号',
       weight: '车牌号',
       material: '颜色',
       category: '类别',
+      iccid:'ICCID',
     };
 
     const headerColumns = columns.map((k) => tableItem[k]);
@@ -792,7 +794,7 @@ const Spot: React.FC = () => {
         toolBarRender={() => [
           <a
             onClick={() => {
-              jumpToTemplate(`${host.api}static/template/product.xlsx`);
+              jumpToTemplate(`${host.api}static/template/electric.xlsx`);
             }}
             style={{ fontSize: '12px', verticalAlign: 'center' }}
           >
