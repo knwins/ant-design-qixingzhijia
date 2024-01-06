@@ -720,7 +720,7 @@ const Spot: React.FC = () => {
         if (!info.file.response.success) {
           message.error(info.file.response.errorMessage);
         } else {
-          message.success(info.file.response.message);
+          message.success(info.file.response.data);
           actionRef.current?.reloadAndRest;
         }
       } else if (info.file.status === 'error') {

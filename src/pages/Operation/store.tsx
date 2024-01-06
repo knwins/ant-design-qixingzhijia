@@ -380,7 +380,7 @@ const Spot: React.FC = () => {
         if (!info.file.response.success) {
           message.error(info.file.response.errorMessage);
         } else {
-          message.success('导入成功');
+          message.success(info.file.response.data);
           actionRef.current?.reload();
           return true;
         }
