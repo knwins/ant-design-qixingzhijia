@@ -105,14 +105,13 @@ export async function addProduct(data: { [id: string]: any }, options?: { [id: s
   });
 }
 
-
 /**
  * 调拨
  * @param data
  * @param options
  * @returns
  */
- export async function createProductLog(
+export async function createProductLog(
   data: { [id: string]: any },
   options?: { [id: string]: any },
 ) {
@@ -126,12 +125,6 @@ export async function addProduct(data: { [id: string]: any }, options?: { [id: s
   });
 }
 
-/**
- * 库存调拨
- * @param data
- * @param options
- * @returns
- */
 export async function createProductStock(
   data: { [id: string]: any },
   options?: { [id: string]: any },
@@ -146,12 +139,6 @@ export async function createProductStock(
   });
 }
 
-/**
- * 库存添加
- * @param data
- * @param options
- * @returns
- */
 export async function addProductStock(
   data: { [id: string]: any },
   options?: { [id: string]: any },
@@ -165,6 +152,22 @@ export async function addProductStock(
     ...(options || {}),
   });
 }
+
+export async function removeProductStock(
+  data: { [id: string]: any },
+  options?: { [id: string]: any },
+) {
+  return request<{
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/manage/product/stock/delete', {
+    data,
+    method: 'DELETE',
+    ...(options || {}),
+  });
+}
+
+
 
 /**
  * 批量调拨

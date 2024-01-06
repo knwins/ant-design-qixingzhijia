@@ -7,10 +7,10 @@ import {
   ProTable,
 } from '@ant-design/pro-components';
 import { FormattedMessage, useIntl } from '@umijs/max';
-import { Button, message } from 'antd';
+import { Button, message, Modal } from 'antd';
 import { FC, useRef, useState } from 'react';
 import { ProductItem, ProductStockItem } from '../data';
-import { addProductStock, queryProductStockList } from '../service';
+import { addProductStock, queryProductStockList, removeProductStock } from '../service';
 import StockAddModel from './StockAddModel';
 
 type StockModalProps = {
@@ -75,6 +75,57 @@ const StocksModal: FC<StockModalProps> = (props) => {
     }
   };
 
+  const handleRemove = (selectedRows: ProductStockItem) => {
+    Modal.confirm({
+      title: intl.formatMessage({
+        id: 'pages.tip.title',
+      }),
+      content: intl.formatMessage({
+        id: 'pages.tip.content',
+      }),
+      okText: intl.formatMessage({
+        id: 'pages.tip.ok',
+      }),
+      cancelText: intl.formatMessage({
+        id: 'pages.tip.cancel',
+      }),
+      onOk: async () => {
+        if (!selectedRows) return true;
+        try {
+          const loadingHidde = message.loading(
+            intl.formatMessage({
+              id: 'pages.tip.loading',
+            }),
+          );
+          const { success } = await removeProductStock({
+            id: selectedRows.id,
+          });
+
+          if (success) {
+            loadingHidde();
+            message.success(
+              intl.formatMessage({
+                id: 'pages.tip.success',
+              }),
+            );
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+            return true;
+          }
+          return false;
+        } catch (error) {
+          message.error(
+            intl.formatMessage({
+              id: 'pages.tip.error',
+            }),
+          );
+          return false;
+        }
+      },
+    });
+  };
+
   const columns: ProColumns<ProductStockItem>[] = [
     {
       title: '仓库位置',
@@ -98,6 +149,25 @@ const StocksModal: FC<StockModalProps> = (props) => {
       title: '库存数量',
       dataIndex: 'qty',
       valueType: 'text',
+    },
+
+    {
+      title: <FormattedMessage id="pages.option" />,
+      dataIndex: 'option',
+      valueType: 'option',
+      hideInDescriptions: true,
+      render: (_, record) => {
+        return [
+          <a
+            key="delete"
+            onClick={() => {
+              handleRemove(record);
+            }}
+          >
+            <FormattedMessage id="pages.delete" />
+          </a>,
+        ];
+      },
     },
   ];
 
