@@ -41,7 +41,7 @@ const UserModel: FC<UserModelProps> = (props) => {
     });
   }
 
-  const handleStoreSelect = async (key?: any) => {
+  const handleStoreSelect = async (key?: any, keywords?: any) => {
     if (key === '') {
       return;
     }
@@ -52,6 +52,7 @@ const UserModel: FC<UserModelProps> = (props) => {
     };
     const options: StoreParams = {
       type: key,
+      keywords:keywords,
     };
     //读取仓库数据
     const { data: storeData } = await queryStoreSelect({
@@ -222,6 +223,7 @@ const UserModel: FC<UserModelProps> = (props) => {
           fieldProps={{
             labelInValue: true,
           }}
+          showSearch
           rules={[
             {
               required: true,
@@ -230,7 +232,7 @@ const UserModel: FC<UserModelProps> = (props) => {
           label="默认位置"
           dependencies={['type']}
           request={async (params) => {
-            return handleStoreSelect(params.type);
+            return handleStoreSelect(params.type, params.keyWords);
           }}
         />
 

@@ -33,6 +33,7 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
     };
     const options: StoreParams = {
       type: key,
+      keywords:keywords,
     };
     //读取仓库数据
     const { data: store } = await queryStoreSelect({

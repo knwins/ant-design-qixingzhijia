@@ -58,6 +58,7 @@ const ProductStockModel: FC<ProductStockModelProps> = (props) => {
     //读取Store数据
     const options: StoreParams = {
       type: type,
+      keywords:keywords,
     };
     const { data: store } = await queryStoreSelect({
       current: 1,
