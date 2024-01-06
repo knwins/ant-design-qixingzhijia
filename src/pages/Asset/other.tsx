@@ -43,7 +43,7 @@ const Spot: React.FC = () => {
   const { data } = useRequest(() => {
     return queryOptionSelect({
       current: 1,
-      pageSize: 100,
+      pageSize: 100000,
       type: 'OTHER',
     });
   });
