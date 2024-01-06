@@ -832,7 +832,7 @@ const Cabinet: React.FC = () => {
         toolBarRender={() => [
           <a
             onClick={() => {
-              jumpToTemplate(`${host.api}static/template/product.xlsx`);
+              jumpToTemplate(`${host.api}static/template/cabinet.xlsx`);
             }}
             style={{ fontSize: '12px', verticalAlign: 'center' }}
           >

@@ -823,7 +823,7 @@ const Spot: React.FC = () => {
         toolBarRender={() => [
           <a
             onClick={() => {
-              jumpToTemplate(`${host.api}static/template/product.xlsx`);
+              jumpToTemplate(`${host.api}static/template/cell.xlsx`);
             }}
             style={{ fontSize: '12px', verticalAlign: 'center' }}
           >
