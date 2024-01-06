@@ -304,7 +304,7 @@ const ProductLease: React.FC = () => {
 
     {
       title: '租赁人',
-      dataIndex: ['user', 'username'],
+      dataIndex: ['leaseUser', 'label'],
       valueType: 'text',
       hideInForm: true,
       hideInSearch: true,

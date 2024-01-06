@@ -83,7 +83,7 @@ const LeaseModel: FC<LeaseModelProps> = (props) => {
           }}
         />
         <ProFormSelect
-          name="user"
+          name="leaseUser"
           width="md"
           showSearch
           rules={[

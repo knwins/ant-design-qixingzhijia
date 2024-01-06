@@ -51,6 +51,7 @@ export type ProductLeaseItem = {
   id: string;
   product: ProductItem;
   user: UserItem;
+  leaseUser:UserItem;
   inro: string;
   deductAmount: number;
   amountTotal: number;

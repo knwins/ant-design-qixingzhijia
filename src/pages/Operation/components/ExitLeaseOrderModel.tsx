@@ -127,7 +127,7 @@ const ExitLeaseOrderModel: FC<ExitLeaseOrderModelProps> = (props) => {
               readonly
             />
             <ProFormSelect
-              name="user"
+              name="leaseUser"
               width="md"
               fieldProps={{
                 labelInValue: true,

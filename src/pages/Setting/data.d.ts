@@ -83,6 +83,7 @@ export type UserItem = {
   role?:RoleItem;
   store?:StoreItem;
   key?:string;
+  label?:string;
 };
 
 export type UserParams = {
