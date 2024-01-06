@@ -498,15 +498,6 @@ const Cabinet: React.FC = () => {
       hideInForm: true,
       hideInSearch: true,
     },
-
-    {
-      title: '所在位置',
-      dataIndex: ['store', 'id'],
-      valueType: 'text',
-      hideInForm: true,
-      hideInSearch: true,
-    },
-
     {
       title: <FormattedMessage id="pages.product.brand" />,
       dataIndex: ['brand', 'name'],
