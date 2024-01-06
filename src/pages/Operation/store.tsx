@@ -385,7 +385,7 @@ const Spot: React.FC = () => {
           return true;
         }
       } else if (info.file.status === 'error') {
-        message.error(`本地导入文件失败`);
+        message.error(`您没有权限访问`);
       }
       return true;
     },
