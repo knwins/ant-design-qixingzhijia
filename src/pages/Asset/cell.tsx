@@ -560,7 +560,7 @@ const Spot: React.FC = () => {
     {
       title: <FormattedMessage id="pages.product.store" />,
       dataIndex: ['store', 'type'],
-      valueType: 'text',
+      valueType: 'select',
       hideInForm: true,
       hideInSearch: true,
       valueEnum: {
