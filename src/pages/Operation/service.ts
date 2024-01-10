@@ -1,5 +1,6 @@
 import { request } from 'umi';
 import host from '../../host';
+import { UserItem } from '../Setting/data';
 import { BusinessItem, ProductCheckItem, ProductLeaseItem, ProductLeaseOrderItem, StoreItem } from './data';
 
 export async function queryProductCheckList(
@@ -435,3 +436,5 @@ export async function removeBusiness(data: { [id: string]: any }, options?: { [i
     ...(options || {}),
   });
 }
+
+

@@ -6,11 +6,11 @@ export type pagination = {
 
 export type UserItem = {
   id: string;
-  name: string;
+  username: string;
   portrait: string;
   createTime: Date;
   state: string;
-  nickName: string;
+  nick: string;
   signature: string;
   password:string;
   parent: UserItem;

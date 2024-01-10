@@ -29,6 +29,7 @@ export async function queryUserSelect(
     current?: number;
     pageSize?: number;
     type?:string;
+    keywords?:string;
   },
   options?: { [key: string]: any },
 ) {

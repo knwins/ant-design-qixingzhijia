@@ -1,4 +1,5 @@
 import { queryPCDList } from '@/pages/Asset/service';
+import { queryUserSelect } from '@/pages/User/service';
 import ProForm, {
   ModalForm,
   ProFormDependency,
@@ -8,7 +9,7 @@ import ProForm, {
 } from '@ant-design/pro-form';
 import { useIntl } from '@umijs/max';
 import type { FC } from 'react';
-import { queryUserSelect } from '../../Setting/service';
+
 
 import { StoreItem } from '../data';
 

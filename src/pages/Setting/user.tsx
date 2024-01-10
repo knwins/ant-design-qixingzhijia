@@ -7,7 +7,7 @@ import { Button, message, Modal } from 'antd';
 import React, { useRef, useState } from 'react';
 import UserModel from './components/UserModel';
 import type { UserItem } from './data';
-import { addUser, queryUserList, removeUser, updateUser } from './service';
+import { addSystemUser, querySystemUserList, removeSystemUser, updateSystemUser } from './service';
 
 const User: React.FC = () => {
   const actionRef = useRef<ActionType>();
@@ -27,7 +27,7 @@ const User: React.FC = () => {
     loadingHidde();
     try {
       if (fields.id != null) {
-        const { success } = await updateUser({
+        const { success } = await updateSystemUser({
           ...fields,
         });
 
@@ -40,7 +40,7 @@ const User: React.FC = () => {
           return true;
         }
       } else {
-        const { success } = await addUser({
+        const { success } = await addSystemUser({
           ...fields,
         });
         if (success) {
@@ -90,7 +90,7 @@ const User: React.FC = () => {
             }),
           );
 
-          const { success } = await updateUser({
+          const { success } = await updateSystemUser({
             ...fields,
           });
 
@@ -142,7 +142,7 @@ const User: React.FC = () => {
             }),
           );
 
-          const { success } = await removeUser({
+          const { success } = await removeSystemUser({
             id: selectedRows.id,
           });
 
@@ -287,7 +287,7 @@ const User: React.FC = () => {
         ]}
         pagination={paginationProps}
         request={(params) => {
-          return queryUserList({ ...params, type: 'SYSTEM' });
+          return querySystemUserList({ ...params, type: 'SYSTEM' });
         }}
         columns={columns}
       />

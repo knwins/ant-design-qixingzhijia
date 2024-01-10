@@ -213,9 +213,9 @@ export async function removeRole(data: { [id: string]: any }, options?: { [id: s
   });
 }
 
-/** User */
+/** SystemUser */
 
-export async function queryUserList(
+export async function querySystemUserList(
   params: {
     current?: number;
     pageSize?: number;
@@ -236,7 +236,7 @@ export async function queryUserList(
   });
 }
 
-export async function queryUserSelect(
+export async function querySystemUserSelect(
   params: {
     current?: number;
     pageSize?: number;
@@ -258,7 +258,7 @@ export async function queryUserSelect(
   });
 }
 
-export async function getUser(params: { [id: string]: any }, options?: { [id: string]: any }) {
+export async function getSystemUser(params: { [id: string]: any }, options?: { [id: string]: any }) {
   return request<{
     data: UserItem;
     success?: boolean;
@@ -271,7 +271,7 @@ export async function getUser(params: { [id: string]: any }, options?: { [id: st
   });
 }
 
-export async function addUser(data: { [id: string]: any }, options?: { [id: string]: any }) {
+export async function addSystemUser(data: { [id: string]: any }, options?: { [id: string]: any }) {
   return request<{
     success?: boolean;
     errorMessage?: string;
@@ -282,7 +282,7 @@ export async function addUser(data: { [id: string]: any }, options?: { [id: stri
   });
 }
 
-export async function updateUser(data: { [key: string]: any }, options?: { [key: string]: any }) {
+export async function updateSystemUser(data: { [key: string]: any }, options?: { [key: string]: any }) {
   return request<{
     success?: boolean;
     errorMessage?: string;
@@ -293,7 +293,7 @@ export async function updateUser(data: { [key: string]: any }, options?: { [key:
   });
 }
 
-export async function removeUser(data: { [id: string]: any }, options?: { [id: string]: any }) {
+export async function removeSystemUser(data: { [id: string]: any }, options?: { [id: string]: any }) {
   return request<{
     success?: boolean;
     errorMessage?: string;

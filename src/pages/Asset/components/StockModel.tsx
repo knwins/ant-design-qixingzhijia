@@ -134,6 +134,11 @@ const StocksModal: FC<StockModalProps> = (props) => {
       valueType: 'text',
     },
     {
+      title: '运营商',
+      dataIndex: ['business', 'name'],
+      valueType: 'text',
+    },
+    {
       title: '类型',
       dataIndex: ['store', 'type'],
       valueType: 'select',

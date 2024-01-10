@@ -8,7 +8,7 @@ import ExportJsonExcel from 'js-export-excel';
 import React, { useRef, useState } from 'react';
 import host from '../../host';
 import { queryPCDList } from '../Asset/service';
-import { queryUserList } from '../Setting/service';
+import { queryUserList } from '../User/service';
 import StoreModel from './components/StoreModel';
 import { StoreItem } from './data';
 import {

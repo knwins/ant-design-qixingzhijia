@@ -1,5 +1,5 @@
 import { queryProductSelect } from '@/pages/Asset/service';
-import { queryUserSelect } from '@/pages/Setting/service';
+import { queryUserSelect } from '@/pages/User/service';
 import ProForm, {
   ModalForm,
   ProFormDatePicker,

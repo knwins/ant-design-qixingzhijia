@@ -1,5 +1,6 @@
 import { queryProductSelect } from '@/pages/Asset/service';
-import { queryUserSelect } from '@/pages/Setting/service';
+import { queryUserSelect } from '@/pages/User/service';
+
 import ProForm, {
   ModalForm,
   ProFormDatePicker,
@@ -108,25 +109,25 @@ const LeaseOrderModel: FC<LeaseOrderModelProps> = (props) => {
             <ProFormDatePicker name="endTime" label="到期时间" readonly />
 
             <ProFormSelect
-            name="state"
-            width="xs"
-            label="状态"
-            options={[
-              {
-                label: '退租完成',
-                value: 'FINISH',
-              },
-              {
-                label: '租赁中',
-                value: 'NORMAL',
-              },
-              {
-                label: '已逾期',
-                value: 'LATE',
-              },
-            ]}
-            readonly
-          />
+              name="state"
+              width="xs"
+              label="状态"
+              options={[
+                {
+                  label: '退租完成',
+                  value: 'FINISH',
+                },
+                {
+                  label: '租赁中',
+                  value: 'NORMAL',
+                },
+                {
+                  label: '已逾期',
+                  value: 'LATE',
+                },
+              ]}
+              readonly
+            />
           </ProForm.Group>
 
           <ProForm.Group title="计费数据">
@@ -151,7 +152,7 @@ const LeaseOrderModel: FC<LeaseOrderModelProps> = (props) => {
               name="price"
               label="单价(元)"
               width="xs"
-              fieldProps={{ addonAfter: '元'}}
+              fieldProps={{ addonAfter: '元' }}
               readonly
             />
 
@@ -163,8 +164,6 @@ const LeaseOrderModel: FC<LeaseOrderModelProps> = (props) => {
               readonly
             />
           </ProForm.Group>
-
-          
 
           <ProFormSelect hidden name="action" initialValue={'RENEWAL'} />
 

@@ -1,9 +1,10 @@
-import { queryUserSelect } from '../../Setting/service';
+
 import { ModalForm, ProFormDigit, ProFormRadio, ProFormSelect } from '@ant-design/pro-form';
 import { useIntl } from '@umijs/max';
 import type { FC } from 'react';
 import { ProductLeaseItem } from '../data';
 import { queryProductSelect } from '@/pages/Asset/service';
+import { queryUserSelect } from '@/pages/User/service';
 
 type LeaseModelProps = {
   done: boolean;
