@@ -236,27 +236,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
           })}
         />
 
-        <ProFormText
-          name="latitude"
-          label={intl.formatMessage({
-            id: 'pages.product.latitude',
-          })}
-          width="lg"
-          placeholder={intl.formatMessage({
-            id: 'pages.product.latitude.placeholder',
-          })}
-        />
-
-        <ProFormText
-          name="longitude"
-          label={intl.formatMessage({
-            id: 'pages.product.longitude',
-          })}
-          width="lg"
-          placeholder={intl.formatMessage({
-            id: 'pages.product.longitude.placeholder',
-          })}
-        />
+       
       </>
     </ModalForm>
   );

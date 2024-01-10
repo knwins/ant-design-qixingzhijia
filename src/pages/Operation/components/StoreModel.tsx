@@ -10,7 +10,6 @@ import ProForm, {
 import { useIntl } from '@umijs/max';
 import type { FC } from 'react';
 
-
 import { StoreItem } from '../data';
 
 type StoreModelProps = {
@@ -275,6 +274,28 @@ const StoreModel: FC<StoreModelProps> = (props) => {
           ]}
           placeholder={intl.formatMessage({
             id: 'pages.store.address.placeholder',
+          })}
+        />
+
+        <ProFormText
+          name="latitude"
+          label={intl.formatMessage({
+            id: 'pages.store.latitude',
+          })}
+          width="lg"
+          placeholder={intl.formatMessage({
+            id: 'pages.store.latitude.placeholder',
+          })}
+        />
+
+        <ProFormText
+          name="longitude"
+          label={intl.formatMessage({
+            id: 'pages.store.longitude',
+          })}
+          width="lg"
+          placeholder={intl.formatMessage({
+            id: 'pages.store.longitude.placeholder',
           })}
         />
       </>
