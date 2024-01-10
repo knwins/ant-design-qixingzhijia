@@ -53,7 +53,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
     >
       <>
         <ProFormDigit name="id" hidden />
-        <ProFormDigit name="category" hidden initialValue={"CABINET"}/>
+        <ProFormDigit name="category" hidden initialValue={'CABINET'} />
         <ProFormText
           name="number"
           label={intl.formatMessage({
@@ -97,7 +97,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
             {
               label: '异常',
               value: 'ABNORMAL',
-            }
+            },
           ]}
         />
         {/* <ProFormSelect
@@ -233,6 +233,28 @@ const ProductModel: FC<ProductModelProps> = (props) => {
           width="lg"
           placeholder={intl.formatMessage({
             id: 'pages.product.material.placeholder',
+          })}
+        />
+
+        <ProFormText
+          name="latitude"
+          label={intl.formatMessage({
+            id: 'pages.product.latitude',
+          })}
+          width="lg"
+          placeholder={intl.formatMessage({
+            id: 'pages.product.latitude.placeholder',
+          })}
+        />
+
+        <ProFormText
+          name="longitude"
+          label={intl.formatMessage({
+            id: 'pages.product.longitude',
+          })}
+          width="lg"
+          placeholder={intl.formatMessage({
+            id: 'pages.product.longitude.placeholder',
           })}
         />
       </>
