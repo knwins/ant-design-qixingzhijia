@@ -210,8 +210,8 @@ const User: React.FC = () => {
     },
 
     {
-      title: <FormattedMessage id="pages.user.email" />,
-      dataIndex: 'email',
+      title: <FormattedMessage id="pages.user.business" />,
+      dataIndex: ['business','name'],
       valueType: 'text',
       hideInSearch: true,
       hideInForm: true,

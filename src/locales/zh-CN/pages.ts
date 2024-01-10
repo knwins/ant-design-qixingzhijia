@@ -295,6 +295,7 @@ export default {
   /* user */
   'pages.user.title': '用户列表',
   'pages.user.name': '用户名',
+  'pages.user.business': '运营商',
   'pages.user.portrait': '头像',
   'pages.user.state': '状态',
   'pages.user.nickName': '昵称',

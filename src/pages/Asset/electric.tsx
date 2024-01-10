@@ -58,14 +58,13 @@ const Spot: React.FC = () => {
     });
   });
 
-   //读取属性数据
-   const { data: businessData } = useRequest(() => {
+  //读取属性数据
+  const { data: businessData } = useRequest(() => {
     return queryBusinessSelect({
       current: 1,
       pageSize: 100000,
     });
   });
-
 
   const businessListOptions = {};
   const brandListOptions = {};
@@ -85,7 +84,6 @@ const Spot: React.FC = () => {
       businessListData[item.id] = item.name;
     });
   }
-
 
   if (data?.brand) {
     const brandData = data?.brand || [];
@@ -196,7 +194,6 @@ const Spot: React.FC = () => {
     }
   };
 
-
   const handleRemove = (selectedRows: ProductItem) => {
     Modal.confirm({
       title: intl.formatMessage({
@@ -226,10 +223,10 @@ const Spot: React.FC = () => {
           if (success) {
             loadingHidde();
             message.success(
-          intl.formatMessage({
-            id: 'pages.tip.success',
-          }),
-        );
+              intl.formatMessage({
+                id: 'pages.tip.success',
+              }),
+            );
             if (actionRef.current) {
               actionRef.current.reload();
             }
@@ -311,10 +308,10 @@ const Spot: React.FC = () => {
           if (success) {
             loadingHidde();
             message.success(
-          intl.formatMessage({
-            id: 'pages.tip.success',
-          }),
-        );
+              intl.formatMessage({
+                id: 'pages.tip.success',
+              }),
+            );
             if (actionRef.current) {
               actionRef.current.reload();
             }
@@ -367,7 +364,7 @@ const Spot: React.FC = () => {
       weight: '车牌号',
       material: '颜色',
       category: '类别',
-      iccid:'ICCID',
+      iccid: 'ICCID',
     };
 
     const headerColumns = columns.map((k) => tableItem[k]);
@@ -408,10 +405,8 @@ const Spot: React.FC = () => {
       tableData.push(kv);
     });
 
-    // console.log(tableData);
-
     const option = {
-      fileName: '电柜数据',
+      fileName: '导出电动车',
       datas: [
         {
           sheetData: tableData, // 要导出的原数据
@@ -459,7 +454,7 @@ const Spot: React.FC = () => {
       dataIndex: 'number',
       hideInForm: true,
       hideInSearch: true,
-      copyable:true,
+      copyable: true,
       valueType: 'text',
       render: (dom, entity) => {
         return (
@@ -536,7 +531,7 @@ const Spot: React.FC = () => {
       valueType: 'text',
       hideInSearch: true,
       hideInForm: true,
-      hideInTable:true,
+      hideInTable: true,
     },
 
     {
@@ -545,7 +540,7 @@ const Spot: React.FC = () => {
       valueType: 'text',
       hideInSearch: true,
       hideInForm: true,
-      hideInTable:true,
+      hideInTable: true,
     },
 
     {
@@ -554,7 +549,7 @@ const Spot: React.FC = () => {
       valueType: 'text',
       hideInSearch: true,
       hideInForm: true,
-      hideInTable:true,
+      hideInTable: true,
     },
 
     {
@@ -585,8 +580,6 @@ const Spot: React.FC = () => {
       hideInDescriptions: true,
       render: (_, record) => {
         return [
-          
-          
           <a
             key="create"
             onClick={() => {
@@ -597,14 +590,14 @@ const Spot: React.FC = () => {
             <FormattedMessage id="pages.product.log.create" />
           </a>,
           <a
-          key="edit"
-          onClick={() => {
-            setCurrentRow(record);
-            setVisible(true);
-          }}
-        >
-          <FormattedMessage id="pages.edit" />
-        </a>,
+            key="edit"
+            onClick={() => {
+              setCurrentRow(record);
+              setVisible(true);
+            }}
+          >
+            <FormattedMessage id="pages.edit" />
+          </a>,
           <a
             key="delete"
             onClick={() => {
@@ -659,7 +652,7 @@ const Spot: React.FC = () => {
           type: 'Lease',
         },
         ExitLease: {
-          text: '退租', 
+          text: '退租',
           type: 'ExitLease',
         },
       },

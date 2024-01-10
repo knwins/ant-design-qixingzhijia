@@ -405,7 +405,7 @@ const Spot: React.FC = () => {
     // console.log(tableData);
 
     const option = {
-      fileName: 'other-' + new Date(),
+      fileName: '导出配件',
       datas: [
         {
           sheetData: tableData, // 要导出的原数据

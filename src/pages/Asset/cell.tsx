@@ -407,7 +407,7 @@ const Cell: React.FC = () => {
     // console.log(tableData);
 
     const option = {
-      fileName: '电池数据' + new Date(),
+      fileName: '导出电池',
       datas: [
         {
           sheetData: tableData, // 要导出的原数据

@@ -269,23 +269,21 @@ const ExitLeaseOrderModel: FC<ExitLeaseOrderModelProps> = (props) => {
 
                   <ProFormTextArea
                     name="inro"
-                    label="车辆损坏或其他原因请备注说明"
-                    placeholder="车辆损坏或其他原因请备注说明"
-                    // initialValue={`实际${days > 0 ? '剩余' : '逾期'}${days}天，${
-                    //   days > 0 ? '退款' : '扣除'
-                    // }${diffAmount}元，退回保证金${deposit}元，车损及折旧扣除金额${amount},实际退款${exitAmount}元。`}
+                    label="车辆费用计算及备注"
                     width="md"
                     fieldProps={{
                       value: `电动车租赁${days > 0 ? '剩余' : '逾期'}${days}天，${
                         days > 0 ? '退款' : '扣除'
                       }${diffAmount}元，退回保证金${deposit}元，车损及折旧扣除金额${amount}元，实际退款${exitAmount}元。`,
                     }}
-                    rules={[
-                      {
-                        required: true,
-                      },
-                    ]}
                   />
+
+                  {/* <ProFormTextArea
+                    name="inro"
+                    label="其他备注说明"
+                    placeholder="其他备注说明"
+                    width="md"
+                  /> */}
                 </>
               );
             }}

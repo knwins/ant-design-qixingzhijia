@@ -405,7 +405,7 @@ const Cabinet: React.FC = () => {
     // console.log(tableData);
 
     const option = {
-      fileName: '电柜数据',
+      fileName: '导出电柜',
       datas: [
         {
           sheetData: tableData, // 要导出的原数据
