@@ -132,7 +132,7 @@ const Spot: React.FC = () => {
       dataIndex: 'createTime',
       hideInForm: true,
       hideInSearch: true,
-      valueType: 'time',
+      valueType: 'dateTime',
       width: 'md',
     },
 
