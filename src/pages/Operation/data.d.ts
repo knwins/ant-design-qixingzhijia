@@ -27,6 +27,19 @@ export type StoreParams = {
 } & Partial<StoreItem>;
 
 
+export type BusinessItem = {
+  id: string;
+  name: string;
+};
+
+export type BusinessParams = {
+  keywords?: string;
+  filter?: Record<string, any[]>;
+  sorter?: Record<string, any>;
+} & Partial<BusinessItem>;
+
+
+
 
 export type ProductCheckItem = {
   id: string;
@@ -91,4 +104,20 @@ export type ProductLeaseOrderParams = {
   filter?: Record<string, any[]>;
   sorter?: Record<string, any>;
 } & Partial<ProductLeaseOrderItem>;
+
+
+export type BusinessItem = {
+  id: string;
+  name:string;
+  state:string;
+  createTime: Date;
+};
+
+
+export type BusinessParams = {
+  keywords?: string;
+  filter?: Record<string, any[]>;
+  sorter?: Record<string, any>;
+} & Partial<BusinessItem>;
+
 

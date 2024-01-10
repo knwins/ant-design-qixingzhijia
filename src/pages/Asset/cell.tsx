@@ -14,7 +14,7 @@ import { Button, Drawer, message, Modal, Space, Table, Upload, UploadProps } fro
 import ExportJsonExcel from 'js-export-excel';
 import React, { useRef, useState } from 'react';
 import host from '../../host';
-import { queryStoreSelect } from '../Operation/service';
+import { queryBusinessSelect, queryStoreSelect } from '../Operation/service';
 import { queryOptionSelect } from '../Setting/service';
 import BatchProductLogModel from './components/BatchProductLogModel';
 import ProductModel from './components/CellModel';
@@ -32,7 +32,7 @@ import {
   updateProduct,
 } from './service';
 
-const Spot: React.FC = () => {
+const Cell: React.FC = () => {
   //const inpRef = useRef();
   const actionRef = useRef<ActionType>();
   const [done, setDone] = useState<boolean>(false);
@@ -45,6 +45,8 @@ const Spot: React.FC = () => {
   const [exportParams, setExportParams] = useState({}); //导出参数
   const [ids, setIds] = useState<string>();
 
+  let roleGroup = localStorage.getItem('roleGroup');
+
   //国际化
   const intl = useIntl();
   //读取属性数据
@@ -53,6 +55,14 @@ const Spot: React.FC = () => {
       current: 1,
       pageSize: 100000,
       type: 'CELL',
+    });
+  });
+
+  //读取属性数据
+  const { data: businessData } = useRequest(() => {
+    return queryBusinessSelect({
+      current: 1,
+      pageSize: 100000,
     });
   });
 
@@ -65,17 +75,14 @@ const Spot: React.FC = () => {
   const brandListData = {};
   const specListData = {};
 
-  if (data?.business) {
-    const businessData = data?.business || [];
-    if (businessData) {
-      businessData.map((item) => {
-        businessListOptions[item.id] = {
-          text: item.name,
-          value: item.id,
-        };
-        businessListData[item.id] = item.name;
-      });
-    }
+  if (businessData) {
+    businessData.map((item) => {
+      businessListOptions[item.id] = {
+        text: item.name,
+        value: item.id,
+      };
+      businessListData[item.id] = item.name;
+    });
   }
 
   if (data?.brand) {
@@ -447,9 +454,10 @@ const Spot: React.FC = () => {
       title: '类型',
       dataIndex: 'storeType',
       valueType: 'select',
-      width:'sm',
+      width: 'sm',
       hideInForm: true,
       hideInTable: true,
+      hideInDescriptions:true,
       valueEnum: {
         SITE: {
           text: '站点',
@@ -519,6 +527,7 @@ const Spot: React.FC = () => {
       fieldProps: { width: '60px' },
       hideInDescriptions: true,
       valueEnum: businessListOptions,
+      hideInSearch: roleGroup == 'SystemUser' ? false : true,
     },
 
     {
@@ -574,8 +583,6 @@ const Spot: React.FC = () => {
         },
       },
     },
-
-    
 
     {
       title: <FormattedMessage id="pages.product.state" />,
@@ -942,4 +949,4 @@ const Spot: React.FC = () => {
     </PageContainer>
   );
 };
-export default Spot;
+export default Cell;

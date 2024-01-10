@@ -1,4 +1,3 @@
-import { PlusOutlined } from '@ant-design/icons';
 import {
   ActionType,
   ModalForm,
@@ -7,11 +6,12 @@ import {
   ProTable,
 } from '@ant-design/pro-components';
 import { FormattedMessage, useIntl } from '@umijs/max';
-import { Button, message, Modal } from 'antd';
+import { message, Modal } from 'antd';
 import { FC, useRef, useState } from 'react';
 import { ProductItem, ProductStockItem } from '../data';
 import { addProductStock, queryProductStockList, removeProductStock } from '../service';
 import StockAddModel from './StockAddModel';
+import StockSubModel from './StockSubModel';
 
 type StockModalProps = {
   done: boolean;
@@ -29,6 +29,8 @@ const StocksModal: FC<StockModalProps> = (props) => {
 
   const actionRef = useRef<ActionType>();
   const [stockVisible, setStockVisible] = useState<boolean>(false);
+  const [subStockVisible, setSubStockVisible] = useState<boolean>(false);
+  const [currentStock, setCurrentStock] = useState<ProductStockItem>();
 
   if (!visible) {
     return null;
@@ -36,6 +38,7 @@ const StocksModal: FC<StockModalProps> = (props) => {
 
   const addDone = () => {
     setStockVisible(false);
+    setSubStockVisible(false);
   };
 
   /**
@@ -51,18 +54,16 @@ const StocksModal: FC<StockModalProps> = (props) => {
     );
     loadingHidde();
     try {
-      if (fields.action == 'addProductStock') {
-        const { success } = await addProductStock({
-          ...fields,
-        });
-        if (success) {
-          message.success(
-            intl.formatMessage({
-              id: 'pages.tip.success',
-            }),
-          );
-          return true;
-        }
+      const { success } = await addProductStock({
+        ...fields,
+      });
+      if (success) {
+        message.success(
+          intl.formatMessage({
+            id: 'pages.tip.success',
+          }),
+        );
+        return true;
       }
       return false;
     } catch (error) {
@@ -159,6 +160,24 @@ const StocksModal: FC<StockModalProps> = (props) => {
       render: (_, record) => {
         return [
           <a
+            key="add"
+            onClick={() => {
+              setCurrentStock(record);
+              setStockVisible(true);
+            }}
+          >
+            加
+          </a>,
+          <a
+            key="sub"
+            onClick={() => {
+              setCurrentStock(record);
+              setSubStockVisible(true);
+            }}
+          >
+            减
+          </a>,
+          <a
             key="delete"
             onClick={() => {
               handleRemove(record);
@@ -193,19 +212,19 @@ const StocksModal: FC<StockModalProps> = (props) => {
           actionRef={actionRef}
           columns={columns}
           search={false}
-          toolBarRender={() => [
-            <Button
-              type="primary"
-              key="add"
-              size="small"
-              onClick={() => {
-                setStockVisible(true);
-              }}
-            >
-              <PlusOutlined />
-              <FormattedMessage id="pages.new.stock" />
-            </Button>,
-          ]}
+          // toolBarRender={() => [
+          //   <Button
+          //     type="primary"
+          //     key="add"
+          //     size="small"
+          //     onClick={() => {
+          //       setStockVisible(true);
+          //     }}
+          //   >
+          //     <PlusOutlined />
+          //     <FormattedMessage id="pages.new.stock" />
+          //   </Button>,
+          // ]}
           request={(params) => {
             return queryProductStockList({ ...params, productId: current?.id });
           }}
@@ -216,11 +235,29 @@ const StocksModal: FC<StockModalProps> = (props) => {
         done={done}
         visible={stockVisible}
         onDone={addDone}
+        currentStock={currentStock}
         current={current || {}}
         onSubmit={async (value) => {
           const success = await handleStockAction(value as ProductStockItem);
           if (success) {
             setStockVisible(false);
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+          }
+        }}
+      />
+
+      <StockSubModel
+        done={done}
+        visible={subStockVisible}
+        onDone={addDone}
+        currentStock={currentStock}
+        current={current || {}}
+        onSubmit={async (value) => {
+          const success = await handleStockAction(value as ProductStockItem);
+          if (success) {
+            setSubStockVisible(false);
             if (actionRef.current) {
               actionRef.current.reload();
             }

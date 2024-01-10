@@ -115,7 +115,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
           ]}
         />
 
-        <ProFormSelect
+        {/* <ProFormSelect
           name="business"
           width="lg"
           fieldProps={{
@@ -147,7 +147,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
               });
             });
           }}
-        />
+        /> */}
 
         <ProFormSelect
           name="brand"

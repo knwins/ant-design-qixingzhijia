@@ -1,6 +1,6 @@
 import { request } from 'umi';
 import host from '../../host';
-import { ProductCheckItem, ProductLeaseItem, ProductLeaseOrderItem, StoreItem } from './data';
+import { BusinessItem, ProductCheckItem, ProductLeaseItem, ProductLeaseOrderItem, StoreItem } from './data';
 
 export async function queryProductCheckList(
   params: {
@@ -78,6 +78,10 @@ export async function removeProductCheck(
     ...(options || {}),
   });
 }
+
+
+
+
 
 /**Store */
 
@@ -336,6 +340,96 @@ export async function removeProductLeaseOrder(
     success?: boolean;
     errorMessage?: string;
   }>(host.api + 'api/manage/product/lease/order/delete', {
+    data,
+    method: 'DELETE',
+    ...(options || {}),
+  });
+}
+
+
+/**Business */
+
+export async function queryBusinessList(
+  params: {
+    current?: number;
+    pageSize?: number;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{
+    data: StoreItem[];
+    total?: number;
+    success?: boolean;
+  }>(host.api + 'api/manage/business/list', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+
+
+export async function queryBusinessSelect(
+  params: {
+    current?: number;
+    pageSize?: number;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{
+    data: BusinessItem[];
+    total?: number;
+    success?: boolean;
+  }>(host.api + 'api/manage/business/select', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+export async function getBusiness(data: { [id: string]: any }, options?: { [id: string]: any }) {
+  return request<{
+    data: BusinessItem;
+    success?: boolean;
+    errorMessage?: number;
+  }>(host.api + 'api/manage/business/get', {
+    data,
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
+export async function updateBusiness(data: { [id: string]: any }, options?: { [id: string]: any }) {
+  return request<{
+    success?: boolean;
+    errorMessage?: number;
+  }>(host.api + 'api/manage/business/update', {
+    data,
+    method: 'PUT',
+    ...(options || {}),
+  });
+}
+
+export async function addBusiness(data: { [id: string]: any }, options?: { [id: string]: any }) {
+  return request<{
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/manage/business/add', {
+    data,
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
+export async function removeBusiness(data: { [id: string]: any }, options?: { [id: string]: any }) {
+  return request<{
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/manage/business/delete', {
     data,
     method: 'DELETE',
     ...(options || {}),

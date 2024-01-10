@@ -139,6 +139,10 @@ const RoleModel: FC<RoleModelProps> = (props) => {
               value: 'SystemUser',
             },
             {
+              label: '运营用户',
+              value: 'BusinessUser',
+            },
+            {
               label: '仓库用户',
               value: 'StoreUser',
             },

@@ -1,3 +1,5 @@
+import { BusinessItem } from "../Operation/data";
+
 export type Pagination = {
   total?: number;
   pageSize: number;
@@ -9,7 +11,7 @@ export type ProductItem = {
   number: number;
   name: number;
   brand: OptionItem; //品牌
-  business: OptionItem; //运营商
+  business: BusinessItem; //运营商
   spec: OptionItem; //型号
   size: string;
   weight: string;

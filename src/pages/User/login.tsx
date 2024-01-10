@@ -29,13 +29,14 @@ const Login: React.FC = () => {
       // 登录
       const lang = getLocale ();
       values.lang=lang;
-      const { status, token } = await login({ ...values });
+      const { status, token,roleGroup } = await login({ ...values });
       if (status) {
         const defaultLoginSuccessMessage = intl.formatMessage({
           id: 'pages.login.success',
         });
         message.success(defaultLoginSuccessMessage);
         localStorage.setItem('token', token);
+        localStorage.setItem('roleGroup', roleGroup);
         await fetchUserInfo();
         const urlParams = new URL(window.location.href).searchParams;
         history.push(urlParams.get('redirect') || '/');

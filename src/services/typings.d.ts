@@ -12,8 +12,8 @@ declare namespace API {
   type LoginResult = {
     currentAuthority?: string;
     status?: boolean;
-    info?: string;
     token: string;
+    roleGroup: string;
   };
 
   type PageParams = {

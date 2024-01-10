@@ -462,4 +462,8 @@ export default {
   'pages.electric.chepaihao.placeholder':'请输入车牌号',
   'pages.electric.color':'车辆颜色',
   'pages.electric.color.placeholder':'请输入车辆颜色',
+
+  'pages.business.name':'名称',
+  'pages.business.state':'状态',
+  'pages.business.state.placeholder':'请选择状态',
 };

@@ -4,7 +4,7 @@ import type { FC } from 'react';
 
 import { ProductItem, ProductStockItem } from '../data';
 
-type StockAddModelProps = {
+type StockSubModelProps = {
   done: boolean;
   visible: boolean;
   current: Partial<ProductItem> | undefined;
@@ -13,8 +13,8 @@ type StockAddModelProps = {
   onSubmit: (values: ProductStockItem) => void;
 };
 
-const StockAddModel: FC<StockAddModelProps> = (props) => {
-  const { done, visible, current, currentStock,onDone, onSubmit, children } = props;
+const StockSubModel: FC<StockSubModelProps> = (props) => {
+  const { done, visible, current, currentStock, onDone, onSubmit, children } = props;
   const intl = useIntl();
 
   if (!visible) {
@@ -24,7 +24,7 @@ const StockAddModel: FC<StockAddModelProps> = (props) => {
   return (
     <ModalForm<ProductStockItem>
       visible={visible}
-      title="添加库存"
+      title="减少库存"
       width={540}
       initialValues={current}
       onFinish={async (values) => {
@@ -42,7 +42,8 @@ const StockAddModel: FC<StockAddModelProps> = (props) => {
     >
       <>
         <ProFormDigit name="productId" initialValue={current?.id} hidden />
-        <ProFormText name="action" initialValue="addProductStock" hidden />
+        <ProFormText name="action" initialValue="subProductStock" hidden />
+
         <ProFormText name="productStockId" initialValue={currentStock?.id} hidden />
         <ProFormText
           name="number"
@@ -54,6 +55,7 @@ const StockAddModel: FC<StockAddModelProps> = (props) => {
         />
         <ProFormDigit
           name="_qty"
+          initialValue={currentStock?.qty}
           label={intl.formatMessage({
             id: 'pages.product.stock.qty',
           })}
@@ -63,4 +65,4 @@ const StockAddModel: FC<StockAddModelProps> = (props) => {
     </ModalForm>
   );
 };
-export default StockAddModel;
+export default StockSubModel;

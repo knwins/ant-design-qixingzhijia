@@ -3,6 +3,7 @@ import { ModalForm, ProFormDigit, ProFormSelect, ProFormText } from '@ant-design
 import { useIntl } from '@umijs/max';
 import type { FC } from 'react';
 import { ProductItem } from '../data';
+import { queryBusinessSelect } from '@/pages/Operation/service';
 
 type ProductModelProps = {
   done: boolean;
@@ -110,7 +111,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
           ]}
         />
 
-        <ProFormSelect
+        {/* <ProFormSelect
           name="business"
           width="lg"
           fieldProps={{
@@ -128,12 +129,11 @@ const ProductModel: FC<ProductModelProps> = (props) => {
             id: 'pages.product.business.placeholder',
           })}
           request={async () => {
-            return queryOptionSelect({
+            return queryBusinessSelect({
               current: 1,
               pageSize: 1000,
-              type: 'CELL',
             }).then(({ data }) => {
-              return data?.business.map((item) => {
+              return data?.map((item) => {
                 return {
                   label: item.name,
                   value: item.id + '',
@@ -141,7 +141,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
               });
             });
           }}
-        />
+        /> */}
 
         <ProFormSelect
           name="brand"

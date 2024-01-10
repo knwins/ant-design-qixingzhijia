@@ -70,6 +70,12 @@ export default [
         path: '/operation/lease',
         component: './Operation/lease',
       },
+      {
+        name: 'business',
+        icon: 'smile',
+        path: '/operation/business',
+        component: './Operation/business',
+      },
     ],
   },
 

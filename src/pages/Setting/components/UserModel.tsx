@@ -1,5 +1,5 @@
-import { StoreParams } from '@/pages/Operation/data';
-import { queryStoreSelect } from '@/pages/Operation/service';
+import { BusinessParams, StoreParams } from '@/pages/Operation/data';
+import { queryBusinessSelect, queryStoreSelect } from '@/pages/Operation/service';
 import { ProFormRadio } from '@ant-design/pro-components';
 import { ModalForm, ProFormDigit, ProFormSelect, ProFormText } from '@ant-design/pro-form';
 import { useIntl, useRequest } from '@umijs/max';
@@ -71,15 +71,42 @@ const UserModel: FC<UserModelProps> = (props) => {
           });
         }
       }
-
-      //    storeData.map((item) => {
-      //   storeListOptions.push({
-      //     text: item.name,
-      //     value: item.id,
-      //   });
-      // }
     }
     return storeListOptions;
+  };
+
+
+  const handleBusinessSelect = async (key?: any, keywords?: any) => {
+    if (key === '') {
+      return;
+    }
+    const pagination: pagination = {
+      current: 1,
+      pageSize: 10,
+      total: 100,
+    };
+    const options: BusinessParams = {
+      keywords:keywords,
+    };
+    //读取仓库数据
+    const { data: businessData } = await queryBusinessSelect({
+      ...pagination,
+      ...options,
+    });
+
+    const businessListOptions = [];
+    if (businessData) {
+      for (let i = 0; i < businessData.length; i += 1) {
+        const item = businessData[i];
+        if (item) {
+          businessListOptions.push({
+            label: item.name,
+            value: item.id,
+          });
+        }
+      }
+    }
+    return businessListOptions;
   };
 
   //end
@@ -233,6 +260,24 @@ const UserModel: FC<UserModelProps> = (props) => {
           dependencies={['type']}
           request={async (params) => {
             return handleStoreSelect(params.type, params.keyWords);
+          }}
+        />
+
+<ProFormSelect
+          name="business"
+          width="lg"
+          fieldProps={{
+            labelInValue: true,
+          }}
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          label="运营商"
+          dependencies={['type']}
+          request={async (params) => {
+            return handleBusinessSelect(params.keyWords);
           }}
         />
 

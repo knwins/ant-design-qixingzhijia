@@ -8,7 +8,7 @@ import { Button, Drawer, message, Modal, Space, Table, Upload, UploadProps } fro
 import ExportJsonExcel from 'js-export-excel';
 import React, { useRef, useState } from 'react';
 import host from '../../host';
-import { queryStoreSelect } from '../Operation/service';
+import { queryBusinessSelect, queryStoreSelect } from '../Operation/service';
 import { queryOptionSelect } from '../Setting/service';
 import ProductModel from './components/OtherModel';
 import ProductStockModel from './components/ProductStockModel';
@@ -37,6 +37,8 @@ const Spot: React.FC = () => {
   const [exportParams, setExportParams] = useState({}); //导出参数
   const [ids, setIds] = useState<string>();
 
+  let roleGroup = localStorage.getItem('roleGroup');
+
   //国际化
   const intl = useIntl();
   //读取属性数据
@@ -45,6 +47,14 @@ const Spot: React.FC = () => {
       current: 1,
       pageSize: 100000,
       type: 'OTHER',
+    });
+  });
+
+   //读取属性数据
+   const { data: businessData } = useRequest(() => {
+    return queryBusinessSelect({
+      current: 1,
+      pageSize: 100000,
     });
   });
 
@@ -57,17 +67,14 @@ const Spot: React.FC = () => {
   const brandListData = {};
   const specListData = {};
 
-  if (data?.business) {
-    const businessData = data?.business || [];
-    if (businessData) {
-      businessData.map((item) => {
-        businessListOptions[item.id] = {
-          text: item.name,
-          value: item.id,
-        };
-        businessListData[item.id] = item.name;
-      });
-    }
+  if (businessData) {
+    businessData.map((item) => {
+      businessListOptions[item.id] = {
+        text: item.name,
+        value: item.id,
+      };
+      businessListData[item.id] = item.name;
+    });
   }
 
   if (data?.brand) {
@@ -496,6 +503,7 @@ const Spot: React.FC = () => {
       hideInForm: true,
       hideInTable: true,
       hideInDescriptions: true,
+      hideInSearch: roleGroup == 'SystemUser' ? false : true,
       valueEnum: businessListOptions,
     },
 
@@ -607,6 +615,10 @@ const Spot: React.FC = () => {
         AddStore: {
           text: '添库存',
           type: 'AddStore',
+        },
+        SubStore: {
+          text: '减库存',
+          type: 'SubStore',
         },
         InStore: {
           text: '入库',
