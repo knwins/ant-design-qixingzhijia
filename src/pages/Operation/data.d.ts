@@ -17,6 +17,8 @@ export type StoreItem = {
   province: ProvinceCityDistrictItem;
   city: ProvinceCityDistrictItem;
   district: ProvinceCityDistrictItem;
+  latitude?:string;
+  longitude?:string;
 };
 
 export type StoreParams = {

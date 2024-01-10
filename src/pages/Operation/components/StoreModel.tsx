@@ -282,7 +282,7 @@ const StoreModel: FC<StoreModelProps> = (props) => {
           label={intl.formatMessage({
             id: 'pages.store.latitude',
           })}
-          width="lg"
+          width="sm"
           placeholder={intl.formatMessage({
             id: 'pages.store.latitude.placeholder',
           })}
@@ -293,7 +293,7 @@ const StoreModel: FC<StoreModelProps> = (props) => {
           label={intl.formatMessage({
             id: 'pages.store.longitude',
           })}
-          width="lg"
+          width="sm"
           placeholder={intl.formatMessage({
             id: 'pages.store.longitude.placeholder',
           })}
