@@ -397,9 +397,9 @@ export default {
   'pages.store.username.search': '用户名搜索',
   'pages.store.address.placeholder': '请输入站点详细地址',
   'pages.store.address.required': '请输入站点详细地址',
-  'pages.store.latitude': '经度',
-  'pages.store.latitude.placeholder': '经度',
-  'pages.store.longitude': '纬度',
+  'pages.store.latitude': '纬度',
+  'pages.store.latitude.placeholder': '请输入纬度',
+  'pages.store.longitude': '经度',
   'pages.store.longitude.placeholder': '请输入经度',
 
   'pages.product.ids': '批量IDS',
