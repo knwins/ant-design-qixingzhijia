@@ -278,17 +278,6 @@ const StoreModel: FC<StoreModelProps> = (props) => {
         />
 
         <ProFormText
-          name="latitude"
-          label={intl.formatMessage({
-            id: 'pages.store.latitude',
-          })}
-          width="sm"
-          placeholder={intl.formatMessage({
-            id: 'pages.store.latitude.placeholder',
-          })}
-        />
-
-        <ProFormText
           name="longitude"
           label={intl.formatMessage({
             id: 'pages.store.longitude',
@@ -296,6 +285,17 @@ const StoreModel: FC<StoreModelProps> = (props) => {
           width="sm"
           placeholder={intl.formatMessage({
             id: 'pages.store.longitude.placeholder',
+          })}
+        />
+
+        <ProFormText
+          name="latitude"
+          label={intl.formatMessage({
+            id: 'pages.store.latitude',
+          })}
+          width="sm"
+          placeholder={intl.formatMessage({
+            id: 'pages.store.latitude.placeholder',
           })}
         />
       </>
