@@ -562,6 +562,10 @@ const Cabinet: React.FC = () => {
           text: '仓库',
           state: 'STORE',
         },
+        ADDRESS: {
+          text: '租赁地址',
+          state: 'ADDRESS',
+        },
       },
     },
 
