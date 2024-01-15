@@ -52,7 +52,7 @@ const UserModel: FC<UserModelProps> = (props) => {
     };
     const options: StoreParams = {
       type: key,
-      keywords:keywords,
+      keywords: keywords,
     };
     //读取仓库数据
     const { data: storeData } = await queryStoreSelect({
@@ -75,7 +75,6 @@ const UserModel: FC<UserModelProps> = (props) => {
     return storeListOptions;
   };
 
-
   const handleBusinessSelect = async (key?: any, keywords?: any) => {
     if (key === '') {
       return;
@@ -86,7 +85,7 @@ const UserModel: FC<UserModelProps> = (props) => {
       total: 100,
     };
     const options: BusinessParams = {
-      keywords:keywords,
+      keywords: keywords,
     };
     //读取仓库数据
     const { data: businessData } = await queryBusinessSelect({
@@ -241,6 +240,10 @@ const UserModel: FC<UserModelProps> = (props) => {
               label: '仓库',
               value: 'Store',
             },
+            {
+              label: '地址',
+              value: 'Address',
+            },
           ]}
         />
 
@@ -263,7 +266,7 @@ const UserModel: FC<UserModelProps> = (props) => {
           }}
         />
 
-<ProFormSelect
+        <ProFormSelect
           name="business"
           width="lg"
           fieldProps={{

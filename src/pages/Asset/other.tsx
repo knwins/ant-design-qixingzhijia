@@ -388,8 +388,12 @@ const Spot: React.FC = () => {
               category = '电柜';
             } else if (item[vv] == 'CELL') {
               category = '电池';
+            } else if (item[vv] == 'PILE') {
+              category = '充电桩';
             } else if (item[vv] == 'ELECTRIC') {
               category = '电动车';
+            } else if (item[vv] == 'STAGE') {
+              category = '场站';
             } else {
               category = '其他';
             }

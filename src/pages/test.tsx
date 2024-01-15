@@ -1,0 +1,18 @@
+[
+  { key: 'CellBrand', name: 'brand', label: '电池品牌', type: 'CELL' },
+  { key: 'CellSpec', name: 'spec', label: '电池规格', type: 'CELL' },
+  { key: 'CellSize', name: 'size', label: '电池尺寸', type: 'CELL' },
+  { key: 'CabinetBrand', name: 'brand', label: '电柜品牌', type: 'CABINET' },
+  { key: 'CabinetSpec', name: 'spec', label: '电柜规格', type: 'CABINET' },
+  { key: 'CabinetSize', name: 'size', label: '电柜尺寸', type: 'CABINET' },
+  { key: 'PileBrand', name: 'brand', label: '充电桩品牌', type: 'PILE' },
+  { key: 'PileSpec', name: 'spec', label: '充电桩规格', type: 'PILE' },
+  { key: 'PileSize', name: 'size', label: '充电桩尺寸', type: 'PILE' },
+  { key: 'ElectricBrand', name: 'brand', label: '电动车品牌', type: 'ELECTRIC' },
+  { key: 'ElectricSpec', name: 'spec', label: '电动车型号', type: 'ELECTRIC' },
+  { key: 'ElectricSize', name: 'size', label: '电动车尺寸', type: 'ELECTRIC' },
+  { key: 'StageBrand', name: 'brand', label: '场站品牌', type: 'STAGE' },
+  { key: 'StageSpec', name: 'spec', label: '场站型号', type: 'STAGE' },
+  { key: 'StageSize', name: 'size', label: '场站尺寸', type: 'STAGE' },
+  { key: 'OtherBrand', name: 'brand', label: '配件品牌', type: 'OTHER' },{ key: 'OtherSpec', name: 'spec', label: '配件规格', type: 'OTHER' },
+];

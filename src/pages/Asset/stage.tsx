@@ -17,7 +17,7 @@ import host from '../../host';
 import { queryBusinessSelect, queryStoreSelect } from '../Operation/service';
 import { queryOptionSelect } from '../Setting/service';
 import BatchProductLogModel from './components/BatchProductLogModel';
-import ProductModel from './components/ElectricModel';
+import ProductModel from './components/StageModel';
 import ProductLogModel from './components/ProductLogModel';
 import { ProductItem, ProductLogBatchItem, ProductLogItem, ProductLogParams } from './data';
 import {
@@ -32,7 +32,7 @@ import {
   updateProduct,
 } from './service';
 
-const Spot: React.FC = () => {
+const Cabinet: React.FC = () => {
   //const inpRef = useRef();
   const actionRef = useRef<ActionType>();
   const [done, setDone] = useState<boolean>(false);
@@ -53,8 +53,8 @@ const Spot: React.FC = () => {
   const { data } = useRequest(() => {
     return queryOptionSelect({
       current: 1,
-      pageSize: 100,
-      type: 'ELECTRIC',
+      pageSize: 10000,
+      type: 'STAGE',
     });
   });
 
@@ -118,15 +118,11 @@ const Spot: React.FC = () => {
       pageSize: 100000,
     });
   });
-  const storeListOptions = {};
+  // const storeListOptions = {};
   const storeListData = {};
   const storeData = store || [];
   if (storeData) {
     storeData.map((item) => {
-      storeListOptions[item.id] = {
-        text: item.name,
-        value: item.id,
-      };
       storeListData[item.id] = item.name;
     });
   }
@@ -340,7 +336,6 @@ const Spot: React.FC = () => {
 
   //导出数据
   const exportExcel = async () => {
-    //console.log(exportParams);
     const { data: dataList } = await exportProductList({ ...exportParams });
     const columns = [
       'number',
@@ -359,10 +354,10 @@ const Spot: React.FC = () => {
       store: '站点',
       brand: '品牌',
       business: '运营商',
-      spec: '车辆型号',
-      size: '车架号',
-      weight: '车牌号',
-      material: '颜色',
+      spec: '规格',
+      size: '尺寸',
+      weight: '重量',
+      material: '材质',
       category: '类别',
       iccid: 'ICCID',
     };
@@ -378,6 +373,8 @@ const Spot: React.FC = () => {
       Object.keys(item).map((vv) => {
         if (columns.includes(vv)) {
           if (vv === 'store') {
+            console.log(item.store.id);
+            console.log(storeListData[item.store.id]);
             kv[vv] = storeListData[item.store.id] || '';
           } else if (vv === 'brand') {
             kv[vv] = brandListData[item.brand.id] || '';
@@ -385,7 +382,7 @@ const Spot: React.FC = () => {
             kv[vv] = businessListData[item.business.id] || '';
           } else if (vv === 'spec') {
             kv[vv] = specListData[item.spec.id] || '';
-          } else if (vv === 'category'){
+          } else if (vv === 'category') {
             let category = '';
             if (item[vv] == 'CABINET') {
               category = '电柜';
@@ -409,8 +406,10 @@ const Spot: React.FC = () => {
       tableData.push(kv);
     });
 
+    // console.log(tableData);
+
     const option = {
-      fileName: '导出电动车',
+      fileName: '导出电柜',
       datas: [
         {
           sheetData: tableData, // 要导出的原数据
@@ -453,13 +452,32 @@ const Spot: React.FC = () => {
       },
     },
 
+    // {
+    //   title: '类型',
+    //   dataIndex: 'storeType',
+    //   valueType: 'select',
+    //   width: 'sm',
+    //   hideInForm: true,
+    //   hideInTable: true,
+    //   hideInDescriptions:true,
+    //   valueEnum: {
+    //     SITE: {
+    //       text: '站点',
+    //       state: 'SITE',
+    //     },
+    //     STORE: {
+    //       text: '仓库',
+    //       state: 'STORE',
+    //     },
+    //   },
+    // },
     {
       title: <FormattedMessage id="pages.product.number" />,
       dataIndex: 'number',
       hideInForm: true,
       hideInSearch: true,
-      copyable: true,
       valueType: 'text',
+      copyable: true,
       render: (dom, entity) => {
         return (
           <a
@@ -486,13 +504,12 @@ const Spot: React.FC = () => {
     },
 
     {
-      title: <FormattedMessage id="pages.product.store" />,
+      title: '所在位置',
       dataIndex: ['store', 'name'],
       valueType: 'text',
       hideInForm: true,
       hideInSearch: true,
     },
-
     {
       title: <FormattedMessage id="pages.product.brand" />,
       dataIndex: ['brand', 'name'],
@@ -518,43 +535,35 @@ const Spot: React.FC = () => {
       dataIndex: ['business', 'name'],
       valueType: 'text',
       hideInForm: true,
+      hideInTable: true,
       hideInSearch: true,
     },
 
     {
-      title: <FormattedMessage id="pages.electric.model" />,
+      title: <FormattedMessage id="pages.product.spec" />,
       dataIndex: ['spec', 'name'],
       valueType: 'text',
       hideInForm: true,
       hideInSearch: true,
     },
 
-    {
-      title: <FormattedMessage id="pages.electric.chejiahao" />,
-      dataIndex: 'weight',
-      valueType: 'text',
-      hideInSearch: true,
-      hideInForm: true,
-      hideInTable: true,
-    },
-
-    {
-      title: <FormattedMessage id="pages.electric.chepaihao" />,
-      dataIndex: 'weight',
-      valueType: 'text',
-      hideInSearch: true,
-      hideInForm: true,
-      hideInTable: true,
-    },
-
-    {
-      title: <FormattedMessage id="pages.electric.color" />,
-      dataIndex: 'material',
-      valueType: 'text',
-      hideInSearch: true,
-      hideInForm: true,
-      hideInTable: true,
-    },
+    // {
+    //   title: <FormattedMessage id="pages.product.store" />,
+    //   dataIndex: ['store', 'type'],
+    //   valueType: 'select',
+    //   hideInForm: true,
+    //   hideInSearch: true,
+    //   valueEnum: {
+    //     SITE: {
+    //       text: '站点',
+    //       state: 'SITE',
+    //     },
+    //     STORE: {
+    //       text: '仓库',
+    //       state: 'STORE',
+    //     },
+    //   },
+    // },
 
     {
       title: <FormattedMessage id="pages.product.state" />,
@@ -562,20 +571,42 @@ const Spot: React.FC = () => {
       valueType: 'select',
       hideInForm: true,
       valueEnum: {
-        STORE: {
-          text: '仓库中',
-          state: 'STORE',
-        },
-        LEASE: {
-          text: '租赁中',
-          state: 'LEASE',
+        NORMAL: {
+          text: '正常',
+          state: 'NORMAL',
         },
         ABNORMAL: {
           text: '异常',
           state: 'ABNORMAL',
         },
+        INSTALL: {
+          text: '安装中',
+          state: 'INSTALL',
+        },
+        APPLICATION: {
+          text: '申请中',
+          state: 'APPLICATION',
+        },
       },
     },
+
+    // {
+    //   title: <FormattedMessage id="pages.product.weight" />,
+    //   dataIndex: 'weight',
+    //   valueType: 'text',
+    //   hideInSearch: true,
+    //   hideInTable: true,
+    //   hideInForm: true,
+    // },
+
+    // {
+    //   title: <FormattedMessage id="pages.product.material" />,
+    //   dataIndex: 'material',
+    //   valueType: 'text',
+    //   hideInSearch: true,
+    //   hideInTable: true,
+    //   hideInForm: true,
+    // },
 
     {
       title: <FormattedMessage id="pages.option" />,
@@ -591,7 +622,7 @@ const Spot: React.FC = () => {
               setLogVisible(true);
             }}
           >
-            <FormattedMessage id="pages.product.log.create" />
+            调整
           </a>,
           <a
             key="edit"
@@ -651,14 +682,6 @@ const Spot: React.FC = () => {
           text: '出库',
           type: 'OutStore',
         },
-        Lease: {
-          text: '续租',
-          type: 'Lease',
-        },
-        ExitLease: {
-          text: '退租',
-          type: 'ExitLease',
-        },
       },
     },
     {
@@ -685,9 +708,21 @@ const Spot: React.FC = () => {
     // 限制类型
     accept: '.xls,.xlsx', // 限制只能上传表格文件
     showUploadList: false,
-    beforeUpload() {
+    beforeUpload: (file) => {
+      const isXlSXOrXLS =
+        file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+        file.type === 'application/vnd.ms-excel';
+      if (!isXlSXOrXLS) {
+        message.error('只允许上传XLSS/XLS格式文件!');
+        return;
+      }
+      const isLt2M = file.size / 1024 / 1024 < 5;
+      if (!isLt2M) {
+        message.error('只允许上传最大5MB文件');
+        return;
+      }
       message.loading('正在导入中...');
-      return true;
+      return isXlSXOrXLS && isLt2M;
     },
     onChange: (info) => {
       if (info.file.status !== 'uploading') {
@@ -712,7 +747,7 @@ const Spot: React.FC = () => {
     <PageContainer>
       <ProTable<ProductItem>
         headerTitle={intl.formatMessage({
-          id: 'pages.product.electric.title',
+          id: 'pages.product.stage.title',
         })}
         actionRef={actionRef}
         rowKey={(record) => record.id}
@@ -721,10 +756,10 @@ const Spot: React.FC = () => {
         }}
         pagination={paginationProps}
         request={(params) => {
-          const res = queryProductList({ ...params, category: 'ELECTRIC' });
+          const res = queryProductList({ ...params, category: 'STAGE' });
           res.then((value) => {
             params.pageSize = value.total;
-            params.category = 'ELECTRIC';
+            params.category = 'STAGE';
             setExportParams(params);
           });
           return res;
@@ -801,7 +836,7 @@ const Spot: React.FC = () => {
         toolBarRender={() => [
           <a
             onClick={() => {
-              jumpToTemplate(`${host.api}static/template/electric.xlsx`);
+              jumpToTemplate(`${host.api}static/template/cabinet.xlsx`);
             }}
             style={{ fontSize: '12px', verticalAlign: 'center' }}
           >
@@ -920,4 +955,4 @@ const Spot: React.FC = () => {
     </PageContainer>
   );
 };
-export default Spot;
+export default Cabinet;

@@ -27,11 +27,27 @@ export default [
         path: '/asset/cabinet',
         component: './Asset/cabinet',
       },
+
+      {
+        name: 'pile',
+        icon: 'smile',
+        path: '/asset/pile',
+        component: './Asset/pile',
+      },
+
+
       {
         name: 'electric',
         icon: 'smile',
         path: '/asset/electric',
         component: './Asset/electric',
+      },
+
+      {
+        name: 'stage',
+        icon: 'smile',
+        path: '/asset/stage',
+        component: './Asset/stage',
       },
 
       {

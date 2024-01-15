@@ -353,7 +353,7 @@ const Cabinet: React.FC = () => {
       number: '编号',
       store: '站点',
       brand: '品牌',
-      business: '运营商名称',
+      business: '运营商',
       spec: '规格',
       size: '尺寸',
       weight: '重量',
@@ -388,8 +388,12 @@ const Cabinet: React.FC = () => {
               category = '电柜';
             } else if (item[vv] == 'CELL') {
               category = '电池';
+            } else if (item[vv] == 'PILE') {
+              category = '充电桩';
             } else if (item[vv] == 'ELECTRIC') {
               category = '电动车';
+            } else if (item[vv] == 'STAGE') {
+              category = '场站';
             } else {
               category = '其他';
             }
@@ -611,6 +615,8 @@ const Cabinet: React.FC = () => {
       hideInDescriptions: true,
       render: (_, record) => {
         return [
+
+         
           <a
             key="create"
             onClick={() => {
