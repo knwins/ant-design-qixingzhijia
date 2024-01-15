@@ -385,7 +385,7 @@ const Spot: React.FC = () => {
             kv[vv] = businessListData[item.business.id] || '';
           } else if (vv === 'spec') {
             kv[vv] = specListData[item.spec.id] || '';
-          } else if (vv === 'category'){
+          } else if (vv === 'category') {
             let category = '';
             if (item[vv] == 'CABINET') {
               category = '电柜';
@@ -536,15 +536,7 @@ const Spot: React.FC = () => {
       hideInSearch: true,
       hideInForm: true,
       hideInTable: true,
-    },
-
-    {
-      title: <FormattedMessage id="pages.electric.chepaihao" />,
-      dataIndex: 'weight',
-      valueType: 'text',
-      hideInSearch: true,
-      hideInForm: true,
-      hideInTable: true,
+      hideInDescriptions: currentRow?.weight == '' ? true : false,
     },
 
     {
@@ -554,6 +546,7 @@ const Spot: React.FC = () => {
       hideInSearch: true,
       hideInForm: true,
       hideInTable: true,
+      hideInDescriptions: currentRow?.material == '' ? true : false,
     },
 
     {

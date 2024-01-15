@@ -597,6 +597,7 @@ const Cabinet: React.FC = () => {
       hideInSearch: true,
       hideInTable: true,
       hideInForm: true,
+      hideInDescriptions: currentRow?.weight == '' ? true : false,
     },
 
     {
@@ -606,6 +607,7 @@ const Cabinet: React.FC = () => {
       hideInSearch: true,
       hideInTable: true,
       hideInForm: true,
+      hideInDescriptions: currentRow?.material == '' ? true : false,
     },
 
     {

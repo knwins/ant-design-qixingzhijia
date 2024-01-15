@@ -559,6 +559,7 @@ const Cell: React.FC = () => {
       hideInSearch: true,
       hideInForm: true,
       hideInTable: true,
+      hideInDescriptions:currentRow?.weight==''?true:false,
     },
 
     {
@@ -568,6 +569,7 @@ const Cell: React.FC = () => {
       hideInSearch: true,
       hideInForm: true,
       hideInTable: true,
+      hideInDescriptions:currentRow?.material==''?true:false,
     },
 
     {

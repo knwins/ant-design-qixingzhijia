@@ -534,6 +534,7 @@ const Spot: React.FC = () => {
       hideInSearch: true,
       hideInForm: true,
       hideInTable: true,
+      hideInDescriptions: currentRow?.weight == '' ? true : false,
     },
 
     {
@@ -543,6 +544,7 @@ const Spot: React.FC = () => {
       hideInSearch: true,
       hideInForm: true,
       hideInTable: true,
+      hideInDescriptions: currentRow?.material == '' ? true : false,
     },
 
     {
