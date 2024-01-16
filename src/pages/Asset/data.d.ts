@@ -20,6 +20,7 @@ export type ProductItem = {
   store: StoreItem;
   action: string;
   iccid:string;
+  category:string;
 };
 
 export type ProductLogItem = {

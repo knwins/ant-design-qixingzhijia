@@ -226,7 +226,7 @@ const Spot: React.FC = () => {
                 span={1}
                 valueType="text"
                 ellipsis
-                label="柜点地面是否符合安装要求"
+                label={currentRow.product.category=='CABINET'?"柜点地面是否符合安装要求":"场站外观、内部设备摆放是否干净整洁"}
               >
                 {currentRow.input0 ? '是' : '否'}
               </ProDescriptions.Item>
@@ -241,7 +241,7 @@ const Spot: React.FC = () => {
                   return _;
                 }}
                 ellipsis
-                label="地线安装是否符合要求"
+                label={currentRow.product.category=='CABINET'?"地线安装是否符合要求":"场站外部与内部管线、消防设备是否正常"}
               >
                 {currentRow.input1 ? '是' : '否'}
               </ProDescriptions.Item>
@@ -256,7 +256,7 @@ const Spot: React.FC = () => {
                   return _;
                 }}
                 ellipsis
-                label="电线是否完好无破损"
+                label={currentRow.product.category=='CABINET'?"电线是否完好无破损":"场站内部各类设备是否工问题正常"}
               >
                 {currentRow.input2 ? '是' : '否'}
               </ProDescriptions.Item>
@@ -271,7 +271,7 @@ const Spot: React.FC = () => {
                   return _;
                 }}
                 ellipsis
-                label="电柜是否稳固"
+                label={currentRow.product.category=='CABINET'?"电柜是否稳固":"如有广告位广告展示是否正常"}
               >
                 {currentRow.input3 ? '是' : '否'}
               </ProDescriptions.Item>
@@ -286,7 +286,7 @@ const Spot: React.FC = () => {
                   return _;
                 }}
                 ellipsis
-                label="电柜是否完好无损坏"
+                label={currentRow.product.category=='CABINET'?"电柜是否完好无损坏":"工作人员是否在岗"}
               >
                 {currentRow.input4 ? '是' : '否'}
               </ProDescriptions.Item>
