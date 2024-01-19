@@ -596,26 +596,31 @@ const Cell: React.FC = () => {
       valueType: 'select',
       hideInForm: true,
       fieldProps: { width: '60px' },
+      
       valueEnum: {
         NORMAL: {
           text: '正常',
-          state: 'NORMAL',
+          status: 'Processing',
         },
         LEASE: {
           text: '租赁中',
-          state: 'LEASE',
+          status: 'Processing',
         },
         STOCK: {
           text: '库存',
-          state: 'STOCK',
+          status: 'Success',
         },
         CABINET: {
           text: '在柜',
-          state: 'CABINET',
+          status: 'Processing',
         },
         ABNORMAL: {
           text: '异常',
-          state: 'ABNORMAL',
+          status: 'Error',
+        },
+        LOSS: {
+          text: '丢失',
+          status: 'Default',
         },
       },
     },
@@ -627,6 +632,14 @@ const Cell: React.FC = () => {
       hideInDescriptions: true,
       render: (_, record) => {
         return [
+          <a
+            key="detail"
+            onClick={() => {
+             
+            }}
+          >
+            详情
+          </a>,
           <a
             key="create"
             onClick={() => {
