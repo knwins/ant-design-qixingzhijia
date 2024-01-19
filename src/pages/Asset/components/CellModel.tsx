@@ -3,7 +3,6 @@ import { ModalForm, ProFormDigit, ProFormSelect, ProFormText } from '@ant-design
 import { useIntl } from '@umijs/max';
 import type { FC } from 'react';
 import { ProductItem } from '../data';
-import { queryBusinessSelect } from '@/pages/Operation/service';
 
 type ProductModelProps = {
   done: boolean;
@@ -99,7 +98,6 @@ const ProductModel: FC<ProductModelProps> = (props) => {
             id: 'pages.product.state',
           })}
           options={[
-           
             {
               label: '正常',
               value: 'NORMAL',
@@ -124,6 +122,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
               label: '丢失',
               value: 'LOSS',
             },
+            { label: '维修中', value: 'MAINTENANCE' },
           ]}
         />
 

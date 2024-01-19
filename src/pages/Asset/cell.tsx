@@ -622,6 +622,11 @@ const Cell: React.FC = () => {
           text: '丢失',
           status: 'Default',
         },
+        MAINTENANCE: {
+          text: '维修中',
+          status: 'Error',
+        },
+        
       },
     },
 
@@ -632,6 +637,14 @@ const Cell: React.FC = () => {
       hideInDescriptions: true,
       render: (_, record) => {
         return [
+          <a
+            key="log"
+            onClick={() => {
+             
+            }}
+          >
+            添加日志
+          </a>,
           <a
             key="detail"
             onClick={() => {
