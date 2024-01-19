@@ -601,6 +601,18 @@ const Cell: React.FC = () => {
           text: '正常',
           state: 'NORMAL',
         },
+        LEASE: {
+          text: '租赁中',
+          state: 'LEASE',
+        },
+        STOCK: {
+          text: '库存',
+          state: 'STOCK',
+        },
+        CABINET: {
+          text: '在柜',
+          state: 'CABINET',
+        },
         ABNORMAL: {
           text: '异常',
           state: 'ABNORMAL',

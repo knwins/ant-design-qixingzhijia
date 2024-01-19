@@ -23,7 +23,11 @@ export const errorConfig: RequestConfig = {
       // 拦截请求配置，进行个性化处理。
       const token = localStorage.getItem('token');
       const lang = getLocale();
-      const authHeader = { token: `${token}`, lang: `${lang}` };
+      const authHeader = {
+        token: `${token}`,
+        lang: `${lang}`,
+        // 'Content-Type': 'application/json;charset=UTF-8',
+      };
       const url = config?.url?.concat();
       return { ...config, url, headers: authHeader };
     },

@@ -4,7 +4,7 @@ export type TaskItem = {
   status: string;
   startTime: Date;
   endTime:Date;
-  lastUpdateTime:Data;
+  lastUpdateTime:Date;
   takeTime:number;
   number:number;
   httpurl?:string;

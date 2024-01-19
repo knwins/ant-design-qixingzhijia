@@ -8,6 +8,7 @@ import type {
   OptionMarkItem,
   RoleItem,
   SiteConfigItem,
+  TaskItem,
   UserItem,
 } from './data';
 import { PrivilegeItem } from './data';
@@ -240,8 +241,8 @@ export async function querySystemUserSelect(
   params: {
     current?: number;
     pageSize?: number;
-    type?:string;
-    keywords?:string;
+    type?: string;
+    keywords?: string;
   },
   options?: { [key: string]: any },
 ) {
@@ -258,7 +259,10 @@ export async function querySystemUserSelect(
   });
 }
 
-export async function getSystemUser(params: { [id: string]: any }, options?: { [id: string]: any }) {
+export async function getSystemUser(
+  params: { [id: string]: any },
+  options?: { [id: string]: any },
+) {
   return request<{
     data: UserItem;
     success?: boolean;
@@ -282,7 +286,10 @@ export async function addSystemUser(data: { [id: string]: any }, options?: { [id
   });
 }
 
-export async function updateSystemUser(data: { [key: string]: any }, options?: { [key: string]: any }) {
+export async function updateSystemUser(
+  data: { [key: string]: any },
+  options?: { [key: string]: any },
+) {
   return request<{
     success?: boolean;
     errorMessage?: string;
@@ -293,7 +300,10 @@ export async function updateSystemUser(data: { [key: string]: any }, options?: {
   });
 }
 
-export async function removeSystemUser(data: { [id: string]: any }, options?: { [id: string]: any }) {
+export async function removeSystemUser(
+  data: { [id: string]: any },
+  options?: { [id: string]: any },
+) {
   return request<{
     success?: boolean;
     errorMessage?: string;
@@ -418,6 +428,32 @@ export async function removeOption(data: { [id: string]: any }, options?: { [id:
   }>(host.api + 'api/system/option/delete', {
     data,
     method: 'DELETE',
+    ...(options || {}),
+  });
+}
+
+/**Task */
+
+export async function queryTaskList(
+  params: {
+    // query
+    /** 当前的页码 */
+    current?: number;
+    /** 页面的容量 */
+    pageSize?: number;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{
+    data: TaskItem[];
+    /** 列表的内容总数 */
+    total?: number;
+    success?: boolean;
+  }>(host.api + 'api/system/task/list', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
     ...(options || {}),
   });
 }

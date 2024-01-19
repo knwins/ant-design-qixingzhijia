@@ -1,12 +1,12 @@
+import { PageContainer } from '@ant-design/pro-layout';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { PageContainer } from '@ant-design/pro-layout';
 import { FormattedMessage, useIntl } from '@umijs/max';
-import {Typography } from 'antd';
-const { Paragraph } = Typography;
+import { Typography } from 'antd';
 import React, { useRef } from 'react';
 import type { TaskItem } from './data';
 import { queryTaskList } from './service';
+const { Paragraph } = Typography;
 
 const Task: React.FC = () => {
   const actionRef = useRef<ActionType>();
@@ -35,11 +35,9 @@ const Task: React.FC = () => {
       valueType: 'text',
       width: '280px',
     },
-    
- 
 
     {
-      title: "执行URL",
+      title: '执行URL',
       dataIndex: 'httpurl',
       valueType: 'text',
       hideInSearch: true,
@@ -49,11 +47,7 @@ const Task: React.FC = () => {
       render: (text, record, _, action) => {
         if (record.httpurl) {
           return [
-            <Paragraph
-              copyable
-              title={record.httpurl}
-              ellipsis={{ rows: 1, expandable: true }}
-            >
+            <Paragraph copyable title={record.httpurl} ellipsis={{ rows: 1, expandable: true }}>
               {record.httpurl}
             </Paragraph>,
           ];
@@ -90,7 +84,7 @@ const Task: React.FC = () => {
     },
   ];
   return (
-    <PageContainer title=' '>
+    <PageContainer title=" ">
       <ProTable<TaskItem>
         actionRef={actionRef}
         rowKey={(record) => record.id}

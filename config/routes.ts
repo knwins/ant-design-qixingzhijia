@@ -204,7 +204,12 @@ export default [
         path: '/setting/privilege',
         component: './Setting/privilege',
       },
-
+      {
+        name: 'task',
+        icon: 'smile',
+        path: '/setting/task',
+        component: './Setting/task',
+      },
       {
         name: 'option',
         icon: 'smile',

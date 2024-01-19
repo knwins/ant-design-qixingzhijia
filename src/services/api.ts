@@ -15,7 +15,7 @@ export async function login(body: API.LoginParams, options?: { [key: string]: an
   return request<API.LoginResult>(host.api + 'api/user/login', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json;charset=UTF-8',
     },
     data: body,
     ...(options || {}),
