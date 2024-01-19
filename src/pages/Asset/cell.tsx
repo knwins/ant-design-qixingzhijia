@@ -1,5 +1,6 @@
 import {
   DeleteOutlined,
+  DownOutlined,
   ExportOutlined,
   ImportOutlined,
   PlusOutlined,
@@ -10,7 +11,18 @@ import { PageContainer } from '@ant-design/pro-layout';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { FormattedMessage, useIntl, useRequest } from '@umijs/max';
-import { Button, Drawer, message, Modal, Space, Table, Upload, UploadProps } from 'antd';
+import {
+  Button,
+  Drawer,
+  Dropdown,
+  Menu,
+  message,
+  Modal,
+  Space,
+  Table,
+  Upload,
+  UploadProps,
+} from 'antd';
 import ExportJsonExcel from 'js-export-excel';
 import React, { useRef, useState } from 'react';
 import host from '../../host';
@@ -441,6 +453,37 @@ const Cell: React.FC = () => {
     productId: currentRow?.id,
   };
 
+  //更多
+  const MoreBtn: React.FC<{
+    item: ProductItem;
+  }> = ({ item }) => (
+    <Dropdown
+      overlay={
+        <Menu
+          onClick={async ({ key }) => {
+            if (key == 'edit') {
+              setCurrentRow(item);
+              setVisible(true);
+            } else if (key == 'delete') {
+              handleRemove(item);
+            }
+          }}
+        >
+          <Menu.Item key="edit">
+            <FormattedMessage id="pages.edit" />
+          </Menu.Item>
+          <Menu.Item key="delete">
+            <FormattedMessage id="pages.delete" />
+          </Menu.Item>
+        </Menu>
+      }
+    >
+      <a>
+        更多 <DownOutlined />
+      </a>
+    </Dropdown>
+  );
+
   const columns: ProColumns<ProductItem>[] = [
     {
       title: <FormattedMessage id="pages.product.search.keywords" />,
@@ -461,7 +504,7 @@ const Cell: React.FC = () => {
       width: 'sm',
       hideInForm: true,
       hideInTable: true,
-      hideInDescriptions:true,
+      hideInDescriptions: true,
       valueEnum: {
         SITE: {
           text: '站点',
@@ -559,7 +602,7 @@ const Cell: React.FC = () => {
       hideInSearch: true,
       hideInForm: true,
       hideInTable: true,
-      hideInDescriptions:currentRow?.weight==''?true:false,
+      hideInDescriptions: currentRow?.weight == '' ? true : false,
     },
 
     {
@@ -569,7 +612,7 @@ const Cell: React.FC = () => {
       hideInSearch: true,
       hideInForm: true,
       hideInTable: true,
-      hideInDescriptions:currentRow?.material==''?true:false,
+      hideInDescriptions: currentRow?.material == '' ? true : false,
     },
 
     {
@@ -596,7 +639,7 @@ const Cell: React.FC = () => {
       valueType: 'select',
       hideInForm: true,
       fieldProps: { width: '60px' },
-      
+
       valueEnum: {
         NORMAL: {
           text: '正常',
@@ -623,10 +666,9 @@ const Cell: React.FC = () => {
           status: 'Default',
         },
         MAINTENANCE: {
-          text: '维修中',
+          text: '维修',
           status: 'Error',
         },
-        
       },
     },
 
@@ -637,20 +679,10 @@ const Cell: React.FC = () => {
       hideInDescriptions: true,
       render: (_, record) => {
         return [
-          <a
-            key="log"
-            onClick={() => {
-             
-            }}
-          >
-            添加日志
+          <a key="log" onClick={() => {}}>
+            加日志
           </a>,
-          <a
-            key="detail"
-            onClick={() => {
-             
-            }}
-          >
+          <a key="detail" onClick={() => {}}>
             详情
           </a>,
           <a
@@ -662,23 +694,7 @@ const Cell: React.FC = () => {
           >
             <FormattedMessage id="pages.product.log.create" />
           </a>,
-          <a
-            key="edit"
-            onClick={() => {
-              setCurrentRow(record);
-              setVisible(true);
-            }}
-          >
-            <FormattedMessage id="pages.edit" />
-          </a>,
-          <a
-            key="delete"
-            onClick={() => {
-              handleRemove(record);
-            }}
-          >
-            <FormattedMessage id="pages.delete" />
-          </a>,
+          <MoreBtn key="more" item={record} />,
         ];
       },
     },
@@ -719,6 +735,10 @@ const Cell: React.FC = () => {
         OutStore: {
           text: '出库',
           type: 'OutStore',
+        },
+        Log: {
+          text: '日志',
+          type: 'Log',
         },
       },
     },
