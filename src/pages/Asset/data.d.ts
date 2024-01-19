@@ -27,8 +27,9 @@ export type ProductLogItem = {
   id: string;
   content: string;
   createTime: Date;
-  Product: ProductItem;
-  user: UserItem;
+  proudctId:string;
+  Product?: ProductItem;
+  user?: UserItem;
 };
 
 export type ProductLogParams = {

@@ -307,7 +307,7 @@ export async function updateProductLog(
   });
 }
 
-export async function addproductLog(data: { [id: string]: any }, options?: { [id: string]: any }) {
+export async function addProductLog(data: { [id: string]: any }, options?: { [id: string]: any }) {
   return request<{
     success?: boolean;
     errorMessage?: string;

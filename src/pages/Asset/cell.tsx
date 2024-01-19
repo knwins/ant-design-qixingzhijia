@@ -31,9 +31,11 @@ import { queryOptionSelect } from '../Setting/service';
 import BatchProductLogModel from './components/BatchProductLogModel';
 import ProductModel from './components/CellModel';
 import ProductLogModel from './components/ProductLogModel';
+import ProductLogsModel from './components/ProductLogsModel';
 import { ProductItem, ProductLogBatchItem, ProductLogItem, ProductLogParams } from './data';
 import {
   addProduct,
+  addProductLog,
   batchCreateProductLog,
   createProductLog,
   exportProductList,
@@ -54,6 +56,7 @@ const Cell: React.FC = () => {
   const [currentRow, setCurrentRow] = useState<ProductItem>();
   const [currentBatch, setCurrentBatch] = useState<ProductLogBatchItem>();
   const [showDetail, setShowDetail] = useState<boolean>(false);
+  const [logsVisible, setLogsVisible] = useState<boolean>(false);
   const [exportParams, setExportParams] = useState({}); //导出参数
   const [ids, setIds] = useState<string>();
 
@@ -206,6 +209,40 @@ const Cell: React.FC = () => {
     }
   };
 
+  /**
+   * Product 操作
+   * @param fields
+   * @returns
+   */
+  const handleProductLogsAction = async (fields: ProductLogItem) => {
+    const loadingHidde = message.loading(
+      intl.formatMessage({
+        id: 'pages.tip.loading',
+      }),
+    );
+    loadingHidde();
+    try {
+      const { success } = await addProductLog({
+        ...fields,
+      });
+      if (success) {
+        message.success(
+          intl.formatMessage({
+            id: 'pages.tip.success',
+          }),
+        );
+        return true;
+      }
+    } catch (error) {
+      message.error(
+        intl.formatMessage({
+          id: 'pages.tip.error',
+        }),
+      );
+      return false;
+    }
+  };
+
   const handleRemove = (selectedRows: ProductItem) => {
     Modal.confirm({
       title: intl.formatMessage({
@@ -348,6 +385,7 @@ const Cell: React.FC = () => {
     setLogVisible(false);
     setLogAllVisible(false);
     setCurrentRow(undefined);
+    setLogsVisible(false);
   };
 
   const exportExcel = async () => {
@@ -466,9 +504,13 @@ const Cell: React.FC = () => {
               setVisible(true);
             } else if (key == 'delete') {
               handleRemove(item);
+            } else if (key == 'addLogs') {
+              setCurrentRow(item);
+              setLogsVisible(true);
             }
           }}
         >
+          <Menu.Item key="addLogs">日志</Menu.Item>
           <Menu.Item key="edit">
             <FormattedMessage id="pages.edit" />
           </Menu.Item>
@@ -679,9 +721,6 @@ const Cell: React.FC = () => {
       hideInDescriptions: true,
       render: (_, record) => {
         return [
-          <a key="log" onClick={() => {}}>
-            加日志
-          </a>,
           <a key="detail" onClick={() => {}}>
             详情
           </a>,
@@ -970,6 +1009,22 @@ const Cell: React.FC = () => {
         }}
       />
 
+      <ProductLogsModel
+        done={done}
+        visible={logsVisible}
+        productId={currentRow?.id || ''}
+        onDone={handleDone}
+        onSubmit={async (value) => {
+          const success = await handleProductLogsAction(value as ProductLogItem);
+          if (success) {
+            setLogsVisible(false);
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+          }
+        }}
+      />
+
       <Drawer
         width={600}
         open={showDetail}
@@ -994,18 +1049,20 @@ const Cell: React.FC = () => {
         )}
 
         {currentRow ? (
-          <ProTable<ProductLogItem, ProductLogParams>
-            headerTitle={intl.formatMessage({
-              id: 'pages.product.log.title',
-            })}
-            search={false}
-            pagination={paginationProps}
-            options={false}
-            params={cparams}
-            rowKey={(record) => record.id}
-            request={queryProductLogList}
-            columns={tcolumns}
-          />
+          <>
+            <ProTable<ProductLogItem, ProductLogParams>
+              headerTitle={intl.formatMessage({
+                id: 'pages.product.log.title',
+              })}
+              search={false}
+              pagination={paginationProps}
+              options={false}
+              params={cparams}
+              rowKey={(record) => record.id}
+              request={queryProductLogList}
+              columns={tcolumns}
+            />
+          </>
         ) : (
           ''
         )}
