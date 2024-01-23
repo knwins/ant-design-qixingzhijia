@@ -24,6 +24,7 @@ import {
   UploadProps,
 } from 'antd';
 import ExportJsonExcel from 'js-export-excel';
+import moment from 'moment';
 import React, { useRef, useState } from 'react';
 import host from '../../host';
 import { queryBusinessSelect, queryStoreSelect } from '../Operation/service';
@@ -219,8 +220,6 @@ const Cell: React.FC = () => {
     }
   };
 
-  
-  
   const handleProductLogsAction = async (fields: ProductLogItem) => {
     const loadingHidde = message.loading(
       intl.formatMessage({
@@ -409,6 +408,14 @@ const Cell: React.FC = () => {
       'weight',
       'material',
       'iccid',
+      'state',
+      'readTime',
+      'soc',
+      'mileage',
+      'cycleTimes',
+      'runningDays',
+      'averageMileage',
+      'tipMessage',
     ];
     const tableItem = {
       number: '编号',
@@ -422,6 +429,14 @@ const Cell: React.FC = () => {
       material: '材质',
       category: '类别',
       iccid: 'ICCID',
+      state: '状态',
+      readTime: '数据读取时间',
+      soc: 'SOC(%)',
+      mileage: 'GPS里程(KM)',
+      cycleTimes: '循环数(次)',
+      runningDays: '安全运行(天)',
+      averageMileage: '里程(KM/天)',
+      tipMessage: '异常提示',
     };
 
     const headerColumns = columns.map((k) => tableItem[k]);
@@ -460,6 +475,27 @@ const Cell: React.FC = () => {
             kv[vv] = category || '';
           } else {
             kv[vv] = item[vv];
+          }
+        }
+
+        if (vv === 'batteryDetail') {
+          if (item['batteryDetail']?.readTime) {
+            kv['readTime'] = moment(item['batteryDetail']?.readTime).format('YYYY-MM-DD HH:mm:ss');
+          }
+          if (item['batteryDetail']?.mileage) {
+            kv['mileage'] = item['batteryDetail']?.mileage;
+          }
+          if (item['batteryDetail']?.runningDays) {
+            kv['runningDays'] = item['batteryDetail']?.runningDays;
+          }
+          if (item['batteryDetail']?.averageMileage) {
+            kv['averageMileage'] = item['batteryDetail']?.averageMileage;
+          }
+          if (item['batteryDetail']?.tipMessage) {
+            kv['tipMessage'] = item['batteryDetail']?.tipMessage;
+          }
+          if (item['batteryDetail']?.soc) {
+            kv['soc'] = item['batteryDetail']?.soc;
           }
         }
       });
@@ -729,7 +765,7 @@ const Cell: React.FC = () => {
         return [
           <a
             key="detail"
-            onClick={async() => {
+            onClick={async () => {
               const { data } = await getBatteryDetail({
                 id: record.detailId,
               });

@@ -22,6 +22,7 @@ export type ProductItem = {
   iccid: string;
   category: string;
   detailId?:number;
+  batteryDetail?:BatteryDetailItem;
 };
 
 
@@ -109,4 +110,6 @@ export type BatteryDetailItem = {
   runningDays?: string;
   bms_C_FET?: string;
   bms_D_FET?: string;
+  averageMileage?:string;
+  tipMessage?:string;
 };
