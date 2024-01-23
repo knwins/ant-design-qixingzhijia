@@ -396,6 +396,9 @@ const Cell: React.FC = () => {
   };
 
   const exportExcel = async () => {
+
+
+    
     const { data: dataList } = await exportProductList({ ...exportParams });
     const columns = [
       'number',
