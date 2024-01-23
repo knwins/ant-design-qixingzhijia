@@ -397,7 +397,11 @@ const Cell: React.FC = () => {
 
   const exportExcel = async () => {
 
-
+    const loadingHidde = message.loading(
+      intl.formatMessage({
+        id: 'pages.tip.loading',
+      }),
+    );
     
     const { data: dataList } = await exportProductList({ ...exportParams });
     const columns = [
@@ -527,6 +531,7 @@ const Cell: React.FC = () => {
     const toExcel = new ExportJsonExcel(option);
     // 将表格文件保存在本地
     toExcel.saveExcel();
+    loadingHidde();
   };
 
   // 模板下载

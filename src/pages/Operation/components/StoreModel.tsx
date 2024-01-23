@@ -61,7 +61,7 @@ const StoreModel: FC<StoreModelProps> = (props) => {
     >
       <>
         <ProFormDigit name="id" hidden />
-
+        <ProFormDigit name="businessId" hidden />
         <ProFormText
           name="name"
           label={intl.formatMessage({
