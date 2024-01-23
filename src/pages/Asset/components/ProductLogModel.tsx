@@ -23,7 +23,7 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
   const { done, visible, current, onDone, onSubmit, children } = props;
   const intl = useIntl();
 
-  const handleStoreSelect = async (key?: any, keywords?: any) => {
+  const handleStoreSelect = async (key?: any,businessId?: any, keywords?: any) => {
     if (key === '') {
       return;
     }
@@ -33,6 +33,7 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
     };
     const options: StoreParams = {
       type: key,
+      businessId:businessId,
       keywords:keywords,
     };
     //读取仓库数据
@@ -191,7 +192,7 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
                 key = 'STORE';
               }
             }
-            return handleStoreSelect(key, params.keyWords);
+            return handleStoreSelect(key,current?.business?.id, params.keyWords);
           }}
         />
         <ProFormText

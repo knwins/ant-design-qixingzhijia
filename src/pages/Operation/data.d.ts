@@ -23,6 +23,7 @@ export type StoreItem = {
 
 export type StoreParams = {
   type?: string;
+  businessId?:string;
   keywords?: string;
   filter?: Record<string, any[]>;
   sorter?: Record<string, any>;
