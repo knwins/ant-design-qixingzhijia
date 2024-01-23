@@ -497,6 +497,10 @@ const Cell: React.FC = () => {
           if (item['batteryDetail']?.soc) {
             kv['soc'] = item['batteryDetail']?.soc;
           }
+          if (item['batteryDetail']?.cycleTimes) {
+            kv['cycleTimes'] = item['batteryDetail']?.cycleTimes;
+          }
+          
         }
       });
       tableData.push(kv);
