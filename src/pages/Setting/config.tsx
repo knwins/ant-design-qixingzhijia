@@ -176,18 +176,31 @@ const SiteConfigForm: React.FC = () => {
               </Card>
 
               <Card title="其他信息" bordered={false} className={styles.card}>
-                {/* <ProFormText
-                  width="sm"
-                  label="区块高度"
-                  name="blockNubmer"
+                <ProFormTextArea
+                  width="md"
+                  label="你想换电Token"
+                  name="nxhdToken"
                   rules={[
                     {
                       required: true,
-                      message: '请输入区块高度',
+                      message: '请输入你想换电Token',
                     },
                   ]}
-                  placeholder="区块高度"
-                /> */}
+                  placeholder="你想换电Token"
+                />
+
+                <ProFormTextArea
+                  width="md"
+                  label="中骏换电Token"
+                  name="zjhdToken"
+                  rules={[
+                    {
+                      required: true,
+                      message: '请输入中骏换电Token',
+                    },
+                  ]}
+                  placeholder="中骏换电Token"
+                />
 
                 <ProFormText
                   width="lg"

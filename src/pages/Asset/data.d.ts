@@ -1,4 +1,4 @@
-import { BusinessItem } from "../Operation/data";
+import { BusinessItem } from '../Operation/data';
 
 export type Pagination = {
   total?: number;
@@ -19,15 +19,19 @@ export type ProductItem = {
   createTime: Date;
   store: StoreItem;
   action: string;
-  iccid:string;
-  category:string;
+  iccid: string;
+  category: string;
+  detailId?:number;
 };
+
+
+
 
 export type ProductLogItem = {
   id: string;
-  content: string;
-  createTime: Date;
-  proudctId:string;
+  content?: string;
+  createTime?: Date;
+  proudctId?: string;
   Product?: ProductItem;
   user?: UserItem;
 };
@@ -68,4 +72,41 @@ export type ProvinceCityDistrictItem = {
   areacode: string;
   pinyin: string;
   sort: number;
+};
+
+export type BatteryDetailItem = {
+  id: number;
+  readTime: Date;
+  locationType?: string;
+  longitude?: string;
+  latitude?: string;
+  cellInformation?: string;
+  signal?: string;
+  state?: number;
+  speed?: string;
+  mileage?: string;
+  totalVoltage?: string;
+  totalCurrent?: string;
+  soc?: string;
+  residualCapacity?: string;
+  voltageSeries?: string;
+  voltageValue?: string;
+  powerTemperature?: string;
+  coreTemperature?: string;
+  ambientTemperature?: string;
+  batteryControl?: string;
+  equilibriumFlag?: string;
+  totalDischarge?: string;
+  totalCharge?: string;
+  dischargeTime?: string;
+  cycleTimes?: string;
+  bmsAlarm?: string;
+  bmsFault?: string;
+  dtuFault?: string;
+  time: Date;
+  locationTime?: Date;
+  protocol?: string;
+  runningDays?: string;
+  bms_C_FET?: string;
+  bms_D_FET?: string;
 };

@@ -1,6 +1,6 @@
 import { request } from 'umi';
 import host from '../../host';
-import { ProductItem, ProductLogItem, ProductStockItem, ProvinceCityDistrictItem } from './data';
+import { BatteryDetailItem, ProductItem, ProductLogItem, ProductStockItem, ProvinceCityDistrictItem } from './data';
 
 /**product */
 
@@ -353,3 +353,23 @@ export async function queryPCDList(
     ...(options || {}),
   });
 }
+
+ 
+
+
+export async function getBatteryDetail(
+  data: { [id: string]: any },
+  options?: { [id: string]: any },
+) {
+  return request<{
+    data: BatteryDetailItem;
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/manage/product/battery/detail', {
+    data,
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
+

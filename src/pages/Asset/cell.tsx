@@ -29,16 +29,24 @@ import host from '../../host';
 import { queryBusinessSelect, queryStoreSelect } from '../Operation/service';
 import { queryOptionSelect } from '../Setting/service';
 import BatchProductLogModel from './components/BatchProductLogModel';
+import BatteryDetailModel from './components/BatteryDetailModel';
 import ProductModel from './components/CellModel';
 import ProductLogModel from './components/ProductLogModel';
 import ProductLogsModel from './components/ProductLogsModel';
-import { ProductItem, ProductLogBatchItem, ProductLogItem, ProductLogParams } from './data';
+import {
+  BatteryDetailItem,
+  ProductItem,
+  ProductLogBatchItem,
+  ProductLogItem,
+  ProductLogParams,
+} from './data';
 import {
   addProduct,
   addProductLog,
   batchCreateProductLog,
   createProductLog,
   exportProductList,
+  getBatteryDetail,
   queryProductList,
   queryProductLogList,
   removeProduct,
@@ -54,8 +62,10 @@ const Cell: React.FC = () => {
   const [logVisible, setLogVisible] = useState<boolean>(false);
   const [logAllVisible, setLogAllVisible] = useState<boolean>(false);
   const [currentRow, setCurrentRow] = useState<ProductItem>();
+  const [batteryDetail, setBatteryDetail] = useState<BatteryDetailItem>();
   const [currentBatch, setCurrentBatch] = useState<ProductLogBatchItem>();
   const [showDetail, setShowDetail] = useState<boolean>(false);
+  const [showBatteryDetail, setShowBatteryDetail] = useState<boolean>(false);
   const [logsVisible, setLogsVisible] = useState<boolean>(false);
   const [exportParams, setExportParams] = useState({}); //导出参数
   const [ids, setIds] = useState<string>();
@@ -209,11 +219,8 @@ const Cell: React.FC = () => {
     }
   };
 
-  /**
-   * Product 操作
-   * @param fields
-   * @returns
-   */
+  
+  
   const handleProductLogsAction = async (fields: ProductLogItem) => {
     const loadingHidde = message.loading(
       intl.formatMessage({
@@ -386,6 +393,7 @@ const Cell: React.FC = () => {
     setLogAllVisible(false);
     setCurrentRow(undefined);
     setLogsVisible(false);
+    setShowBatteryDetail(false);
   };
 
   const exportExcel = async () => {
@@ -546,6 +554,7 @@ const Cell: React.FC = () => {
       width: 'sm',
       hideInForm: true,
       hideInTable: true,
+      hideInSearch: true,
       hideInDescriptions: true,
       valueEnum: {
         SITE: {
@@ -663,6 +672,7 @@ const Cell: React.FC = () => {
       valueType: 'select',
       hideInForm: true,
       hideInSearch: true,
+      hideInTable: true,
       valueEnum: {
         SITE: {
           text: '站点',
@@ -687,17 +697,13 @@ const Cell: React.FC = () => {
           text: '正常',
           status: 'Processing',
         },
-        LEASE: {
-          text: '租赁中',
-          status: 'Processing',
-        },
-        STOCK: {
-          text: '库存',
+        STORE_STOCK: {
+          text: '仓库库存',
           status: 'Success',
         },
-        CABINET: {
-          text: '在柜',
-          status: 'Processing',
+        SITE_STOCK: {
+          text: '站点库存',
+          status: 'Success',
         },
         ABNORMAL: {
           text: '异常',
@@ -721,7 +727,18 @@ const Cell: React.FC = () => {
       hideInDescriptions: true,
       render: (_, record) => {
         return [
-          <a key="detail" onClick={() => {}}>
+          <a
+            key="detail"
+            onClick={async() => {
+              const { data } = await getBatteryDetail({
+                id: record.detailId,
+              });
+              if (data) {
+                setBatteryDetail(data);
+                setShowBatteryDetail(true);
+              }
+            }}
+          >
             详情
           </a>,
           <a
@@ -1022,7 +1039,15 @@ const Cell: React.FC = () => {
               actionRef.current.reload();
             }
           }
+          return;
         }}
+      />
+
+      <BatteryDetailModel
+        done={done}
+        visible={showBatteryDetail}
+        current={batteryDetail || {}}
+        onDone={handleDone}
       />
 
       <Drawer

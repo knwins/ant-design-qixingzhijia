@@ -13,7 +13,7 @@ type ProductLogsModelProps = {
 
 const ProductLogsModel: FC<ProductLogsModelProps> = (props) => {
 
-  console.log(productId);
+ 
   const { done, visible, productId, onDone, onSubmit, children } = props;
 
   if (!visible) {
