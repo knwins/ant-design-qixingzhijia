@@ -107,17 +107,18 @@ const ProductModel: FC<ProductModelProps> = (props) => {
               value: 'ABNORMAL',
             },
             {
-              label: '租赁中',
-              value: 'LEASE',
+              label: '处理中',
+              value: 'Processing',
             },
             {
-              label: '库存',
-              value: 'STOCK',
+              label: '站点库存',
+              value: 'SITE_STOCK',
             },
             {
-              label: '在柜',
-              value: 'CABINET',
+              label: '仓库库存',
+              value: 'STORE_STOCK',
             },
+
             {
               label: '丢失',
               value: 'LOSS',

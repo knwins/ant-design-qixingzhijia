@@ -737,7 +737,7 @@ const Cell: React.FC = () => {
       valueEnum: {
         NORMAL: {
           text: '正常',
-          status: 'Processing',
+          status: 'Success',
         },
         STORE_STOCK: {
           text: '仓库库存',
@@ -758,6 +758,10 @@ const Cell: React.FC = () => {
         MAINTENANCE: {
           text: '维修',
           status: 'Error',
+        },
+        PROCESSING: {
+          text: '处理中',
+          status: 'Processing',
         },
       },
     },
