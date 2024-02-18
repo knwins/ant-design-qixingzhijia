@@ -85,7 +85,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
           valueEnum={storeListOptions}
         /> */}
 
-        <ProFormSelect
+<ProFormSelect
           name="state"
           width="lg"
           rules={[
@@ -98,20 +98,32 @@ const ProductModel: FC<ProductModelProps> = (props) => {
           })}
           options={[
             {
-              label: '仓库中',
-              value: 'STORE',
-            },
-
-            
-
-            {
-              label: '租赁中',
-              value: 'LEASE',
+              label: '正常',
+              value: 'NORMAL',
             },
             {
               label: '异常',
               value: 'ABNORMAL',
             },
+            {
+              label: '处理中',
+              value: 'Processing',
+            },
+            {
+              label: '站点库存',
+              value: 'SITE_STOCK',
+            },
+            {
+              label: '仓库库存',
+              value: 'STORE_STOCK',
+            },
+
+            {
+              label: '丢失',
+              value: 'LOSS',
+            },
+            { label: '维修', value: 'MAINTENANCE' },
+            { label: '租赁中', value: 'LEASE' },
           ]}
         />
 

@@ -135,16 +135,20 @@ const RoleModel: FC<RoleModelProps> = (props) => {
           name="group"
           options={[
             {
-              label: '系统用户',
+              label: '系统管理员',
               value: 'SystemUser',
             },
             {
-              label: '运营用户',
+              label: '运营管理员',
               value: 'BusinessUser',
             },
             {
-              label: '仓库用户',
+              label: '仓库管理员',
               value: 'StoreUser',
+            },
+            {
+              label: '租赁管理员',
+              value: 'LeaseSystemUser',
             },
             {
               label: '巡检用户',

@@ -359,7 +359,7 @@ const Spot: React.FC = () => {
       store: '站点',
       brand: '品牌',
       business: '运营商',
-      spec: '车辆型号',
+      spec: '型号',
       size: '车架号',
       weight: '车牌号',
       material: '颜色',
@@ -555,17 +555,37 @@ const Spot: React.FC = () => {
       valueType: 'select',
       hideInForm: true,
       valueEnum: {
-        STORE: {
-          text: '仓库中',
-          state: 'STORE',
+        NORMAL: {
+          text: '正常',
+          status: 'Success',
         },
-        LEASE: {
-          text: '租赁中',
-          state: 'LEASE',
+        STORE_STOCK: {
+          text: '仓库库存',
+          status: 'Success',
+        },
+        SITE_STOCK: {
+          text: '站点库存',
+          status: 'Success',
         },
         ABNORMAL: {
           text: '异常',
-          state: 'ABNORMAL',
+          status: 'Error',
+        },
+        LOSS: {
+          text: '丢失',
+          status: 'Default',
+        },
+        MAINTENANCE: {
+          text: '维修',
+          status: 'Error',
+        },
+        PROCESSING: {
+          text: '处理中',
+          status: 'Processing',
+        },
+        LEASE: {
+          text: '租赁中',
+          status: 'Processing',
         },
       },
     },
@@ -667,7 +687,7 @@ const Spot: React.FC = () => {
   const uploadProps: UploadProps = {
     name: 'file',
     multiple: true,
-    action: `${host.api}api/manage/product/import`,
+    action: `${host.api}api/manage/product/electric/import`,
     headers: {
       // 'Content-Type': 'multipart/form-data',
       token: `${token}`,
