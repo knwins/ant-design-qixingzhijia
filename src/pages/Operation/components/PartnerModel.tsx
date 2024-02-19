@@ -2,17 +2,17 @@ import { ModalForm, ProFormDigit, ProFormSelect, ProFormText } from '@ant-design
 import { useIntl } from '@umijs/max';
 import type { FC } from 'react';
 
-import { BusinessItem } from '../data';
+import { PartnerItem } from '../data';
 
-type BusinessModelProps = {
+type PartnerModelProps = {
   done: boolean;
   visible: boolean;
-  current: Partial<BusinessItem> | undefined;
+  current: Partial<PartnerItem> | undefined;
   onDone: () => void;
-  onSubmit: (values: BusinessItem) => void;
+  onSubmit: (values: PartnerItem) => void;
 };
 
-const BusinessModel: FC<BusinessModelProps> = (props) => {
+const PartnerModel: FC<PartnerModelProps> = (props) => {
   const { done, visible, current, onDone, onSubmit, children } = props;
   const intl = useIntl();
 
@@ -21,7 +21,7 @@ const BusinessModel: FC<BusinessModelProps> = (props) => {
   }
 
   return (
-    <ModalForm<BusinessItem>
+    <ModalForm<PartnerItem>
       visible={visible}
       title={
         done
@@ -57,7 +57,7 @@ const BusinessModel: FC<BusinessModelProps> = (props) => {
         <ProFormText
           name="name"
           label={intl.formatMessage({
-            id: 'pages.business.name',
+            id: 'pages.partner.name',
           })}
           width="md"
           rules={[
@@ -66,7 +66,7 @@ const BusinessModel: FC<BusinessModelProps> = (props) => {
             },
           ]}
           placeholder={intl.formatMessage({
-            id: 'pages.business.name.placeholder',
+            id: 'pages.partner.name.placeholder',
           })}
         />
 
@@ -74,19 +74,43 @@ const BusinessModel: FC<BusinessModelProps> = (props) => {
           name="state"
           initialValue="NORMAL"
           label={intl.formatMessage({
-            id: 'pages.business.state',
+            id: 'pages.partner.state',
           })}
           width="xs"
           placeholder={intl.formatMessage({
-            id: 'pages.business.state.placeholder',
+            id: 'pages.partner.state.placeholder',
           })}
           options={[
             { label: '停用', value: 'STOP' },
             { label: '正常', value: 'NORMAL' },
           ]}
         />
+
+        <ProFormText
+          name="username"
+          label="联系人"
+          width="md"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          placeholder="请输入联系人"
+        />
+
+        <ProFormText
+          name="phone"
+          label="联系电话"
+          width="md"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          placeholder="请输入联系电话"
+        />
       </>
     </ModalForm>
   );
 };
-export default BusinessModel;
+export default PartnerModel;

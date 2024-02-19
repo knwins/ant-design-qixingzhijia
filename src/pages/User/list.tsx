@@ -210,6 +210,14 @@ const User: React.FC = () => {
     },
 
     {
+      title: "合作商",
+      dataIndex: ['partner','name'],
+      hideInSearch: true,
+      valueType: 'text',
+      width: 'md',
+    },
+
+    {
       title: <FormattedMessage id="pages.user.email" />,
       dataIndex: 'email',
       valueType: 'text',

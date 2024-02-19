@@ -70,7 +70,7 @@ const LeaseModel: FC<LeaseModelProps> = (props) => {
               current: 1,
               pageSize: 1000,
               category: 'ELECTRIC',
-              state: 'STOCK',
+              state: 'SITE_STOCK',
               keywords: params.keyWords,
             }).then(({ data }) => {
               return data.map((item) => {

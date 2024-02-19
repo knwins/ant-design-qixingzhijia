@@ -1,3 +1,5 @@
+import { BusinessItem, PartnerItem } from "../Operation/data";
+
 export type pagination = {
   total: number;
   pageSize: number;
@@ -14,6 +16,8 @@ export type UserItem = {
   signature: string;
   password:string;
   parent: UserItem;
+  partner:PartnerItem;
+  business:BusinessItem;
 };
 
 export type UserParams = {

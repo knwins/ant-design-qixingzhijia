@@ -473,4 +473,9 @@ export default {
   'pages.business.name':'名称',
   'pages.business.state':'状态',
   'pages.business.state.placeholder':'请选择状态',
+
+  'pages.partner.name':'名称',
+  'pages.partner.name.placeholder':'请输入名称',
+  'pages.partner.state':'状态',
+  'pages.partner.state.placeholder':'请选择状态',
 };

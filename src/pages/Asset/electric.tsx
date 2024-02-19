@@ -687,7 +687,7 @@ const Spot: React.FC = () => {
   const uploadProps: UploadProps = {
     name: 'file',
     multiple: true,
-    action: `${host.api}api/manage/product/electric/import`,
+    action: `${host.api}api/manage/product/import/electric`,
     headers: {
       // 'Content-Type': 'multipart/form-data',
       token: `${token}`,

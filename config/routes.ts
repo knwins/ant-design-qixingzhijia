@@ -92,6 +92,14 @@ export default [
         path: '/operation/business',
         component: './Operation/business',
       },
+
+      {
+        name: 'partner',
+        icon: 'smile',
+        path: '/operation/partner',
+        component: './Operation/partner',
+      },
+
     ],
   },
 

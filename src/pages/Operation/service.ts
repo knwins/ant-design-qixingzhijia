@@ -1,7 +1,13 @@
 import { request } from 'umi';
 import host from '../../host';
-import { UserItem } from '../Setting/data';
-import { BusinessItem, ProductCheckItem, ProductLeaseItem, ProductLeaseOrderItem, StoreItem } from './data';
+import {
+  BusinessItem,
+  PartnerItem,
+  ProductCheckItem,
+  ProductLeaseItem,
+  ProductLeaseOrderItem,
+  StoreItem,
+} from './data';
 
 export async function queryProductCheckList(
   params: {
@@ -79,10 +85,6 @@ export async function removeProductCheck(
     ...(options || {}),
   });
 }
-
-
-
-
 
 /**Store */
 
@@ -347,7 +349,6 @@ export async function removeProductLeaseOrder(
   });
 }
 
-
 /**Business */
 
 export async function queryBusinessList(
@@ -358,7 +359,7 @@ export async function queryBusinessList(
   options?: { [key: string]: any },
 ) {
   return request<{
-    data: StoreItem[];
+    data: BusinessItem[];
     total?: number;
     success?: boolean;
   }>(host.api + 'api/manage/business/list', {
@@ -369,8 +370,6 @@ export async function queryBusinessList(
     ...(options || {}),
   });
 }
-
-
 
 export async function queryBusinessSelect(
   params: {
@@ -437,4 +436,89 @@ export async function removeBusiness(data: { [id: string]: any }, options?: { [i
   });
 }
 
+/**Partner */
 
+export async function queryPartnerList(
+  params: {
+    current?: number;
+    pageSize?: number;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{
+    data: PartnerItem[];
+    total?: number;
+    success?: boolean;
+  }>(host.api + 'api/manage/partner/list', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+export async function queryPartnerSelect(
+  params: {
+    current?: number;
+    pageSize?: number;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{
+    data: PartnerItem[];
+    total?: number;
+    success?: boolean;
+  }>(host.api + 'api/manage/partner/select', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+export async function getPartner(data: { [id: string]: any }, options?: { [id: string]: any }) {
+  return request<{
+    data: PartnerItem;
+    success?: boolean;
+    errorMessage?: number;
+  }>(host.api + 'api/manage/partner/get', {
+    data,
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
+export async function updatePartner(data: { [id: string]: any }, options?: { [id: string]: any }) {
+  return request<{
+    success?: boolean;
+    errorMessage?: number;
+  }>(host.api + 'api/manage/partner/update', {
+    data,
+    method: 'PUT',
+    ...(options || {}),
+  });
+}
+
+export async function addPartner(data: { [id: string]: any }, options?: { [id: string]: any }) {
+  return request<{
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/manage/partner/add', {
+    data,
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
+export async function removePartner(data: { [id: string]: any }, options?: { [id: string]: any }) {
+  return request<{
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/manage/partner/delete', {
+    data,
+    method: 'DELETE',
+    ...(options || {}),
+  });
+}

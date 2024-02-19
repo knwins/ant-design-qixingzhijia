@@ -42,6 +42,21 @@ export type BusinessParams = {
 } & Partial<BusinessItem>;
 
 
+export type PartnerItem = {
+  id: string;
+  name: string;
+  username: string;
+  phone: string;
+};
+
+export type PartnerParams = {
+  keywords?: string;
+  filter?: Record<string, any[]>;
+  sorter?: Record<string, any>;
+} & Partial<PartnerItem>;
+
+
+
 
 
 export type ProductCheckItem = {

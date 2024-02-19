@@ -1,5 +1,5 @@
-import { StoreItem, StoreParams } from '@/pages/Operation/data';
-import { addStore, queryStoreSelect, updateStore } from '@/pages/Operation/service';
+import { PartnerParams, StoreItem, StoreParams } from '@/pages/Operation/data';
+import { addStore, queryPartnerSelect, queryStoreSelect, updateStore } from '@/pages/Operation/service';
 import ProForm, { ModalForm, ProFormDigit, ProFormSelect, ProFormText } from '@ant-design/pro-form';
 import type { ActionType } from '@ant-design/pro-table';
 import { useIntl } from '@umijs/max';
@@ -57,6 +57,38 @@ const UserModel: FC<UserModelProps> = (props) => {
       }
     }
     return storeListOptions;
+  };
+
+
+  const handlePartnerSelect = async ( keywords?: any) => {
+  
+    const pagination: pagination = {
+      current: 1,
+      pageSize: 10,
+      total: 100,
+    };
+    const options: PartnerParams = {
+      keywords: keywords,
+    };
+    //读取仓库数据
+    const { data: partnerData } = await queryPartnerSelect({
+      ...pagination,
+      ...options,
+    });
+    const partnerListOptions = [];
+    if (partnerData) {
+      for (let i = 0; i < partnerData.length; i += 1) {
+        const item = partnerData[i];
+        if (item) {
+          partnerListOptions.push({
+            label: item.name,
+            value: item.id,
+            id: item.id,
+          });
+        }
+      }
+    }
+    return partnerListOptions;
   };
 
   const handleDone = () => {
@@ -146,6 +178,24 @@ const UserModel: FC<UserModelProps> = (props) => {
         }}
       >
         <ProFormDigit name="id" hidden />
+
+        <ProFormSelect
+            name="partner"
+            width="md"
+            showSearch
+            fieldProps={{
+              labelInValue: true,
+            }}
+            label="所属合作商"
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+            request={async (params) => {
+              return handlePartnerSelect(params.keyWords);
+            }}
+          />
 
         <ProFormText
           name="username"

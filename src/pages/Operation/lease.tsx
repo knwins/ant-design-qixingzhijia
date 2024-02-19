@@ -3,9 +3,10 @@ import ProDescriptions, { ProDescriptionsItemProps } from '@ant-design/pro-descr
 import { PageContainer } from '@ant-design/pro-layout';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { FormattedMessage, useIntl } from '@umijs/max';
+import { FormattedMessage, useIntl, useRequest } from '@umijs/max';
 import { Button, Drawer, message, Modal } from 'antd';
 import React, { useRef, useState } from 'react';
+
 import ExitLeaseOrderModel from './components/ExitLeaseOrderModel';
 import LeaseModel from './components/LeaseModel';
 import LeaseOrderModel from './components/LeaseOrderModel';
@@ -13,6 +14,7 @@ import { ProductLeaseItem, ProductLeaseOrderItem, ProductLeaseOrderParams } from
 import {
   addProductLease,
   addProductLeaseOrder,
+  queryPartnerSelect,
   queryProductLeaseList,
   queryProductLeaseOrderList,
   removeProductLease,
@@ -30,6 +32,25 @@ const ProductLease: React.FC = () => {
 
   //国际化
   const intl = useIntl();
+
+  const partnerListOptions = {};
+
+  //读取合作商数据
+  const { data: partnerData } = useRequest(() => {
+    return queryPartnerSelect({
+      current: 1,
+      pageSize: 100000,
+    });
+  });
+  if (partnerData) {
+    partnerData.map((item) => {
+      partnerListOptions[item.id] = {
+        text: item.name,
+        value: item.id,
+      };
+      partnerListOptions[item.id] = item.name;
+    });
+  }
 
   /**
    * Product 操作
@@ -251,6 +272,7 @@ const ProductLease: React.FC = () => {
         },
       },
     },
+
     {
       title: '备注',
       dataIndex: 'inro',
@@ -380,6 +402,25 @@ const ProductLease: React.FC = () => {
         },
       },
     },
+    {
+      title: '合作商',
+      dataIndex: 'partnerId',
+      valueType: 'select',
+      hideInForm: true,
+      hideInTable:true,
+      hideInDescriptions:true,
+      width: 'sm',
+      valueEnum: partnerListOptions,
+    },
+
+    {
+      title: '合作商',
+      dataIndex: ['leaseUser','partner','name'],
+      valueType: 'text',
+      hideInForm: true,
+      hideInSearch:true,
+      width: 'sm',
+    },
 
     {
       title: '起租时间',
@@ -436,8 +477,8 @@ const ProductLease: React.FC = () => {
               <FormattedMessage id="pages.delete" />
             </a>,
           ];
-        }else{
-          return('-')
+        } else {
+          return '-';
         }
       },
     },
