@@ -22,6 +22,7 @@ export type ProductItem = {
   iccid: string;
   category: string;
   detailId?:number;
+  state?:string;
   batteryDetail?:BatteryDetailItem;
 };
 

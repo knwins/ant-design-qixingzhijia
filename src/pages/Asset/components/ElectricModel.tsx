@@ -85,7 +85,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
           valueEnum={storeListOptions}
         /> */}
 
-<ProFormSelect
+        <ProFormSelect
           name="state"
           width="lg"
           rules={[
@@ -96,6 +96,13 @@ const ProductModel: FC<ProductModelProps> = (props) => {
           label={intl.formatMessage({
             id: 'pages.product.state',
           })}
+          hidden={
+            current?.state == 'LEASE' ||
+            current?.state == 'STORE_STOCK' ||
+            current?.state == 'SITE_STOCK'
+              ? true
+              : false
+          }
           options={[
             {
               label: '正常',
