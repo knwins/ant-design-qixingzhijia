@@ -709,6 +709,16 @@ const Cell: React.FC = () => {
     },
 
     {
+      title: <FormattedMessage id="pages.update.time" />,
+      dataIndex: 'updateTime',
+      valueType: 'dateTime',
+      width: '150px',
+      fieldProps: { size: 'small' },
+      hideInSearch: true,
+      ellipsis: true,
+    },
+
+    {
       title: <FormattedMessage id="pages.product.store" />,
       dataIndex: ['store', 'type'],
       valueType: 'select',
@@ -733,7 +743,6 @@ const Cell: React.FC = () => {
       valueType: 'select',
       hideInForm: true,
       fieldProps: { width: '60px' },
-
       valueEnum: {
         NORMAL: {
           text: '正常',

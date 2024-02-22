@@ -169,6 +169,22 @@ const PrivilegeModel: FC<PrivilegeModelProps> = (props) => {
           ]}
         />
 
+        <ProFormRadio.Group
+          hidden={current?.type == 'directory' ? false : true}
+          name="isShow"
+          label="显示状态"
+          options={[
+            {
+              label: '显示',
+              value: 'true',
+            },
+            {
+              label: '隐藏',
+              value: 'false',
+            },
+          ]}
+        />
+
         <ProFormDigit
           name="sort"
           label={intl.formatMessage({

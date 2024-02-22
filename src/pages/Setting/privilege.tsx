@@ -194,6 +194,15 @@ const PrivilegeList: React.FC = () => {
     },
 
     {
+      title: "显示状态",
+      dataIndex: 'isShow',
+      hideInSearch: true,
+      hideInForm: true,
+      valueType: 'text',
+      fieldProps: { precision: 6 },
+    },
+
+    {
       title: <FormattedMessage id="pages.option" />,
       dataIndex: 'option',
       valueType: 'option',
