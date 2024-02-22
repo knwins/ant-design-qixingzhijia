@@ -648,6 +648,7 @@ const Cell: React.FC = () => {
       valueType: 'text',
       hideInForm: true,
       hideInSearch: true,
+      ellipsis: true,
     },
 
     {
@@ -712,7 +713,7 @@ const Cell: React.FC = () => {
       title: <FormattedMessage id="pages.update.time" />,
       dataIndex: 'updateTime',
       valueType: 'dateTime',
-      width: '150px',
+      width:'sm',
       fieldProps: { size: 'small' },
       hideInSearch: true,
       ellipsis: true,
@@ -722,6 +723,7 @@ const Cell: React.FC = () => {
       title: <FormattedMessage id="pages.product.store" />,
       dataIndex: ['store', 'type'],
       valueType: 'select',
+      width:"sm",
       hideInForm: true,
       hideInSearch: true,
       hideInTable: true,
@@ -742,7 +744,7 @@ const Cell: React.FC = () => {
       dataIndex: 'state',
       valueType: 'select',
       hideInForm: true,
-      fieldProps: { width: '60px' },
+      fieldProps: { width: '40px' },
       valueEnum: {
         NORMAL: {
           text: '正常',
