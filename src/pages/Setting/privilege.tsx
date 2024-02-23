@@ -198,8 +198,18 @@ const PrivilegeList: React.FC = () => {
       dataIndex: 'isShow',
       hideInSearch: true,
       hideInForm: true,
-      valueType: 'text',
+      valueType: 'select',
       fieldProps: { precision: 6 },
+      valueEnum: {
+        true: {
+          text: '显示',
+          action: 'true',
+        },
+        false: {
+          text: '蕴藏',
+          action: 'false',
+        }
+      },
     },
 
     {

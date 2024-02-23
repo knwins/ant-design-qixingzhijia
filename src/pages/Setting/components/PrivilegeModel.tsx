@@ -168,7 +168,7 @@ const PrivilegeModel: FC<PrivilegeModelProps> = (props) => {
             },
           ]}
         />
-
+       
         <ProFormRadio.Group
           hidden={current?.type == 'directory' ? false : true}
           name="isShow"
@@ -176,11 +176,11 @@ const PrivilegeModel: FC<PrivilegeModelProps> = (props) => {
           options={[
             {
               label: '显示',
-              value: 'true',
+              value: true,
             },
             {
               label: '隐藏',
-              value: 'false',
+              value: false,
             },
           ]}
         />

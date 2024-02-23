@@ -39,6 +39,7 @@ export type PrivilegeItem = {
   component?: string;
   type?: string;
   sort?: number;
+  isShow?:boolean;
   children?: Array<PrivilegeItem>;
   parent?: PrivilegeItem;
   parentId?: string;

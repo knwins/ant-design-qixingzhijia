@@ -648,6 +648,7 @@ const Cell: React.FC = () => {
       valueType: 'text',
       hideInForm: true,
       hideInSearch: true,
+      width:'lg',
       ellipsis: true,
     },
 
@@ -744,7 +745,7 @@ const Cell: React.FC = () => {
       dataIndex: 'state',
       valueType: 'select',
       hideInForm: true,
-      fieldProps: { width: '40px' },
+      width:'sm',
       valueEnum: {
         NORMAL: {
           text: '正常',
