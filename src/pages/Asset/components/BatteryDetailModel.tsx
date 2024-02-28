@@ -40,14 +40,14 @@ const BatteryDetailModel: FC<BatteryDetailModelProps> = (props) => {
           <ProForm.Group title="基础数据">
             <ProFormSelect name="soc" width="md" label="SOC(%)" readonly />
             <ProFormSelect name="mileage" width="md" label="GPS里程(公里)" readonly />
-            <ProFormSelect name="cycleTimes" width="md" label="循环次数" readonly />
+            <ProFormSelect name="cycleNumbers" width="md" label="循环次数" readonly />
             <ProFormSelect name="runningDays" width="md" label="运行天数" readonly />
           </ProForm.Group>
 
           <ProForm.Group title="其他数据">
             <ProFormSelect name="totalVoltage" width="md" label="总电压(V)" readonly />
             <ProFormSelect name="totalCurrent" width="md" label="总电流(A)" readonly />
-            <ProFormSelect name="totalDischarge" width="md" label="总放电(Ah)" readonly />
+            <ProFormSelect name="totalDisCharge" width="md" label="总放电(Ah)" readonly />
             <ProFormSelect name="totalCharge" width="md" label="总充电(Ah)" readonly />
           </ProForm.Group>
 
