@@ -105,7 +105,7 @@ export type BatteryDetailItem = {
   bmsAlarm?: string;
   bmsFault?: string;
   dtuFault?: string;
-  time: Date;
+  updateTime: Date;
   locationTime?: Date;
   protocol?: string;
   runningDays?: string;

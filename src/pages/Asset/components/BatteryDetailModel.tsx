@@ -34,7 +34,7 @@ const BatteryDetailModel: FC<BatteryDetailModelProps> = (props) => {
         <div className={styles.order}>
           <ProForm.Group title="时间信息">
             <ProFormDateTimePicker name="readTime" label="读取时间" readonly />
-            <ProFormDateTimePicker name="time" label="GPS最后更新时间" readonly />
+            <ProFormDateTimePicker name="updateTime" label="GPS最后更新时间" readonly />
           </ProForm.Group>
 
           <ProForm.Group title="基础数据">
