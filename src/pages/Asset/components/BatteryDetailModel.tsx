@@ -35,6 +35,8 @@ const BatteryDetailModel: FC<BatteryDetailModelProps> = (props) => {
           <ProForm.Group title="时间信息">
             <ProFormDateTimePicker name="readTime" label="读取时间" readonly />
             <ProFormDateTimePicker name="updateTime" label="GPS最后更新时间" readonly />
+            <ProFormDateTimePicker name="state" label="电池状态" readonly />
+            <ProFormDateTimePicker name="controllerState" label="电池控制状态" readonly />
           </ProForm.Group>
 
           <ProForm.Group title="基础数据">
@@ -47,6 +49,7 @@ const BatteryDetailModel: FC<BatteryDetailModelProps> = (props) => {
           <ProForm.Group title="其他数据">
             <ProFormSelect name="totalVoltage" width="md" label="总电压(V)" readonly />
             <ProFormSelect name="totalCurrent" width="md" label="总电流(A)" readonly />
+            <ProFormSelect name="balanceCurrent" width="md" label="剩余容量(Ah)" readonly />
             <ProFormSelect name="totalDisCharge" width="md" label="总放电(Ah)" readonly />
             <ProFormSelect name="totalCharge" width="md" label="总充电(Ah)" readonly />
           </ProForm.Group>
