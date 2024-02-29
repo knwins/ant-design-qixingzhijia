@@ -1,4 +1,9 @@
-import ProForm, { ModalForm, ProFormDateTimePicker, ProFormSelect,ProFormText } from '@ant-design/pro-form';
+import ProForm, {
+  ModalForm,
+  ProFormDateTimePicker,
+  ProFormSelect,
+  ProFormText,
+} from '@ant-design/pro-form';
 import { type FC } from 'react';
 import { BatteryDetailItem } from '../data';
 import styles from './style.less';
@@ -35,6 +40,10 @@ const BatteryDetailModel: FC<BatteryDetailModelProps> = (props) => {
           <ProForm.Group title="时间信息">
             <ProFormDateTimePicker name="readTime" label="读取时间" readonly />
             <ProFormDateTimePicker name="updateTime" label="GPS最后更新时间" readonly />
+          </ProForm.Group>
+
+          <ProForm.Group title="状态数据">
+            <ProFormText name="serviceState" label="业务状态" readonly />
             <ProFormText name="state" label="电池状态" readonly />
             <ProFormText name="controllerState" label="电池控制状态" readonly />
           </ProForm.Group>
@@ -55,10 +64,9 @@ const BatteryDetailModel: FC<BatteryDetailModelProps> = (props) => {
           </ProForm.Group>
 
           <ProForm.Group title="异常数据">
-          <ProFormSelect name="tipMessage" width="md" label="天数超期" readonly />
+            <ProFormSelect name="tipMessage" width="md" label="天数超期" readonly />
           </ProForm.Group>
 
-          
           <ProFormSelect name="address" width="md" label="最新位置信息" readonly />
         </div>
       </>

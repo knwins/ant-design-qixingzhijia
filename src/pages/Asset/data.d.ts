@@ -84,7 +84,9 @@ export type BatteryDetailItem = {
   latitude?: string;
   coreVoltages?: string;
   gsmSignal?: string;
+  serviceState?:string;
   state?: number;
+  controlState?: string;
   speed?: string;
   mileage?: string;
   totalVoltage?: string;
@@ -94,7 +96,6 @@ export type BatteryDetailItem = {
   powerTemperature?: string;
   coreTemperature?: string;
   ambientTemperature?: string;
-  controlState?: string;
   totalDisCharge?: string;
   totalCharge?: string;
   dischargeTime?: string;
