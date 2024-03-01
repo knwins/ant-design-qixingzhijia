@@ -20,7 +20,7 @@ const CabinetDetailModel: FC<CabinetDetailModelProps> = (props) => {
 
   const columns: ProColumns<CabinetDoorItem>[] = [
     {
-      title: <FormattedMessage id="pages.create.time" />,
+      title: <FormattedMessage id="pages.update.time" />,
       dataIndex: 'createTime',
       valueType: 'dateTime',
       width: '150px',
@@ -30,6 +30,12 @@ const CabinetDetailModel: FC<CabinetDetailModelProps> = (props) => {
     {
       title: '柜门编号',
       dataIndex: 'doorNumber',
+      valueType: 'text',
+      hideInSearch: true,
+    },
+    {
+      title: '状态',
+      dataIndex: 'state',
       valueType: 'text',
       hideInSearch: true,
     },
