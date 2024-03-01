@@ -239,6 +239,7 @@ const Cell: React.FC = () => {
         );
         return true;
       }
+      return false;
     } catch (error) {
       message.error(
         intl.formatMessage({

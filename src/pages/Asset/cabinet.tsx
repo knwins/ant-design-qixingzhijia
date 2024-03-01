@@ -1,5 +1,6 @@
 import {
   DeleteOutlined,
+  DownOutlined,
   ExportOutlined,
   ImportOutlined,
   PlusOutlined,
@@ -10,7 +11,18 @@ import { PageContainer } from '@ant-design/pro-layout';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { FormattedMessage, useIntl, useRequest } from '@umijs/max';
-import { Button, Drawer, message, Modal, Space, Table, Upload, UploadProps } from 'antd';
+import {
+  Button,
+  Drawer,
+  Dropdown,
+  Menu,
+  message,
+  Modal,
+  Space,
+  Table,
+  Upload,
+  UploadProps,
+} from 'antd';
 import ExportJsonExcel from 'js-export-excel';
 import React, { useRef, useState } from 'react';
 import host from '../../host';
@@ -20,6 +32,7 @@ import BatchProductLogModel from './components/BatchProductLogModel';
 import CabinetDetailModel from './components/CabinetDetailModel';
 import ProductModel from './components/CabinetModel';
 import ProductLogModel from './components/ProductLogModel';
+import ProductLogsModel from './components/ProductLogsModel';
 import {
   CabinetDetailItem,
   ProductItem,
@@ -29,6 +42,7 @@ import {
 } from './data';
 import {
   addProduct,
+  addProductLog,
   batchCreateProductLog,
   createProductLog,
   exportProductList,
@@ -52,6 +66,7 @@ const Cabinet: React.FC = () => {
   const [showDetail, setShowDetail] = useState<boolean>(false);
   const [exportParams, setExportParams] = useState({}); //导出参数
   const [ids, setIds] = useState<string>();
+  const [logsVisible, setLogsVisible] = useState<boolean>(false);
 
   const [cabinetDetail, setCabinetDetail] = useState<CabinetDetailItem>();
   const [showCabinetDetail, setShowCabinetDetail] = useState<boolean>(false);
@@ -137,6 +152,37 @@ const Cabinet: React.FC = () => {
       storeListData[item.id] = item.name;
     });
   }
+
+
+  const handleProductLogsAction = async (fields: ProductLogItem) => {
+    const loadingHidde = message.loading(
+      intl.formatMessage({
+        id: 'pages.tip.loading',
+      }),
+    );
+    loadingHidde();
+    try {
+      const { success } = await addProductLog({
+        ...fields,
+      });
+      if (success) {
+        message.success(
+          intl.formatMessage({
+            id: 'pages.tip.success',
+          }),
+        );
+        return true;
+      }
+      return false;
+    } catch (error) {
+      message.error(
+        intl.formatMessage({
+          id: 'pages.tip.error',
+        }),
+      );
+      return false;
+    }
+  };
 
   /**
    * Product 操作
@@ -344,6 +390,7 @@ const Cabinet: React.FC = () => {
     setLogAllVisible(false);
     setCurrentRow(undefined);
     setShowCabinetDetail(false);
+    setLogsVisible(false);
   };
 
   //导出数据
@@ -666,49 +713,34 @@ const Cabinet: React.FC = () => {
       valueType: 'option',
       hideInDescriptions: true,
       render: (_, record) => {
-        return [
-          <a
-            key="detail"
-            onClick={async () => {
-              const { data } = await getCabinetDetail({
-                id: record.detailId,
-              });
-              if (data) {
-                setCabinetDetail(data);
-                setShowCabinetDetail(true);
-              }
-            }}
-          >
-            详情
-          </a>,
-
-          <a
-            key="create"
-            onClick={() => {
-              setCurrentRow(record);
-              setLogVisible(true);
-            }}
-          >
-            <FormattedMessage id="pages.product.log.create" />
-          </a>,
-          <a
-            key="edit"
-            onClick={() => {
-              setCurrentRow(record);
-              setVisible(true);
-            }}
-          >
-            <FormattedMessage id="pages.edit" />
-          </a>,
-          <a
-            key="delete"
-            onClick={() => {
-              handleRemove(record);
-            }}
-          >
-            <FormattedMessage id="pages.delete" />
-          </a>,
-        ];
+        {
+          return [
+            <a
+              key="detail"
+              onClick={async () => {
+                const { data } = await getCabinetDetail({
+                  id: record.detailId,
+                });
+                if (data) {
+                  setCabinetDetail(data);
+                  setShowCabinetDetail(true);
+                }
+              }}
+            >
+              详情
+            </a>,
+            <a
+              key="create"
+              onClick={() => {
+                setCurrentRow(record);
+                setLogVisible(true);
+              }}
+            >
+              <FormattedMessage id="pages.product.log.create" />
+            </a>,
+            <MoreBtn key="more" item={record} />,
+          ];
+        }
       },
     },
   ];
@@ -809,6 +841,41 @@ const Cabinet: React.FC = () => {
       return false;
     },
   };
+
+  //更多
+  const MoreBtn: React.FC<{
+    item: ProductItem;
+  }> = ({ item }) => (
+    <Dropdown
+      overlay={
+        <Menu
+          onClick={async ({ key }) => {
+            if (key == 'edit') {
+              setCurrentRow(item);
+              setVisible(true);
+            } else if (key == 'delete') {
+              handleRemove(item);
+            } else if (key == 'addLogs') {
+              setCurrentRow(item);
+              setLogsVisible(true);
+            }
+          }}
+        >
+          <Menu.Item key="addLogs">日志</Menu.Item>
+          <Menu.Item key="edit">
+            <FormattedMessage id="pages.edit" />
+          </Menu.Item>
+          <Menu.Item key="delete">
+            <FormattedMessage id="pages.delete" />
+          </Menu.Item>
+        </Menu>
+      }
+    >
+      <a>
+        更多 <DownOutlined />
+      </a>
+    </Dropdown>
+  );
 
   return (
     <PageContainer>
@@ -961,6 +1028,25 @@ const Cabinet: React.FC = () => {
           }
         }}
       />
+
+
+<ProductLogsModel
+        done={done}
+        visible={logsVisible}
+        productId={currentRow?.id || ''}
+        onDone={handleDone}
+        onSubmit={async (value) => {
+          const success = await handleProductLogsAction(value as ProductLogItem);
+          if (success) {
+            setLogsVisible(false);
+            if (actionRef.current) {
+              actionRef.current.reload();
+            }
+          }
+          return;
+        }}
+      />
+
 
       <BatchProductLogModel
         done={done}
