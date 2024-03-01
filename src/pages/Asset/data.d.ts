@@ -109,3 +109,17 @@ export type BatteryDetailItem = {
   tipMessage?:string;
   address?:string;
 };
+
+
+export type CabinetDetailItem = {
+  id: number;
+  readTime: Date;
+  longitude?: string;
+  latitude?: string;
+  state?: number;
+  powerTemperature?: string;
+  ambientTemperature?: string;
+  updateTime: Date;
+  tipMessage?:string;
+  address?:string;
+};

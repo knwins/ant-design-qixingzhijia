@@ -657,6 +657,7 @@ const Cell: React.FC = () => {
       dataIndex: ['brand', 'name'],
       valueType: 'text',
       hideInForm: true,
+      width:"sm",
       hideInSearch: true,
     },
 
@@ -685,6 +686,8 @@ const Cell: React.FC = () => {
       title: <FormattedMessage id="pages.product.spec" />,
       dataIndex: ['spec', 'name'],
       valueType: 'text',
+      width:"sm",
+      
       hideInForm: true,
       hideInSearch: true,
       hideInTable: true,

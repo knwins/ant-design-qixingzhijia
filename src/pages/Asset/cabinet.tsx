@@ -17,14 +17,22 @@ import host from '../../host';
 import { queryBusinessSelect, queryStoreSelect } from '../Operation/service';
 import { queryOptionSelect } from '../Setting/service';
 import BatchProductLogModel from './components/BatchProductLogModel';
+import CabinetDetailModel from './components/CabinetDetailModel';
 import ProductModel from './components/CabinetModel';
 import ProductLogModel from './components/ProductLogModel';
-import { ProductItem, ProductLogBatchItem, ProductLogItem, ProductLogParams } from './data';
+import {
+  CabinetDetailItem,
+  ProductItem,
+  ProductLogBatchItem,
+  ProductLogItem,
+  ProductLogParams,
+} from './data';
 import {
   addProduct,
   batchCreateProductLog,
   createProductLog,
   exportProductList,
+  getCabinetDetail,
   queryProductList,
   queryProductLogList,
   removeProduct,
@@ -44,6 +52,9 @@ const Cabinet: React.FC = () => {
   const [showDetail, setShowDetail] = useState<boolean>(false);
   const [exportParams, setExportParams] = useState({}); //导出参数
   const [ids, setIds] = useState<string>();
+
+  const [cabinetDetail, setCabinetDetail] = useState<CabinetDetailItem>();
+  const [showCabinetDetail, setShowCabinetDetail] = useState<boolean>(false);
 
   let roleGroup = localStorage.getItem('roleGroup');
 
@@ -332,6 +343,7 @@ const Cabinet: React.FC = () => {
     setLogVisible(false);
     setLogAllVisible(false);
     setCurrentRow(undefined);
+    setShowCabinetDetail(false);
   };
 
   //导出数据
@@ -459,7 +471,7 @@ const Cabinet: React.FC = () => {
       width: 'sm',
       hideInForm: true,
       hideInTable: true,
-      hideInDescriptions:true,
+      hideInDescriptions: true,
       valueEnum: {
         SITE: {
           text: '站点',
@@ -509,12 +521,16 @@ const Cabinet: React.FC = () => {
       valueType: 'text',
       hideInForm: true,
       hideInSearch: true,
+      ellipsis: true,
+      width: 'lg',
     },
     {
       title: <FormattedMessage id="pages.product.brand" />,
       dataIndex: ['brand', 'name'],
       valueType: 'text',
       hideInForm: true,
+      width: 'sm',
+      fieldProps: { width: '60px' },
       hideInSearch: true,
     },
 
@@ -544,6 +560,8 @@ const Cabinet: React.FC = () => {
       dataIndex: ['spec', 'name'],
       valueType: 'text',
       hideInForm: true,
+      width: 'sm',
+      fieldProps: { width: '60px' },
       hideInSearch: true,
     },
 
@@ -552,6 +570,8 @@ const Cabinet: React.FC = () => {
       dataIndex: ['store', 'type'],
       valueType: 'select',
       hideInForm: true,
+      width: 'sm',
+      fieldProps: { width: '60px' },
       hideInSearch: true,
       valueEnum: {
         SITE: {
@@ -568,28 +588,54 @@ const Cabinet: React.FC = () => {
         },
       },
     },
+    {
+      title: <FormattedMessage id="pages.update.time" />,
+      dataIndex: 'updateTime',
+      valueType: 'dateTime',
+      width: 'sm',
+      fieldProps: { size: 'small' },
+      hideInSearch: true,
+      ellipsis: true,
+    },
 
     {
       title: <FormattedMessage id="pages.product.state" />,
       dataIndex: 'state',
       valueType: 'select',
       hideInForm: true,
+      width: 'sm',
       valueEnum: {
         NORMAL: {
           text: '正常',
-          state: 'NORMAL',
+          status: 'Success',
+        },
+        STORE_STOCK: {
+          text: '仓库库存',
+          status: 'Success',
+        },
+        SITE_STOCK: {
+          text: '站点库存',
+          status: 'Success',
         },
         ABNORMAL: {
           text: '异常',
-          state: 'ABNORMAL',
+          status: 'Error',
         },
         INSTALL: {
           text: '安装中',
-          state: 'INSTALL',
+          status: 'Default',
         },
         APPLICATION: {
-          text: '申请中',
-          state: 'APPLICATION',
+          text: 'APPLICATION',
+          status: 'Default',
+        },
+        MAINTENANCE: {
+          text: '维修',
+          status: 'Error',
+        },
+        PROCESSING: {
+          text: '处理中',
+          status: 'Processing',
         },
       },
     },
@@ -601,7 +647,7 @@ const Cabinet: React.FC = () => {
       hideInSearch: true,
       hideInTable: true,
       hideInForm: true,
-      hideInDescriptions:currentRow?.weight==''?true:false,
+      hideInDescriptions: currentRow?.weight == '' ? true : false,
     },
 
     {
@@ -611,7 +657,7 @@ const Cabinet: React.FC = () => {
       hideInSearch: true,
       hideInTable: true,
       hideInForm: true,
-      hideInDescriptions:currentRow?.material==''?true:false,
+      hideInDescriptions: currentRow?.material == '' ? true : false,
     },
 
     {
@@ -621,8 +667,21 @@ const Cabinet: React.FC = () => {
       hideInDescriptions: true,
       render: (_, record) => {
         return [
+          <a
+            key="detail"
+            onClick={async () => {
+              const { data } = await getCabinetDetail({
+                id: record.detailId,
+              });
+              if (data) {
+                setCabinetDetail(data);
+                setShowCabinetDetail(true);
+              }
+            }}
+          >
+            详情
+          </a>,
 
-         
           <a
             key="create"
             onClick={() => {
@@ -918,6 +977,13 @@ const Cabinet: React.FC = () => {
             }
           }
         }}
+      />
+
+      <CabinetDetailModel
+        done={done}
+        visible={showCabinetDetail}
+        current={cabinetDetail || {}}
+        onDone={handleDone}
       />
 
       <Drawer

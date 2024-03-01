@@ -48,6 +48,7 @@ const BatteryDetailModel: FC<BatteryDetailModelProps> = (props) => {
             <ProFormText name="controllerState" label="电池控制状态" readonly />
           </ProForm.Group>
 
+          
           <ProForm.Group title="基础数据">
             <ProFormSelect name="soc" width="md" label="SOC(%)" readonly />
             <ProFormSelect name="mileage" width="md" label="GPS里程(公里)" readonly />

@@ -1,6 +1,6 @@
 import { request } from 'umi';
 import host from '../../host';
-import { BatteryDetailItem, ProductItem, ProductLogItem, ProductStockItem, ProvinceCityDistrictItem } from './data';
+import { BatteryDetailItem, CabinetDetailItem, ProductItem, ProductLogItem, ProductStockItem, ProvinceCityDistrictItem } from './data';
 
 /**product */
 
@@ -371,5 +371,21 @@ export async function getBatteryDetail(
     ...(options || {}),
   });
 }
+
+export async function getCabinetDetail(
+  data: { [id: string]: any },
+  options?: { [id: string]: any },
+) {
+  return request<{
+    data: CabinetDetailItem;
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/manage/product/cabinet/detail', {
+    data,
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
 
 
