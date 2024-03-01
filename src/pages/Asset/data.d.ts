@@ -1,3 +1,4 @@
+import { List } from 'lodash';
 import { BusinessItem } from '../Operation/data';
 
 export type Pagination = {
@@ -122,4 +123,15 @@ export type CabinetDetailItem = {
   updateTime: Date;
   tipMessage?:string;
   address?:string;
+  cabinetDoors?:CabinetDoorItem[];
+};
+
+
+
+export type CabinetDoorItem = {
+  id: number;
+  state?: number;
+  doorNumber?: string;
+  batteryNumber?: string;
+  createTime: Date;
 };

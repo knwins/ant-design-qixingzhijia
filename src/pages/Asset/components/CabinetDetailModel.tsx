@@ -1,11 +1,8 @@
-import ProForm, {
-  ModalForm,
-  ProFormDateTimePicker,
-  ProFormSelect,
-  ProFormText,
-} from '@ant-design/pro-form';
+import { ProColumns, ProTable } from '@ant-design/pro-components';
+import ProForm, { ModalForm, ProFormDateTimePicker, ProFormSelect } from '@ant-design/pro-form';
+import { FormattedMessage } from '@umijs/max';
 import { type FC } from 'react';
-import { CabinetDetailItem } from '../data';
+import { CabinetDetailItem, CabinetDoorItem } from '../data';
 import styles from './style.less';
 type CabinetDetailModelProps = {
   done: boolean;
@@ -20,6 +17,29 @@ const CabinetDetailModel: FC<CabinetDetailModelProps> = (props) => {
   if (!visible) {
     return null;
   }
+
+  const columns: ProColumns<CabinetDoorItem>[] = [
+    {
+      title: <FormattedMessage id="pages.create.time" />,
+      dataIndex: 'createTime',
+      valueType: 'dateTime',
+      width: '150px',
+      fieldProps: { size: 'small' },
+      hideInSearch: true,
+    },
+    {
+      title: '柜门编号',
+      dataIndex: 'doorNumber',
+      valueType: 'text',
+      hideInSearch: true,
+    },
+    {
+      title: '电池编号',
+      dataIndex: 'batteryNumber',
+      valueType: 'text',
+      hideInSearch: true,
+    },
+  ];
 
   return (
     <ModalForm<CabinetDetailItem>
@@ -43,9 +63,13 @@ const CabinetDetailModel: FC<CabinetDetailModelProps> = (props) => {
           </ProForm.Group>
 
           <ProForm.Group title="柜门数据">
-
-            <ProFormText name="serviceState" label="业务状态" readonly />
-            
+            <ProTable<CabinetDoorItem>
+              search={false}
+              options={false}
+              rowKey={(record) => record.id}
+              columns={columns}
+              dataSource={current?.cabinetDoors}
+            />
           </ProForm.Group>
 
           <ProFormSelect name="address" width="md" label="最新位置信息" readonly />
