@@ -558,6 +558,7 @@ const Cabinet: React.FC = () => {
       hideInForm: true,
       hideInTable: true,
       hideInDescriptions: true,
+      hideInSearch: true,
       width: '80px',
       valueEnum: brandListOptions,
     },

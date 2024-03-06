@@ -28,7 +28,7 @@ const CabinetDetailModel: FC<CabinetDetailModelProps> = (props) => {
       hideInSearch: true,
     },
     {
-      title: '柜门编号',
+      title: '编号',
       dataIndex: 'doorNumber',
       valueType: 'text',
       hideInSearch: true,
