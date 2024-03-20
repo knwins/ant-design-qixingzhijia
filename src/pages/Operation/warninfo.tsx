@@ -70,11 +70,12 @@ const WarnInfo: React.FC = () => {
 
   const columns: ProColumns<WarnInfoItem>[] = [
     {
-      title: '采集时间',
-      dataIndex: 'readTime',
+      title: '设备ID',
+      dataIndex: 'devId',
       hideInForm: true,
       hideInSearch: true,
-      valueType: 'dateTime',
+      copyable: true,
+      valueType: 'text',
       width: 'md',
     },
 
@@ -86,21 +87,21 @@ const WarnInfo: React.FC = () => {
       valueType: 'dateTime',
       width: 'md',
     },
+
     {
-      title: '设备ID',
-      dataIndex: 'devId',
+      title: '采集时间',
+      dataIndex: 'readTime',
       hideInForm: true,
       hideInSearch: true,
-      copyable: true,
-      valueType: 'text',
+      valueType: 'dateTime',
       width: 'md',
     },
+
     {
       title: '类型',
       dataIndex: 'alarmType',
       hideInForm: true,
       hideInSearch: true,
-      copyable: true,
       valueType: 'text',
       width: 'md',
     },
@@ -109,7 +110,6 @@ const WarnInfo: React.FC = () => {
       dataIndex: 'alarmMessage',
       hideInForm: true,
       hideInSearch: true,
-      copyable: true,
       valueType: 'text',
       width: 'md',
     },
