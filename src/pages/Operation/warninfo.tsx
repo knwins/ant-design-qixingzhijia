@@ -73,7 +73,6 @@ const WarnInfo: React.FC = () => {
       title: '设备ID',
       dataIndex: 'devId',
       hideInForm: true,
-      hideInSearch: true,
       copyable: true,
       valueType: 'text',
       width: 'md',
@@ -157,7 +156,7 @@ const WarnInfo: React.FC = () => {
         <ProTable<WarnInfoItem>
           actionRef={actionRef}
           rowKey={(record) => record.id}
-          search={false}
+          search={true}
           pagination={paginationProps}
           request={(params) => {
             return queryWarnInfoList({ ...params });
