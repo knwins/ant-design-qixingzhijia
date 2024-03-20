@@ -56,6 +56,11 @@ const BatteryDetailModel: FC<BatteryDetailModelProps> = (props) => {
             <ProFormSelect name="runningDays" width="md" label="运行天数" readonly />
           </ProForm.Group>
 
+          <ProForm.Group title="电芯数据">
+            <ProFormSelect name="totalVoltage" width="md" label="总电压(V)" readonly />
+            
+          </ProForm.Group>
+
           <ProForm.Group title="其他数据">
             <ProFormSelect name="totalVoltage" width="md" label="总电压(V)" readonly />
             <ProFormSelect name="totalCurrent" width="md" label="总电流(A)" readonly />

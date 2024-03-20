@@ -1,16 +1,41 @@
 import { PageContainer } from '@ant-design/pro-layout';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { FormattedMessage, useIntl } from '@umijs/max';
+import { FormattedMessage, useIntl, useRequest } from '@umijs/max';
 import { message, Modal } from 'antd';
 import React, { useRef } from 'react';
 import { WarnInfoItem } from './data';
-import { queryWarnInfoList, removeWarnInfo } from './service';
+import { queryBusinessSelect, queryWarnInfoList, removeWarnInfo } from './service';
 
 const WarnInfo: React.FC = () => {
   const actionRef = useRef<ActionType>();
   //国际化
   const intl = useIntl();
+
+  let roleGroup = localStorage.getItem('roleGroup');
+
+  //读取属性数据
+  const { data: businessData } = useRequest(() => {
+    return queryBusinessSelect({
+      current: 1,
+      pageSize: 100000,
+    });
+  });
+
+  const businessListOptions = {};
+
+  //Execl导出数据使用
+  const businessListData = {};
+
+  if (businessData) {
+    businessData.map((item) => {
+      businessListOptions[item.id] = {
+        text: item.name,
+        value: item.id,
+      };
+      businessListData[item.id] = item.name;
+    });
+  }
 
   const handleRemove = (selectedRows: WarnInfoItem) => {
     Modal.confirm({
@@ -76,6 +101,9 @@ const WarnInfo: React.FC = () => {
       copyable: true,
       valueType: 'text',
       width: 'md',
+      fieldProps: {
+        placeholder: '请输入设备编号',
+      },
     },
 
     {
@@ -97,6 +125,32 @@ const WarnInfo: React.FC = () => {
     },
 
     {
+      title: '选择类型',
+      dataIndex: 'alarmId',
+      hideInForm: true,
+      hideInTable: true,
+      valueType: 'select',
+      width: 'sm',
+      fieldProps: {
+        dropdownStyle: { width: 30 },
+      },
+      valueEnum: {
+        '01002001': {
+          text: 'BMS故障',
+          alarmId: '01002001',
+        },
+        '01003001': {
+          text: 'BMS告警',
+          alarmId: '01003001',
+        },
+        '01001001': {
+          text: 'DTU故障',
+          alarmId: '01001001',
+        },
+      },
+    },
+
+    {
       title: '类型',
       dataIndex: 'alarmType',
       hideInForm: true,
@@ -114,20 +168,32 @@ const WarnInfo: React.FC = () => {
     },
 
     {
-      title: '类型',
+      title: '设备分类',
       dataIndex: 'type',
       valueType: 'select',
       hideInForm: true,
+      width: 'sm',
       valueEnum: {
         '1': {
           text: '电柜',
-          state: '1',
+          type: '1',
         },
         '2': {
           text: '电池',
-          state: '2',
+          type: '2',
         },
       },
+    },
+    {
+      title: <FormattedMessage id="pages.product.business" />,
+      dataIndex: 'businessId',
+      valueType: 'select',
+      width: '80px',
+      hideInForm: true,
+      hideInTable: true,
+      hideInDescriptions: true,
+      hideInSearch: roleGroup == 'SystemUser' ? false : true,
+      valueEnum: businessListOptions,
     },
 
     {
