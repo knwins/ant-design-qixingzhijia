@@ -9,7 +9,7 @@ import BusinessModel from './components/BusinessModel';
 import { BusinessItem } from './data';
 import { addBusiness, queryBusinessList, removeBusiness, updateBusiness } from './service';
 
-const Spot: React.FC = () => {
+const Business: React.FC = () => {
   const actionRef = useRef<ActionType>();
   const [done, setDone] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
@@ -238,4 +238,4 @@ const Spot: React.FC = () => {
     </div>
   );
 };
-export default Spot;
+export default Business;

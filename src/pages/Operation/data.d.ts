@@ -139,3 +139,26 @@ export type BusinessParams = {
 } & Partial<BusinessItem>;
 
 
+
+export type WarnInfoItem = {
+  id: string;
+  readTime: Date;
+  createTime: Date;
+  devId: string;
+  alarmTime: Date;
+  alarmDesc: string;
+  alarmFlag: number;
+  alarmId: string;
+  alarmType: string;
+  alarmMessage: string;
+  type: string;
+  business:BusinessItem;
+};
+
+
+export type WarnInfoParams = {
+  keywords?: string;
+  filter?: Record<string, any[]>;
+  sorter?: Record<string, any>;
+} & Partial<WarnInfoItem>;
+

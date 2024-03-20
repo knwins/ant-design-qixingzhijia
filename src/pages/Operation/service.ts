@@ -522,3 +522,37 @@ export async function removePartner(data: { [id: string]: any }, options?: { [id
     ...(options || {}),
   });
 }
+
+
+/**WarnInfo */
+
+export async function queryWarnInfoList(
+  params: {
+    current?: number;
+    pageSize?: number;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{
+    data: PartnerItem[];
+    total?: number;
+    success?: boolean;
+  }>(host.api + 'api/manage/warninfo/list', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+export async function removeWarnInfo(data: { [id: string]: any }, options?: { [id: string]: any }) {
+  return request<{
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/manage/warninfo/delete', {
+    data,
+    method: 'DELETE',
+    ...(options || {}),
+  });
+}

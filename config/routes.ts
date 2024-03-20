@@ -100,6 +100,13 @@ export default [
         component: './Operation/partner',
       },
 
+      {
+        name: 'warninfo',
+        icon: 'smile',
+        path: '/operation/warninfo',
+        component: './Operation/warninfo',
+      },
+
     ],
   },
 
