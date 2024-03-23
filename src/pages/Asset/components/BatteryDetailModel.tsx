@@ -103,7 +103,7 @@ const BatteryDetailModel: FC<BatteryDetailModelProps> = (props) => {
                     <span>极值</span>
                   </div>
                   <div style={{ width: 20 }}></div>
-                  <div className="volage-zhu">压差:{current?.subtractCoreVoltage}V</div>
+                  <div className="volage-zhu">压差:{current?.subtractCoreVoltage} V</div>
                 </div>
                 <div className="voltage-list">{voltages}</div>
               </div>
