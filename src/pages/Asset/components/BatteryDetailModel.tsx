@@ -92,7 +92,7 @@ const BatteryDetailModel: FC<BatteryDetailModelProps> = (props) => {
 
         {current?.coreVoltagesArry != null ? (
           <>
-            <ProForm.Group title="">
+            <ProForm.Group title="电芯数据">
               <div className="volage-box">
                 <div className="volage-title">
                   <div className="title-left">电池单体电压</div>
