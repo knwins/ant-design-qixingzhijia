@@ -109,6 +109,9 @@ export type BatteryDetailItem = {
   averageMileage?:string;
   tipMessage?:string;
   address?:string;
+  maxCoreVoltage?:string;
+  minCoreVoltage?:string;
+  subtractCoreVoltage?:string;
   coreVoltagesArry?:string[];
 };
 
