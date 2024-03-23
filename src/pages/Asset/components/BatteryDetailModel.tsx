@@ -97,7 +97,7 @@ const BatteryDetailModel: FC<BatteryDetailModelProps> = (props) => {
                 <div className="volage-title">
                   <div className="title-left">电池单体电压</div>
                   <div style={{ width: 33 }}></div>
-                  <div className="min">
+                  <div className="max">
                     <div className="dot"></div>
                     <div style={{ width: 5 }}></div>
                     <span>极值</span>
