@@ -25,6 +25,7 @@ export type ProductItem = {
   detailId?:number;
   state?:string;
   batteryDetail?:BatteryDetailItem;
+  gpsAddress?:string;
 };
 
 

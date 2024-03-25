@@ -649,6 +649,18 @@ const Cell: React.FC = () => {
       valueType: 'text',
       hideInForm: true,
       hideInSearch: true,
+      hideInTable:true,
+      width:'lg',
+      ellipsis: true,
+    },
+
+    {
+      title: 'GPS位置',
+      dataIndex: 'gpsAddress',
+      valueType: 'text',
+      hideInForm: true,
+      hideInSearch: true,
+      hideInTable:currentRow?.gpsAddress==''?true:false,
       width:'lg',
       ellipsis: true,
     },
