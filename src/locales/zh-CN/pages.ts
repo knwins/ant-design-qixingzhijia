@@ -455,7 +455,7 @@ export default {
   'pages._option.mark.placeholder': '请输入标识',
 
   'pages.cabinet.number.search.keywords':'编号搜索',
-  'pages.cabinet.number.search.keywords.placeholder':'请输入电柜编号',
+  'pages.cabinet.number.search.keywords.placeholder':'请输入电柜编号或巡检人号码',
   'pages.cabinet.number':'电柜编号',
   'pages.cabinet.check.username':'巡检员',
   'pages.cabinet.state':'状态',
