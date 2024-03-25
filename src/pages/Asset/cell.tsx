@@ -728,7 +728,7 @@ const Cell: React.FC = () => {
 
     {
       title: <FormattedMessage id="pages.update.time" />,
-      dataIndex: 'updateTime',
+      dataIndex: 'gpsTime',
       valueType: 'dateTime',
       width:'sm',
       fieldProps: { size: 'small' },
