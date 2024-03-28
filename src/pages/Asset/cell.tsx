@@ -407,7 +407,7 @@ const Cell: React.FC = () => {
     const { data: dataList } = await exportProductList({ ...exportParams });
     const columns = [
       'number',
-      'store',
+      'gpsAddress',
       'name',
       'brand',
       'business',
@@ -417,14 +417,14 @@ const Cell: React.FC = () => {
       'readTime',
       'soc',
       'mileage',
-      'cycleTimes',
+      'cycleNumbers',
       'runningDays',
       'averageMileage',
       'tipMessage',
     ];
     const tableItem = {
       number: '编号',
-      store: '站点',
+      gpsAddress: 'GPS位置',
       name: '名称',
       brand: '品牌',
       business: '运营商',
@@ -435,7 +435,7 @@ const Cell: React.FC = () => {
       readTime: '数据读取时间',
       soc: 'SOC(%)',
       mileage: 'GPS里程(KM)',
-      cycleTimes: '循环数(次)',
+      cycleNumbers: '循环数(次)',
       runningDays: '安全运行(天)',
       averageMileage: '里程(KM/天)',
       tipMessage: '异常提示',
@@ -499,8 +499,8 @@ const Cell: React.FC = () => {
           if (item['batteryDetail']?.soc) {
             kv['soc'] = item['batteryDetail']?.soc;
           }
-          if (item['batteryDetail']?.cycleTimes) {
-            kv['cycleTimes'] = item['batteryDetail']?.cycleTimes;
+          if (item['batteryDetail']?.cycleNumbers) {
+            kv['cycleTimes'] = item['batteryDetail']?.cycleNumbers;
           }
           
         }
