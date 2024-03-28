@@ -514,7 +514,7 @@ const Cell: React.FC = () => {
           sheetName: 'Sheet1', // 导出后工作表的名称
           sheetFilter: columns, // 表头
           sheetHeader: headerColumns, // 表头
-          columnWidths: [30,40,40,30,10,10,10,20,10,15,10,10,10,20], // 导出后单元格的宽度
+          columnWidths: [20,30,30,15,5,5,5,5,5,10,5,5,5,10], // 导出后单元格的宽度
         },
       ],
     };
