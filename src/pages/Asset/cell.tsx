@@ -409,10 +409,8 @@ const Cell: React.FC = () => {
       'number',
       'gpsAddress',
       'name',
-      'brand',
       'business',
       'spec',
-      'iccid',
       'state',
       'readTime',
       'soc',
@@ -426,11 +424,9 @@ const Cell: React.FC = () => {
       number: '编号',
       gpsAddress: 'GPS位置',
       name: '名称',
-      brand: '品牌',
       business: '运营商',
       spec: '规格',
       category: '类别',
-      iccid: 'ICCID',
       state: '状态',
       readTime: '数据读取时间',
       soc: 'SOC(%)',
@@ -518,7 +514,7 @@ const Cell: React.FC = () => {
           sheetName: 'Sheet1', // 导出后工作表的名称
           sheetFilter: columns, // 表头
           sheetHeader: headerColumns, // 表头
-          columnWidths: [], // 导出后单元格的宽度
+          columnWidths: [30,40,40,30,10,10,10,20,10,15,10,10,10,20], // 导出后单元格的宽度
         },
       ],
     };
