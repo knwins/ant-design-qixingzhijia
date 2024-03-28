@@ -121,7 +121,7 @@ const BatteryDetailModel: FC<BatteryDetailModelProps> = (props) => {
           <ProFormSelect name="totalCharge" width="md" label="总充电(Ah)" readonly />
         </ProForm.Group>
 
-        {current?.tipMessage != '' ? (
+        {current?.tipMessage ? (
           <>
             <ProForm.Group title="异常数据">
               <ProFormSelect name="tipMessage" width="md" label="天数超期" readonly />

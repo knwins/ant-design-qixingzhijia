@@ -737,6 +737,16 @@ const Cell: React.FC = () => {
     },
 
     {
+      title: <FormattedMessage id="pages.create.time" />,
+      dataIndex: 'createTime',
+      valueType: 'dateTime',
+      width:'sm',
+      fieldProps: { size: 'small' },
+      hideInSearch: true,
+      ellipsis: true,
+    },
+
+    {
       title: <FormattedMessage id="pages.product.store" />,
       dataIndex: ['store', 'type'],
       valueType: 'select',
