@@ -737,7 +737,7 @@ const Cell: React.FC = () => {
     },
 
     {
-      title: <FormattedMessage id="pages.create.time" />,
+      title:'入库时间',
       dataIndex: 'createTime',
       valueType: 'dateTime',
       width:'sm',
