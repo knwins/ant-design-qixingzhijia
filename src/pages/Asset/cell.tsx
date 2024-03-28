@@ -743,6 +743,7 @@ const Cell: React.FC = () => {
       width:'sm',
       fieldProps: { size: 'small' },
       hideInSearch: true,
+      hideInTable:true,
       ellipsis: true,
     },
 
