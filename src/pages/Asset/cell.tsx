@@ -394,18 +394,20 @@ const Cell: React.FC = () => {
     setShowBatteryDetail(false);
   };
 
+  //导出数据
   const exportExcel = async () => {
     const loadingHidde = message.loading(
       intl.formatMessage({
         id: 'pages.tip.loading',
       }),
     );
-    const { success, data } = await exportProductList({ ...exportParams });
+    const { success, data, errorMessage } = await exportProductList({ ...exportParams });
     if (success) {
       loadingHidde();
       window.open(data);
+    } else {
+      message.error(errorMessage);
     }
-    
   };
 
   // 模板下载

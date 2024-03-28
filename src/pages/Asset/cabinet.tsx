@@ -23,7 +23,6 @@ import {
   Upload,
   UploadProps,
 } from 'antd';
-import ExportJsonExcel from 'js-export-excel';
 import React, { useRef, useState } from 'react';
 import host from '../../host';
 import { queryBusinessSelect, queryStoreSelect } from '../Operation/service';
@@ -152,7 +151,6 @@ const Cabinet: React.FC = () => {
       storeListData[item.id] = item.name;
     });
   }
-
 
   const handleProductLogsAction = async (fields: ProductLogItem) => {
     const loadingHidde = message.loading(
@@ -395,94 +393,18 @@ const Cabinet: React.FC = () => {
 
   //导出数据
   const exportExcel = async () => {
-    const { data: dataList } = await exportProductList({ ...exportParams });
-    const columns = [
-      'number',
-      'store',
-      'brand',
-      'business',
-      'spec',
-      'size',
-      'weight',
-      'material',
-      'category',
-      'iccid',
-    ];
-    const tableItem = {
-      number: '编号',
-      store: '站点',
-      brand: '品牌',
-      business: '运营商',
-      spec: '规格',
-      size: '尺寸',
-      weight: '重量',
-      material: '材质',
-      category: '类别',
-      iccid: 'ICCID',
-    };
-
-    const headerColumns = columns.map((k) => tableItem[k]);
-    // console.log(columns);
-    // console.log(headerColumns);
-
-    //数据格式化
-    const tableData: {}[] = [];
-    dataList.forEach((item) => {
-      const kv = {};
-      Object.keys(item).map((vv) => {
-        if (columns.includes(vv)) {
-          if (vv === 'store') {
-            console.log(item.store.id);
-            console.log(storeListData[item.store.id]);
-            kv[vv] = storeListData[item.store.id] || '';
-          } else if (vv === 'brand') {
-            kv[vv] = brandListData[item.brand.id] || '';
-          } else if (vv === 'business') {
-            kv[vv] = businessListData[item.business.id] || '';
-          } else if (vv === 'spec') {
-            kv[vv] = specListData[item.spec.id] || '';
-          } else if (vv === 'category') {
-            let category = '';
-            if (item[vv] == 'CABINET') {
-              category = '电柜';
-            } else if (item[vv] == 'CELL') {
-              category = '电池';
-            } else if (item[vv] == 'PILE') {
-              category = '充电桩';
-            } else if (item[vv] == 'ELECTRIC') {
-              category = '电动车';
-            } else if (item[vv] == 'STAGE') {
-              category = '场站';
-            } else {
-              category = '其他';
-            }
-            kv[vv] = category || '';
-          } else {
-            kv[vv] = item[vv];
-          }
-        }
-      });
-      tableData.push(kv);
-    });
-
-    // console.log(tableData);
-
-    const option = {
-      fileName: '导出电柜',
-      datas: [
-        {
-          sheetData: tableData, // 要导出的原数据
-          sheetName: 'Sheet1', // 导出后工作表的名称
-          sheetFilter: columns, // 表头
-          sheetHeader: headerColumns, // 表头
-          columnWidths: [], // 导出后单元格的宽度
-        },
-      ],
-    };
-    // 将配置对象，配置成 excel 表格文件
-    const toExcel = new ExportJsonExcel(option);
-    // 将表格文件保存在本地
-    toExcel.saveExcel();
+    const loadingHidde = message.loading(
+      intl.formatMessage({
+        id: 'pages.tip.loading',
+      }),
+    );
+    const { success, data, errorMessage } = await exportProductList({ ...exportParams });
+    if (success) {
+      loadingHidde();
+      window.open(data);
+    } else {
+      message.error(errorMessage);
+    }
   };
 
   // 模板下载
@@ -1030,8 +952,7 @@ const Cabinet: React.FC = () => {
         }}
       />
 
-
-<ProductLogsModel
+      <ProductLogsModel
         done={done}
         visible={logsVisible}
         productId={currentRow?.id || ''}
@@ -1047,7 +968,6 @@ const Cabinet: React.FC = () => {
           return;
         }}
       />
-
 
       <BatchProductLogModel
         done={done}
