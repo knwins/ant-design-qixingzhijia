@@ -23,8 +23,6 @@ import {
   Upload,
   UploadProps,
 } from 'antd';
-import ExportJsonExcel from 'js-export-excel';
-import moment from 'moment';
 import React, { useRef, useState } from 'react';
 import host from '../../host';
 import { queryBusinessSelect, queryStoreSelect } from '../Operation/service';
@@ -397,132 +395,17 @@ const Cell: React.FC = () => {
   };
 
   const exportExcel = async () => {
-
     const loadingHidde = message.loading(
       intl.formatMessage({
         id: 'pages.tip.loading',
       }),
     );
+    const { success, data } = await exportProductList({ ...exportParams });
+    if (success) {
+      loadingHidde();
+      window.open(data);
+    }
     
-    const { data: dataList } = await exportProductList({ ...exportParams });
-    const columns = [
-      'number',
-      'gpsAddress',
-      'name',
-      'business',
-      'spec',
-      'state',
-      'readTime',
-      'soc',
-      'mileage',
-      'cycleNumbers',
-      'runningDays',
-      'averageMileage',
-      'tipMessage',
-    ];
-    const tableItem = {
-      number: '编号',
-      gpsAddress: 'GPS位置',
-      name: '名称',
-      business: '运营商',
-      spec: '规格',
-      category: '类别',
-      state: '状态',
-      readTime: '数据读取时间',
-      soc: 'SOC(%)',
-      mileage: 'GPS里程(KM)',
-      cycleNumbers: '循环数(次)',
-      runningDays: '安全运行(天)',
-      averageMileage: '里程(KM/天)',
-      tipMessage: '异常提示',
-    };
-
-    const headerColumns = columns.map((k) => tableItem[k]);
-    // console.log(columns);
-    // console.log(headerColumns);
-
-    //数据格式化
-    const tableData: {}[] = [];
-    dataList.forEach((item) => {
-      const kv = {};
-      Object.keys(item).map((vv) => {
-        if (columns.includes(vv)) {
-          if (vv === 'store') {
-            kv[vv] = storeListData[item.store.id] || '';
-          } else if (vv === 'brand') {
-            kv[vv] = brandListData[item.brand.id] || '';
-          } else if (vv === 'business') {
-            kv[vv] = businessListData[item.business.id] || '';
-          } else if (vv === 'spec') {
-            kv[vv] = specListData[item.spec.id] || '';
-          } else if (vv === 'category') {
-            let category = '';
-            if (item[vv] == 'CABINET') {
-              category = '电柜';
-            } else if (item[vv] == 'CELL') {
-              category = '电池';
-            } else if (item[vv] == 'PILE') {
-              category = '充电桩';
-            } else if (item[vv] == 'ELECTRIC') {
-              category = '电动车';
-            } else if (item[vv] == 'STAGE') {
-              category = '场站';
-            } else {
-              category = '其他';
-            }
-            kv[vv] = category || '';
-          } else {
-            kv[vv] = item[vv];
-          }
-        }
-
-        if (vv === 'batteryDetail') {
-          if (item['batteryDetail']?.readTime) {
-            kv['readTime'] = moment(item['batteryDetail']?.readTime).format('YYYY-MM-DD HH:mm:ss');
-          }
-          if (item['batteryDetail']?.mileage) {
-            kv['mileage'] = item['batteryDetail']?.mileage;
-          }
-          if (item['batteryDetail']?.runningDays) {
-            kv['runningDays'] = item['batteryDetail']?.runningDays;
-          }
-          if (item['batteryDetail']?.averageMileage) {
-            kv['averageMileage'] = item['batteryDetail']?.averageMileage;
-          }
-          if (item['batteryDetail']?.tipMessage) {
-            kv['tipMessage'] = item['batteryDetail']?.tipMessage;
-          }
-          if (item['batteryDetail']?.soc) {
-            kv['soc'] = item['batteryDetail']?.soc;
-          }
-          if (item['batteryDetail']?.cycleNumbers) {
-            kv['cycleTimes'] = item['batteryDetail']?.cycleNumbers;
-          }
-          
-        }
-      });
-      tableData.push(kv);
-    });
-
-    // console.log(tableData);
-
-    const option = {
-      fileName: '导出电池',
-      datas: [
-        {
-          sheetData: tableData, // 要导出的原数据
-          sheetName: 'Sheet1', // 导出后工作表的名称
-          sheetFilter: columns, // 表头
-          sheetHeader: headerColumns, // 表头
-          columnWidths: [20,30,30,15,5,5,5,5,5,10,5,5,5,10], // 导出后单元格的宽度
-        },
-      ],
-    };
-    // 将配置对象，配置成 excel 表格文件
-    const toExcel = new ExportJsonExcel(option);
-    // 将表格文件保存在本地
-    toExcel.saveExcel();
-    loadingHidde();
   };
 
   // 模板下载
@@ -645,8 +528,8 @@ const Cell: React.FC = () => {
       valueType: 'text',
       hideInForm: true,
       hideInSearch: true,
-      hideInTable:true,
-      width:'lg',
+      hideInTable: true,
+      width: 'lg',
       ellipsis: true,
     },
 
@@ -656,8 +539,8 @@ const Cell: React.FC = () => {
       valueType: 'text',
       hideInForm: true,
       hideInSearch: true,
-      hideInTable:currentRow?.gpsAddress==''?true:false,
-      width:'lg',
+      hideInTable: currentRow?.gpsAddress == '' ? true : false,
+      width: 'lg',
       ellipsis: true,
     },
 
@@ -666,7 +549,7 @@ const Cell: React.FC = () => {
       dataIndex: ['brand', 'name'],
       valueType: 'text',
       hideInForm: true,
-      width:"sm",
+      width: 'sm',
       hideInSearch: true,
     },
 
@@ -695,8 +578,8 @@ const Cell: React.FC = () => {
       title: <FormattedMessage id="pages.product.spec" />,
       dataIndex: ['spec', 'name'],
       valueType: 'text',
-      width:"sm",
-      
+      width: 'sm',
+
       hideInForm: true,
       hideInSearch: true,
       hideInTable: true,
@@ -726,20 +609,20 @@ const Cell: React.FC = () => {
       title: <FormattedMessage id="pages.update.time" />,
       dataIndex: 'gpsTime',
       valueType: 'dateTime',
-      width:'sm',
+      width: 'sm',
       fieldProps: { size: 'small' },
       hideInSearch: true,
       ellipsis: true,
     },
 
     {
-      title:'入库时间',
+      title: '入库时间',
       dataIndex: 'createTime',
       valueType: 'dateTime',
-      width:'sm',
+      width: 'sm',
       fieldProps: { size: 'small' },
       hideInSearch: true,
-      hideInTable:true,
+      hideInTable: true,
       ellipsis: true,
     },
 
@@ -747,7 +630,7 @@ const Cell: React.FC = () => {
       title: <FormattedMessage id="pages.product.store" />,
       dataIndex: ['store', 'type'],
       valueType: 'select',
-      width:"sm",
+      width: 'sm',
       hideInForm: true,
       hideInSearch: true,
       hideInTable: true,
@@ -768,7 +651,7 @@ const Cell: React.FC = () => {
       dataIndex: 'state',
       valueType: 'select',
       hideInForm: true,
-      width:'sm',
+      width: 'sm',
       valueEnum: {
         NORMAL: {
           text: '正常',

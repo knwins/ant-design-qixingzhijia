@@ -1,6 +1,13 @@
 import { request } from 'umi';
 import host from '../../host';
-import { BatteryDetailItem, CabinetDetailItem, ProductItem, ProductLogItem, ProductStockItem, ProvinceCityDistrictItem } from './data';
+import {
+  BatteryDetailItem,
+  CabinetDetailItem,
+  ProductItem,
+  ProductLogItem,
+  ProductStockItem,
+  ProvinceCityDistrictItem,
+} from './data';
 
 /**product */
 
@@ -35,9 +42,9 @@ export async function exportProductList(
   options?: { [key: string]: any },
 ) {
   return request<{
-    data: ProductItem[];
-    total?: number;
     success?: boolean;
+    data?: string;
+    errorMessage?: number;
   }>(host.api + 'api/manage/product/export', {
     method: 'POST',
     params: {
@@ -166,8 +173,6 @@ export async function removeProductStock(
     ...(options || {}),
   });
 }
-
-
 
 /**
  * 批量调拨
@@ -354,9 +359,6 @@ export async function queryPCDList(
   });
 }
 
- 
-
-
 export async function getBatteryDetail(
   data: { [id: string]: any },
   options?: { [id: string]: any },
@@ -386,6 +388,3 @@ export async function getCabinetDetail(
     ...(options || {}),
   });
 }
-
-
-
