@@ -497,6 +497,7 @@ const Cabinet: React.FC = () => {
       hideInSearch: true,
       valueType: 'text',
       copyable: true,
+      ellipsis: true,
       render: (dom, entity) => {
         return (
           <a
@@ -520,6 +521,7 @@ const Cabinet: React.FC = () => {
       hideInDescriptions: true,
       hideInSearch: true,
       width: '80px',
+      ellipsis: true,
       valueEnum: brandListOptions,
     },
 
@@ -530,6 +532,7 @@ const Cabinet: React.FC = () => {
       hideInForm: true,
       hideInSearch: true,
       ellipsis: true,
+      
       width: 'lg',
     },
     {
