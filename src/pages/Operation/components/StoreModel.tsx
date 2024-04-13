@@ -113,9 +113,9 @@ const StoreModel: FC<StoreModelProps> = (props) => {
         />
         <ProFormSelect
           name="typeArr"
-          // fieldProps={{
-          //   mode: 'multiple',
-          // }}
+          fieldProps={{
+            mode: 'multiple',
+          }}
           rules={[
             {
               required: true,
