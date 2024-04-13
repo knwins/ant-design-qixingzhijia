@@ -62,7 +62,7 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
     console.log('key:' + key);
     const storeTypeListOptions = [];
 
-    if (key == 'STORE') {
+    if (key.includes('STORE')) {
       storeTypeListOptions.push({
         label: '调拨',
         value: 'StoreToStore',
@@ -72,7 +72,7 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
         value: 'OutStore',
       });
       return storeTypeListOptions;
-    } else if (key == 'SITE') {
+    } else if (key.includes('SITE')) {
       storeTypeListOptions.push({
         label: '入库',
         value: 'InStore',
@@ -178,7 +178,7 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
           request={async (params) => {
             let type = '';
             //当前为仓库时
-            if (current?.store?.type == 'STORE') {
+            if (current?.store?.type.includes('STORE')) {
               if (params.type === 'StoreToStore') {
                 type = 'STORE';
               } else if (params.type === 'OutStore') {
@@ -186,7 +186,7 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
               }
             }
             //当前为站点时
-            if (current?.store?.type == 'SITE') {
+            if (current?.store?.type.includes('SITE')) {
               if (params.type === 'StoreToStore') {
                 type = 'SITE';
               } else if (params.type === 'InStore') {
