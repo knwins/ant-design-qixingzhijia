@@ -107,10 +107,6 @@ const ProductModel: FC<ProductModelProps> = (props) => {
               value: 'ABNORMAL',
             },
             {
-              label: '处理中',
-              value: 'Processing',
-            },
-            {
               label: '站点库存',
               value: 'SITE_STOCK',
             },
@@ -124,8 +120,10 @@ const ProductModel: FC<ProductModelProps> = (props) => {
               value: 'LOSS',
             },
             { label: '维修', value: 'MAINTENANCE' },
+            { label: '处理中', value: 'PROCESSING' },
             { label: '未找到设备', value: 'NOPLATFORM' },
-            { label: '没有数据', value: 'NODATA' },
+            { label: '无定位数据', value: 'NODATA' },
+            { label: '虚拟设备', value: 'VIRTUAL' },
             { label: '调拨中', value: 'STORETOSTORE' },
           ]}
         />

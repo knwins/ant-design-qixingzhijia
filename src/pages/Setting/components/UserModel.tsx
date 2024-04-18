@@ -47,7 +47,7 @@ const UserModel: FC<UserModelProps> = (props) => {
     }
     const pagination: pagination = {
       current: 1,
-      pageSize: 10,
+      pageSize: 5000,
       total: 100,
     };
     const options: StoreParams = {
@@ -108,10 +108,6 @@ const UserModel: FC<UserModelProps> = (props) => {
     return businessListOptions;
   };
 
-
-
-  
-
   //end
 
   return (
@@ -120,14 +116,15 @@ const UserModel: FC<UserModelProps> = (props) => {
       title={
         done
           ? null
-          : `${current?.id
-            ? intl.formatMessage({
-              id: 'pages.edit',
-            })
-            : intl.formatMessage({
-              id: 'pages.new',
-            })
-          }`
+          : `${
+              current?.id
+                ? intl.formatMessage({
+                    id: 'pages.edit',
+                  })
+                : intl.formatMessage({
+                    id: 'pages.new',
+                  })
+            }`
       }
       className={styles.standardListForm}
       width={640}
@@ -253,19 +250,16 @@ const UserModel: FC<UserModelProps> = (props) => {
             },
           ]}
         />
-      
+
         <ProFormSelect
           name="storeArr"
           width="lg"
+          tooltip="默认为用户所属运营商及下级的站点"
+          placeholder="默认为用户所属运营商及下级的站点"
           fieldProps={{
-            mode: 'multiple'
+            mode: 'multiple',
           }}
           showSearch
-          rules={[
-            {
-              required: true,
-            },
-          ]}
           label="站点权限"
           initialValue={current?.storeArr} // 设置默认选中的值
           dependencies={['storeType']}

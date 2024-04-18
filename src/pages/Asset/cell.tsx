@@ -34,6 +34,7 @@ import {
   createProductLog,
   exportProductList,
   getBatteryDetail,
+  getProductDetail,
   queryProductList,
   queryProductLogList,
   removeProduct,
@@ -291,13 +292,12 @@ const Cell: React.FC = () => {
     });
   };
 
-
   const handleSubmitProductLog = (selectedRows: ProductItem) => {
     Modal.confirm({
       title: intl.formatMessage({
         id: 'pages.tip.title',
       }),
-      content: "您要确认到货吗?",
+      content: '您要确认到货吗?',
       okText: intl.formatMessage({
         id: 'pages.tip.ok',
       }),
@@ -350,15 +350,12 @@ const Cell: React.FC = () => {
     loadingHidde();
     try {
       if (fields.action == 'batchCreateProductLog') {
-        const { success } = await batchCreateProductLog({
+        const { success, data } = await batchCreateProductLog({
           ...fields,
         });
         if (success) {
-          message.success(
-            intl.formatMessage({
-              id: 'pages.tip.success',
-            }),
-          );
+          message.success(data);
+
           return true;
         }
       }
@@ -487,7 +484,12 @@ const Cell: React.FC = () => {
           }}
         >
           <Menu.Item key="addLogs">日志</Menu.Item>
-          <Menu.Item key="submitProductLog">确认到货</Menu.Item>
+          <Menu.Item
+            key="submitProductLog"
+            disabled={item?.state === 'STORETOSTORE' ? false : true}
+          >
+            确认到货
+          </Menu.Item>
           <Menu.Item key="edit">
             <FormattedMessage id="pages.edit" />
           </Menu.Item>
@@ -547,11 +549,21 @@ const Cell: React.FC = () => {
       valueType: 'text',
       render: (dom, entity) => {
         return (
-          <a
-            onClick={() => {
-              setCurrentRow(entity);
+          <a onClick={async () => {
+            const { success, data } = await getProductDetail({
+              id: entity.id,
+            });
+            const loadingHidde = message.loading(
+              intl.formatMessage({
+                id: 'pages.tip.loading',
+              }),
+            );
+            if (success) {
+              loadingHidde();
+              setCurrentRow(data);
               setShowDetail(true);
-            }}
+            }
+          }}
           >
             {dom}
           </a>
@@ -567,11 +579,12 @@ const Cell: React.FC = () => {
       hideInTable: true,
       hideInDescriptions: true,
       valueEnum: brandListOptions,
-      ellipsis: true
+      hideInSearch:true,
+      ellipsis: true,
     },
 
     {
-      title: '所在位置',
+      title: '所属站点或仓库',
       dataIndex: ['store', 'name'],
       valueType: 'text',
       hideInForm: true,
@@ -579,6 +592,17 @@ const Cell: React.FC = () => {
       hideInTable: true,
       width: 'lg',
       ellipsis: true,
+    },
+
+    {
+      title: '位置',
+      dataIndex: ['address', 'fullAddress'],
+      valueType: 'text',
+      hideInForm: true,
+      hideInSearch: true,
+      ellipsis: true,
+      hideInTable: true,
+      width: 'lg',
     },
 
     {
@@ -604,18 +628,6 @@ const Cell: React.FC = () => {
 
     {
       title: <FormattedMessage id="pages.product.business" />,
-      dataIndex: 'businessId',
-      valueType: 'select',
-      hideInForm: true,
-      hideInTable: true,
-      fieldProps: { width: '60px' },
-      hideInDescriptions: true,
-      valueEnum: businessListOptions,
-      hideInSearch: roleGroup == 'SystemUser' ? false : true,
-    },
-
-    {
-      title: <FormattedMessage id="pages.product.business" />,
       dataIndex: ['business', 'name'],
       valueType: 'text',
       hideInForm: true,
@@ -628,7 +640,6 @@ const Cell: React.FC = () => {
       dataIndex: ['spec', 'name'],
       valueType: 'text',
       width: 'sm',
-
       hideInForm: true,
       hideInSearch: true,
       hideInTable: true,
@@ -641,7 +652,7 @@ const Cell: React.FC = () => {
       hideInSearch: true,
       hideInForm: true,
       hideInTable: true,
-      hideInDescriptions: currentRow?.weight == '' ? true : false,
+      hideInDescriptions: currentRow?.weight ? false : true,
     },
 
     {
@@ -651,7 +662,19 @@ const Cell: React.FC = () => {
       hideInSearch: true,
       hideInForm: true,
       hideInTable: true,
-      hideInDescriptions: currentRow?.material == '' ? true : false,
+      hideInDescriptions: currentRow?.material ? false : true,
+    },
+
+    {
+      title: <FormattedMessage id="pages.product.business" />,
+      dataIndex: 'businessId',
+      valueType: 'select',
+      hideInForm: true,
+      hideInTable: true,
+      fieldProps: { width: '60px' },
+      hideInDescriptions: true,
+      valueEnum: businessListOptions,
+      hideInSearch: roleGroup == 'SystemUser' ? false : true,
     },
 
     {
@@ -676,13 +699,12 @@ const Cell: React.FC = () => {
 
     {
       title: 'GPS时间',
-      dataIndex: 'gpsTime',
+      dataIndex: 'locationTime',
       valueType: 'dateTime',
       width: 'sm',
       fieldProps: { size: 'small' },
       hideInSearch: true,
       sorter: true,
-      ellipsis: true,
     },
 
     {
@@ -696,7 +718,7 @@ const Cell: React.FC = () => {
     },
 
     {
-      title: '换电信息',
+      title: '运营信息',
       dataIndex: 'exchangeContent',
       valueType: 'text',
       width: 'sm',
@@ -724,6 +746,7 @@ const Cell: React.FC = () => {
       fieldProps: { size: 'small' },
       hideInSearch: true,
       hideInTable: params?.state == 'ABNORMAL' ? false : true,
+      hideInDescriptions: currentRow?.state == 'ABNORMAL' ? false : true,
       sorter: true,
     },
 
@@ -735,6 +758,7 @@ const Cell: React.FC = () => {
       hideInForm: true,
       hideInSearch: true,
       hideInTable: true,
+      hideInDescriptions:true,
       valueEnum: {
         SITE: {
           text: '站点',
@@ -787,8 +811,12 @@ const Cell: React.FC = () => {
           status: 'Error',
         },
         NODATA: {
-          text: '没有数据',
+          text: '无定位数据',
           status: 'Error',
+        },
+        VIRTUAL: {
+          text: '虚拟设备',
+          status: 'Default',
         },
         STORETOSTORE: {
           text: '调拨中',
@@ -866,7 +894,7 @@ const Cell: React.FC = () => {
           text: '调拨',
           type: 'StoreToStore',
         },
-       
+
         OutStore: {
           text: '出库',
           type: 'OutStore',
@@ -921,8 +949,8 @@ const Cell: React.FC = () => {
               case 'exchangeTotal':
                 sorter.field = 'exchange_total';
                 break;
-              case 'gpsTime':
-                sorter.field = 'gps_time';
+              case 'locationTime':
+                sorter.field = 'location_time';
                 break;
               case 'abnormalDays':
                 sorter.field = 'abnormal_days';
@@ -1036,6 +1064,7 @@ const Cell: React.FC = () => {
             setVisible(false);
             setCurrentRow(undefined);
             if (actionRef.current) {
+              actionRef.current?.clearSelected;
               actionRef.current.reload();
             }
           }
@@ -1053,6 +1082,7 @@ const Cell: React.FC = () => {
             setLogVisible(false);
             setCurrentRow(undefined);
             if (actionRef.current) {
+              actionRef.current?.clearSelected;
               actionRef.current.reload();
             }
           }
@@ -1069,7 +1099,9 @@ const Cell: React.FC = () => {
           if (success) {
             setLogAllVisible(false);
             setCurrentBatch(undefined);
+
             if (actionRef.current) {
+              actionRef.current?.clearSelected;
               actionRef.current.reload();
             }
           }
@@ -1086,6 +1118,7 @@ const Cell: React.FC = () => {
           if (success) {
             setLogsVisible(false);
             if (actionRef.current) {
+              actionRef.current?.clearSelected;
               actionRef.current.reload();
             }
           }
@@ -1110,17 +1143,19 @@ const Cell: React.FC = () => {
         closable={false}
       >
         {currentRow?.id && (
-          <ProDescriptions<ProductItem>
-            column={1}
-            title={currentRow?.name}
-            request={async () => ({
-              data: currentRow || {},
-            })}
-            params={{
-              id: currentRow?.id,
-            }}
-            columns={columns as ProDescriptionsItemProps<ProductItem>[]}
-          />
+          <>
+            <ProDescriptions<ProductItem>
+              column={1}
+              title={currentRow?.name}
+              request={async () => ({
+                data: currentRow || {},
+              })}
+              params={{
+                id: currentRow?.id,
+              }}
+              columns={columns as ProDescriptionsItemProps<ProductItem>[]}
+            />
+          </>
         )}
 
         {currentRow ? (

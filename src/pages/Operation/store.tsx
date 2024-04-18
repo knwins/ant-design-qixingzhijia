@@ -1,19 +1,15 @@
-import { DeleteOutlined, ExportOutlined, ImportOutlined, PlusOutlined } from '@ant-design/icons';
+import { DeleteOutlined, ExportOutlined, PlusOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
 import type { ActionType, ProColumns } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { FormattedMessage, useIntl } from '@umijs/max';
-import { Button, message, Modal, Space, Table, Upload, UploadProps } from 'antd';
-import ExportJsonExcel from 'js-export-excel';
+import { FormattedMessage, useIntl, useRequest } from '@umijs/max';
+import { Button, message, Modal, Space, Table } from 'antd';
 import React, { useRef, useState } from 'react';
-import host from '../../host';
-import { queryPCDList } from '../Asset/service';
-import { queryUserList } from '../User/service';
 import StoreModel from './components/StoreModel';
 import { StoreItem } from './data';
 import {
   addStore,
-  exportStoreList,
+  queryBusinessSelect,
   queryStoreList,
   removeStore,
   removeStoreByIds,
@@ -30,6 +26,27 @@ const Spot: React.FC = () => {
 
   //国际化
   const intl = useIntl();
+  let roleGroup = localStorage.getItem('roleGroup');
+  //读取属性数据
+  const { data: businessData } = useRequest(() => {
+    return queryBusinessSelect({
+      current: 1,
+      pageSize: 100000,
+    });
+  });
+
+  const businessListOptions = {};
+  //Execl导出数据使用
+  const businessListData = {};
+  if (businessData) {
+    businessData.map((item) => {
+      businessListOptions[item.id] = {
+        text: item.name,
+        value: item.id,
+      };
+      businessListData[item.id] = item.name;
+    });
+  }
 
   const handleAction = async (fields: StoreItem) => {
     const loadingHidde = message.loading(
@@ -40,7 +57,6 @@ const Spot: React.FC = () => {
     loadingHidde();
     try {
       if (fields.id != null) {
-        fields.userId = fields.user.key;
         const { success } = await updateStore({
           ...fields,
         });
@@ -54,7 +70,6 @@ const Spot: React.FC = () => {
           return true;
         }
       } else {
-        
         const { success } = await addStore({
           ...fields,
         });
@@ -136,98 +151,6 @@ const Spot: React.FC = () => {
     setCurrentRow(undefined);
   };
 
-  //导出数据
-  const exportExcel = async () => {
-    const { data: dataList } = await exportStoreList({ ...exportParams });
-    const columns = ['name', 'province', 'city', 'district', 'address', 'type', 'user'];
-    const tableItem = {
-      name: '名称',
-      province: '省份',
-      city: '城市',
-      district: '区县',
-      address: '详细地址',
-      type: '分类',
-      user: '负责人',
-    };
-    const headerColumns = columns.map((k) => tableItem[k]);
-
-    //读取PCD数据
-    const { data: pcdData } = await queryPCDList({
-      current: 1,
-      pageSize: 5000,
-    });
-    const pcdListOptions = {};
-    if (pcdData) {
-      const data = pcdData || [];
-      if (data) {
-        data.map((item) => {
-          pcdListOptions[item.id] = item.name;
-        });
-      }
-    }
-
-    //分类数据
-    const typeOptions = {};
-    typeOptions['STORE'] = '仓库';
-    typeOptions['SITE'] = '站点';
-    typeOptions['SITE'] = '地址';
-
-    //用户数据
-    const { data: userData } = await queryUserList({
-      current: 1,
-      pageSize: 5000,
-    });
-    const userListOptions = {};
-    if (userData) {
-      const data = userData || [];
-      if (data) {
-        data.map((item) => {
-          userListOptions[item.id] = item.username + '-' + item.nick;
-        });
-      }
-    }
-
-    //数据格式化
-    const tableData: {}[] = [];
-    dataList.forEach((item) => {
-      const kv = {};
-      Object.keys(item).map((vv) => {
-        if (columns.includes(vv)) {
-          if (vv === 'province') {
-            kv[vv] = pcdListOptions[item.province.id];
-          } else if (vv === 'city') {
-            kv[vv] = pcdListOptions[item.city.id] || '';
-          } else if (vv === 'district') {
-            kv[vv] = pcdListOptions[item.district.id] || '';
-          } else if (vv === 'user') {
-            kv[vv] = userListOptions[item.user.id] || '';
-          } else if (vv === 'type') {
-            kv[vv] = typeOptions[item.type] || '';
-          } else {
-            kv[vv] = item[vv];
-          }
-        }
-      });
-      tableData.push(kv);
-    });
-    const option = {
-      fileName: 'Store-' + new Date(),
-      datas: [
-        {
-          sheetData: tableData, // 要导出的原数据
-          sheetName: 'Sheet1', // 导出后工作表的名称
-          sheetFilter: columns, // 表头
-          sheetHeader: headerColumns, // 表头
-          columnWidths: [], // 导出后单元格的宽度
-        },
-      ],
-    };
-    // 将配置对象，配置成 excel 表格文件
-    const toExcel = new ExportJsonExcel(option);
-    // 将表格文件保存在本地
-    toExcel.saveExcel();
-  };
-
   const paginationProps = {
     showSizeChanger: true,
     showQuickJumper: true,
@@ -247,6 +170,18 @@ const Spot: React.FC = () => {
     },
 
     {
+      title: <FormattedMessage id="pages.product.business" />,
+      dataIndex: 'businessId',
+      valueType: 'select',
+      hideInForm: true,
+      hideInTable: true,
+      fieldProps: { width: '60px' },
+      hideInDescriptions: true,
+      valueEnum: businessListOptions,
+      hideInSearch: roleGroup == 'SystemUser' ? false : true,
+    },
+
+    {
       title: <FormattedMessage id="pages.store.search.keywords" />,
       dataIndex: 'keywords',
       hideInForm: true,
@@ -256,7 +191,12 @@ const Spot: React.FC = () => {
         placeholder: intl.formatMessage({ id: 'pages.store.search.keywords.placeholder' }),
       },
     },
-
+    {
+      title:"分组",
+      dataIndex: ['storeGroup', 'name'],
+      hideInSearch: true,
+      valueType: 'text',
+    },
     {
       title: <FormattedMessage id="pages.store.user.name" />,
       dataIndex: ['user', 'username'],
@@ -285,14 +225,7 @@ const Spot: React.FC = () => {
       },
     },
 
-    {
-      title: <FormattedMessage id="pages.store.address" />,
-      dataIndex: 'address',
-      valueType: 'text',
-      hideInSearch: true,
-      ellipsis: true,
-      hideInForm: true,
-    },
+  
     {
       title: <FormattedMessage id="pages.store.state" />,
       dataIndex: 'state',
@@ -341,61 +274,6 @@ const Spot: React.FC = () => {
       },
     },
   ];
-
-  const token = localStorage.getItem('token');
-  const uploadProps: UploadProps = {
-    name: 'file',
-    multiple: true,
-    action: `${host.api}api/manage/store/import`,
-    headers: {
-      // 'Content-Type': 'multipart/form-data',
-      token: `${token}`,
-      authorization: 'authorization-text',
-    },
-    withCredentials: true,
-    maxCount: 1, // 文件最大上传个数
-    // 限制类型
-    accept: '.xls,.xlsx', // 限制只能上传表格文件
-    showUploadList: false,
-    beforeUpload: (file) => {
-      const isXlSXOrXLS =
-        file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
-        file.type === 'application/vnd.ms-excel';
-      if (!isXlSXOrXLS) {
-        message.error('只允许上传XLSS/XLS格式文件!');
-        return;
-      }
-      const isLt2M = file.size / 1024 / 1024 < 5;
-      if (!isLt2M) {
-        message.error('只允许上传最大5MB文件');
-        return;
-      }
-      message.loading('正在导入中...');
-      return isXlSXOrXLS && isLt2M;
-    },
-    onChange: (info) => {
-      if (info.file.status !== 'uploading') {
-        console.log('onChange', info, info.fileList);
-      }
-      if (info.file.status === 'done') {
-        if (!info.file.response.success) {
-          message.error(info.file.response.errorMessage);
-        } else {
-          message.success(info.file.response.data);
-          actionRef.current?.reload();
-          return true;
-        }
-      } else if (info.file.status === 'error') {
-        message.error(`您没有权限访问`);
-      }
-      return true;
-    },
-  };
-
-  // 模板下载
-  const jumpToTemplate = async (templateHref: any) => {
-    window.open(templateHref);
-  };
 
   //批量删除数据
   const handleRemoveByIds = () => {
@@ -505,7 +383,7 @@ const Spot: React.FC = () => {
                   type="primary"
                   size="small"
                   onClick={() => {
-                    exportExcel();
+                   // exportExcel();
                   }}
                 >
                   <ExportOutlined />
@@ -525,14 +403,6 @@ const Spot: React.FC = () => {
             );
           }}
           toolBarRender={() => [
-            <a
-              onClick={() => {
-                jumpToTemplate(`${host.api}static/template/store.xlsx`);
-              }}
-              style={{ fontSize: '12px', verticalAlign: 'center' }}
-            >
-              Execl导入模板下载
-            </a>,
             <Button
               type="primary"
               key="primary"
@@ -543,12 +413,6 @@ const Spot: React.FC = () => {
             >
               <PlusOutlined /> <FormattedMessage id="pages.new" />
             </Button>,
-
-            <Upload {...uploadProps}>
-              <Button icon={<ImportOutlined />} type="primary" size="small">
-                导入
-              </Button>
-            </Upload>,
           ]}
         />
 

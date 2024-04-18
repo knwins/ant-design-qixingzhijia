@@ -97,10 +97,10 @@ const User: React.FC = () => {
           if (success) {
             loadingHidde();
             message.success(
-          intl.formatMessage({
-            id: 'pages.tip.success',
-          }),
-        );
+              intl.formatMessage({
+                id: 'pages.tip.success',
+              }),
+            );
             if (actionRef.current) {
               actionRef.current.reload();
             }
@@ -149,10 +149,10 @@ const User: React.FC = () => {
           if (success) {
             loadingHidde();
             message.success(
-          intl.formatMessage({
-            id: 'pages.tip.success',
-          }),
-        );
+              intl.formatMessage({
+                id: 'pages.tip.success',
+              }),
+            );
             if (actionRef.current) {
               actionRef.current.reload();
             }
@@ -199,8 +199,6 @@ const User: React.FC = () => {
       width: 'md',
     },
 
-    
-
     {
       title: <FormattedMessage id="pages.user.phone" />,
       dataIndex: 'phone',
@@ -211,7 +209,7 @@ const User: React.FC = () => {
 
     {
       title: <FormattedMessage id="pages.user.business" />,
-      dataIndex: ['business','name'],
+      dataIndex: ['business', 'name'],
       valueType: 'text',
       hideInSearch: true,
       hideInForm: true,
@@ -220,7 +218,7 @@ const User: React.FC = () => {
 
     {
       title: <FormattedMessage id="pages.user.role.name" />,
-      dataIndex: ['role','name'],
+      dataIndex: ['role', 'name'],
       valueType: 'text',
       hideInSearch: true,
       hideInForm: true,

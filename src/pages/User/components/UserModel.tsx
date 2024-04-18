@@ -1,5 +1,10 @@
-import { PartnerParams, StoreItem, StoreParams } from '@/pages/Operation/data';
-import { addStore, queryPartnerSelect, queryStoreSelect, updateStore } from '@/pages/Operation/service';
+import { AddressItem, AddressParams, PartnerParams, StoreItem } from '@/pages/Operation/data';
+import {
+  addAddress,
+  queryAddressSelect,
+  queryPartnerSelect,
+  updateAddress,
+} from '@/pages/Operation/service';
 import ProForm, { ModalForm, ProFormDigit, ProFormSelect, ProFormText } from '@ant-design/pro-form';
 import type { ActionType } from '@ant-design/pro-table';
 import { useIntl } from '@umijs/max';
@@ -26,7 +31,7 @@ const UserModel: FC<UserModelProps> = (props) => {
     return null;
   }
 
-  const handleStoreSelect = async (type?: any, keywords?: any) => {
+  const handleAddressSelect = async (type?: any, keywords?: any) => {
     if (type === '') {
       return;
     }
@@ -35,33 +40,29 @@ const UserModel: FC<UserModelProps> = (props) => {
       pageSize: 10,
       total: 100,
     };
-    const options: StoreParams = {
-      type: type,
+    const options: AddressParams = {
       keywords: keywords,
     };
-    //读取仓库数据
-    const { data: storeData } = await queryStoreSelect({
+    const { data: addressData } = await queryAddressSelect({
       ...pagination,
       ...options,
     });
-    const storeListOptions = [];
-    if (storeData) {
-      for (let i = 0; i < storeData.length; i += 1) {
-        const item = storeData[i];
+    const addressListOptions = [];
+    if (addressData) {
+      for (let i = 0; i < addressData.length; i += 1) {
+        const item = addressData[i];
         if (item) {
-          storeListOptions.push({
+          addressListOptions.push({
             label: item.label,
             value: item.value,
           });
         }
       }
     }
-    return storeListOptions;
+    return addressListOptions;
   };
 
-
-  const handlePartnerSelect = async ( keywords?: any) => {
-  
+  const handlePartnerSelect = async (keywords?: any) => {
     const pagination: pagination = {
       current: 1,
       pageSize: 10,
@@ -70,7 +71,6 @@ const UserModel: FC<UserModelProps> = (props) => {
     const options: PartnerParams = {
       keywords: keywords,
     };
-    //读取仓库数据
     const { data: partnerData } = await queryPartnerSelect({
       ...pagination,
       ...options,
@@ -82,7 +82,7 @@ const UserModel: FC<UserModelProps> = (props) => {
         if (item) {
           partnerListOptions.push({
             label: item.label,
-            value: item.value
+            value: item.value,
           });
         }
       }
@@ -94,7 +94,7 @@ const UserModel: FC<UserModelProps> = (props) => {
     setAddressVisible(false);
   };
 
-  const handleAction = async (fields: StoreItem) => {
+  const handleAction = async (fields: AddressItem) => {
     const loadingHidde = message.loading(
       intl.formatMessage({
         id: 'pages.tip.loading',
@@ -103,8 +103,7 @@ const UserModel: FC<UserModelProps> = (props) => {
     loadingHidde();
     try {
       if (fields.id != null) {
-        fields.userId = fields.user.key;
-        const { success } = await updateStore({
+        const { success } = await updateAddress({
           ...fields,
         });
 
@@ -117,7 +116,7 @@ const UserModel: FC<UserModelProps> = (props) => {
           return true;
         }
       } else {
-        const { success } = await addStore({
+        const { success } = await addAddress({
           ...fields,
         });
         if (success) {
@@ -179,22 +178,22 @@ const UserModel: FC<UserModelProps> = (props) => {
         <ProFormDigit name="id" hidden />
 
         <ProFormSelect
-            name="partner"
-            width="md"
-            showSearch
-            fieldProps={{
-              labelInValue: true,
-            }}
-            label="所属合作商"
-            rules={[
-              {
-                required: true,
-              },
-            ]}
-            request={async (params) => {
-              return handlePartnerSelect(params.keyWords);
-            }}
-          />
+          name="partner"
+          width="md"
+          showSearch
+          fieldProps={{
+            labelInValue: true,
+          }}
+          label="所属合作商"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          request={async (params) => {
+            return handlePartnerSelect(params.keyWords);
+          }}
+        />
 
         <ProFormText
           name="username"
@@ -256,7 +255,7 @@ const UserModel: FC<UserModelProps> = (props) => {
 
         <ProForm.Group title="用户地址">
           <ProFormSelect
-            name="store"
+            name="address"
             width="md"
             showSearch
             fieldProps={{
@@ -268,7 +267,7 @@ const UserModel: FC<UserModelProps> = (props) => {
               },
             ]}
             request={async (params) => {
-              return handleStoreSelect('ADDRESS', params.keyWords);
+              return handleAddressSelect(params.keyWords);
             }}
           />
           <Button
@@ -298,7 +297,7 @@ const UserModel: FC<UserModelProps> = (props) => {
           visible={addressVisible}
           onDone={handleDone}
           onSubmit={async (value) => {
-            const success = await handleAction(value as StoreItem);
+            const success = await handleAction(value as AddressItem);
             if (success) {
               setAddressVisible(false);
               if (actionRef.current) {

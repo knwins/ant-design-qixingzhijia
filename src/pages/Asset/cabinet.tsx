@@ -33,6 +33,7 @@ import {
   createProductLog,
   exportProductList,
   getCabinetDetail,
+  getProductDetail,
   queryProductList,
   queryProductLogList,
   removeProduct,
@@ -40,6 +41,7 @@ import {
   submitProductLog,
   updateProduct,
 } from './service';
+import success from '../result/success';
 
 const Cabinet: React.FC = () => {
   //const inpRef = useRef();
@@ -267,6 +269,7 @@ const Cabinet: React.FC = () => {
               }),
             );
             if (actionRef.current) {
+              actionRef.current?.clearSelected;
               actionRef.current.reload();
             }
             return true;
@@ -284,13 +287,12 @@ const Cabinet: React.FC = () => {
     });
   };
 
-
   const handleSubmitProductLog = (selectedRows: ProductItem) => {
     Modal.confirm({
       title: intl.formatMessage({
         id: 'pages.tip.title',
       }),
-      content: "您要确认到货吗?",
+      content: '您要确认到货吗?',
       okText: intl.formatMessage({
         id: 'pages.tip.ok',
       }),
@@ -317,6 +319,7 @@ const Cabinet: React.FC = () => {
               }),
             );
             if (actionRef.current) {
+              actionRef.current?.clearSelected;
               actionRef.current.reload();
             }
             return true;
@@ -343,15 +346,12 @@ const Cabinet: React.FC = () => {
     loadingHidde();
     try {
       if (fields.action == 'batchCreateProductLog') {
-        const { success } = await batchCreateProductLog({
+        const { success, data } = await batchCreateProductLog({
           ...fields,
         });
         if (success) {
-          message.success(
-            intl.formatMessage({
-              id: 'pages.tip.success',
-            }),
-          );
+          message.success(data);
+
           return true;
         }
       }
@@ -402,6 +402,7 @@ const Cabinet: React.FC = () => {
               }),
             );
             if (actionRef.current) {
+              actionRef.current?.clearSelected;
               actionRef.current.reload();
             }
             return true;
@@ -500,11 +501,15 @@ const Cabinet: React.FC = () => {
       ellipsis: true,
       render: (dom, entity) => {
         return (
-          <a
-            onClick={() => {
-              setCurrentRow(entity);
+          <a onClick={async () => {
+            const { success, data } = await getProductDetail({
+              id: entity.id,
+            });
+            if (success) {
+              setCurrentRow(data);
               setShowDetail(true);
-            }}
+            }
+          }}
           >
             {dom}
           </a>
@@ -526,20 +531,54 @@ const Cabinet: React.FC = () => {
     },
 
     {
-      title: '所在位置',
+      title: '所属站点或仓库',
       dataIndex: ['store', 'name'],
       valueType: 'text',
       hideInForm: true,
       hideInSearch: true,
       ellipsis: true,
-      
+      hideInTable: true,
       width: 'lg',
     },
+
+    {
+      title: '位置',
+      dataIndex: ['address', 'fullAddress'],
+      valueType: 'text',
+      hideInForm: true,
+      hideInSearch: true,
+      ellipsis: true,
+      hideInTable: true,
+      width: 'lg',
+    },
+    {
+      title: 'GPS位置',
+      dataIndex: 'gpsAddress',
+      valueType: 'text',
+      hideInForm: true,
+      hideInSearch: true,
+      ellipsis: true,
+      width: 'lg',
+    },
+
+    {
+      title: 'GPS时间',
+      dataIndex: 'locationTime',
+      valueType: 'dateTime',
+      hideInDescriptions: true,
+      width: 'sm',
+      fieldProps: { size: 'small' },
+      hideInSearch: true,
+      sorter: true,
+      ellipsis: true,
+    },
+
     {
       title: <FormattedMessage id="pages.product.brand" />,
       dataIndex: ['brand', 'name'],
       valueType: 'text',
       hideInForm: true,
+      hideInTable: true,
       width: 'sm',
       fieldProps: { width: '60px' },
       hideInSearch: true,
@@ -571,12 +610,12 @@ const Cabinet: React.FC = () => {
       dataIndex: ['spec', 'name'],
       valueType: 'text',
       hideInForm: true,
+      hideInTable: true,
       width: 'sm',
       fieldProps: { width: '60px' },
       hideInSearch: true,
     },
 
-   
     {
       title: <FormattedMessage id="pages.update.time" />,
       dataIndex: 'updateTime',
@@ -637,9 +676,10 @@ const Cabinet: React.FC = () => {
           status: 'Error',
         },
         NODATA: {
-          text: '没有数据',
+          text: '无定位数据',
           status: 'Error',
         },
+
         STORETOSTORE: {
           text: '调拨中',
           status: 'Processing',
@@ -678,6 +718,10 @@ const Cabinet: React.FC = () => {
             <a
               key="detail"
               onClick={async () => {
+
+
+
+
                 const { data } = await getCabinetDetail({
                   id: record.detailId,
                 });
@@ -737,7 +781,7 @@ const Cabinet: React.FC = () => {
           text: '调拨',
           type: 'StoreToStore',
         },
-        
+
         OutStore: {
           text: '出库',
           type: 'OutStore',
@@ -829,7 +873,12 @@ const Cabinet: React.FC = () => {
           }}
         >
           <Menu.Item key="addLogs">日志</Menu.Item>
-          <Menu.Item key="submitProductLog">确认到货</Menu.Item>
+          <Menu.Item
+            key="submitProductLog"
+            disabled={item?.state === 'STORETOSTORE' ? false : true}
+          >
+            确认到货
+          </Menu.Item>
           <Menu.Item key="edit">
             <FormattedMessage id="pages.edit" />
           </Menu.Item>
@@ -910,7 +959,7 @@ const Cabinet: React.FC = () => {
                 }}
               >
                 <ShareAltOutlined />
-                调配
+                调拨
               </Button>
               <Button
                 type="primary"
@@ -974,6 +1023,7 @@ const Cabinet: React.FC = () => {
             setVisible(false);
             setCurrentRow(undefined);
             if (actionRef.current) {
+              actionRef.current?.clearSelected;
               actionRef.current.reload();
             }
           }
@@ -991,6 +1041,7 @@ const Cabinet: React.FC = () => {
             setLogVisible(false);
             setCurrentRow(undefined);
             if (actionRef.current) {
+              actionRef.current?.clearSelected;
               actionRef.current.reload();
             }
           }
@@ -1007,6 +1058,7 @@ const Cabinet: React.FC = () => {
           if (success) {
             setLogsVisible(false);
             if (actionRef.current) {
+              actionRef.current?.clearSelected;
               actionRef.current.reload();
             }
           }
@@ -1025,6 +1077,7 @@ const Cabinet: React.FC = () => {
             setLogAllVisible(false);
             setCurrentBatch(undefined);
             if (actionRef.current) {
+              actionRef.current?.clearSelected;
               actionRef.current.reload();
             }
           }

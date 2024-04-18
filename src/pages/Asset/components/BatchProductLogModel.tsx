@@ -95,11 +95,11 @@ const ProductLogAllModel: FC<ProductLogAllModelProps> = (props) => {
           })}
           options={[
             {
-              label: '仓库间调拨',
+              label: '仓库',
               value: 'Store',
             },
             {
-              label: '站点间调拨',
+              label: '站点',
               value: 'Site',
             },
           ]}
@@ -110,7 +110,7 @@ const ProductLogAllModel: FC<ProductLogAllModelProps> = (props) => {
           ]}
           width="md"
         />
-        <ProFormSelect
+        {/* <ProFormSelect
           name="beforeStoreId"
           showSearch
           tooltip="只有资产所在当前{调出网点}的才能执行"
@@ -128,7 +128,7 @@ const ProductLogAllModel: FC<ProductLogAllModelProps> = (props) => {
             //console.log("params",params);
             return handleStoreSelect(params.storeType, params.keyWords);
           }}
-        />
+        /> */}
 
         <ProFormSelect
           name="laterStoreId"
@@ -144,7 +144,6 @@ const ProductLogAllModel: FC<ProductLogAllModelProps> = (props) => {
           })}
           dependencies={['storeType']}
           request={async (params) => {
-            //console.log("params",params);
             return handleStoreSelect(params.storeType, params.keyWords);
           }}
         />

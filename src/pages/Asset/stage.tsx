@@ -808,7 +808,7 @@ const Cabinet: React.FC = () => {
                 }}
               >
                 <ShareAltOutlined />
-                调配
+                调拨
               </Button>
               <Button
                 type="primary"
@@ -872,6 +872,8 @@ const Cabinet: React.FC = () => {
             setVisible(false);
             setCurrentRow(undefined);
             if (actionRef.current) {
+              
+              actionRef.current?.clearSelected;
               actionRef.current.reload();
             }
           }
@@ -889,6 +891,7 @@ const Cabinet: React.FC = () => {
             setLogVisible(false);
             setCurrentRow(undefined);
             if (actionRef.current) {
+              actionRef.current?.clearSelected;
               actionRef.current.reload();
             }
           }
@@ -906,6 +909,7 @@ const Cabinet: React.FC = () => {
             setLogAllVisible(false);
             setCurrentBatch(undefined);
             if (actionRef.current) {
+              actionRef.current?.clearSelected;
               actionRef.current.reload();
             }
           }

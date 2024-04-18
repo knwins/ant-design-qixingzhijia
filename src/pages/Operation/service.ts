@@ -1,11 +1,13 @@
 import { request } from 'umi';
 import host from '../../host';
 import {
+  AddressItem,
   BusinessItem,
   PartnerItem,
   ProductCheckItem,
   ProductLeaseItem,
   ProductLeaseOrderItem,
+  StoreGroupItem,
   StoreItem,
 } from './data';
 
@@ -80,6 +82,113 @@ export async function removeProductCheck(
     success?: boolean;
     errorMessage?: string;
   }>(host.api + 'api/manage/product/check/delete', {
+    data,
+    method: 'DELETE',
+    ...(options || {}),
+  });
+}
+
+/**Store Group */
+
+export async function queryStoreGroupList(
+  params: {
+    current?: number;
+    pageSize?: number;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{
+    data: StoreGroupItem[];
+    total?: number;
+    success?: boolean;
+  }>(host.api + 'api/manage/store/group/list', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+export async function queryStoreGroupSelect(
+  params: {
+    current?: number;
+    pageSize?: number;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{
+    data: StoreGroupItem[];
+    total?: number;
+    success?: boolean;
+  }>(host.api + 'api/manage/store/group/select', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+export async function getStoreGroup(data: { [id: string]: any }, options?: { [id: string]: any }) {
+  return request<{
+    data: StoreGroupItem;
+    success?: boolean;
+    errorMessage?: number;
+  }>(host.api + 'api/manage/store/group/get', {
+    data,
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
+export async function updateStoreGroup(
+  data: { [id: string]: any },
+  options?: { [id: string]: any },
+) {
+  return request<{
+    success?: boolean;
+    errorMessage?: number;
+  }>(host.api + 'api/manage/store/group/update', {
+    data,
+    method: 'PUT',
+    ...(options || {}),
+  });
+}
+
+export async function addStoreGroup(data: { [id: string]: any }, options?: { [id: string]: any }) {
+  return request<{
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/manage/store/group/add', {
+    data,
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
+export async function removeStoreGroup(
+  data: { [id: string]: any },
+  options?: { [id: string]: any },
+) {
+  return request<{
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/manage/store/group/delete', {
+    data,
+    method: 'DELETE',
+    ...(options || {}),
+  });
+}
+
+export async function removeStoreGroupByIds(
+  data: { [ids: string]: any },
+  options?: { [ids: string]: any },
+) {
+  return request<{
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/manage/store/group/delete', {
     data,
     method: 'DELETE',
     ...(options || {}),
@@ -206,6 +315,107 @@ export async function removeStoreByIds(
     ...(options || {}),
   });
 }
+
+/**Address */
+
+export async function queryAddressList(
+  params: {
+    current?: number;
+    pageSize?: number;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{
+    data: AddressItem[];
+    total?: number;
+    success?: boolean;
+  }>(host.api + 'api/manage/address/list', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+export async function queryAddressSelect(
+  params: {
+    current?: number;
+    pageSize?: number;
+  },
+  options?: { [key: string]: any },
+) {
+  return request<{
+    data: AddressItem[];
+    total?: number;
+    success?: boolean;
+  }>(host.api + 'api/manage/address/select', {
+    method: 'POST',
+    params: {
+      ...params,
+    },
+    ...(options || {}),
+  });
+}
+
+export async function getAddress(data: { [id: string]: any }, options?: { [id: string]: any }) {
+  return request<{
+    data: AddressItem;
+    success?: boolean;
+    errorMessage?: number;
+  }>(host.api + 'api/manage/address/get', {
+    data,
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
+export async function updateAddress(data: { [id: string]: any }, options?: { [id: string]: any }) {
+  return request<{
+    success?: boolean;
+    errorMessage?: number;
+  }>(host.api + 'api/manage/address/update', {
+    data,
+    method: 'PUT',
+    ...(options || {}),
+  });
+}
+
+export async function addAddress(data: { [id: string]: any }, options?: { [id: string]: any }) {
+  return request<{
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/manage/address/add', {
+    data,
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
+export async function removeAddress(data: { [id: string]: any }, options?: { [id: string]: any }) {
+  return request<{
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/manage/address/delete', {
+    data,
+    method: 'DELETE',
+    ...(options || {}),
+  });
+}
+
+// export async function removeStoreByIds(
+//   data: { [ids: string]: any },
+//   options?: { [ids: string]: any },
+// ) {
+//   return request<{
+//     success?: boolean;
+//     errorMessage?: string;
+//   }>(host.api + 'api/manage/store/delete', {
+//     data,
+//     method: 'DELETE',
+//     ...(options || {}),
+//   });
+// }
 
 /**Product Lease */
 export async function queryProductLeaseList(
@@ -522,7 +732,6 @@ export async function removePartner(data: { [id: string]: any }, options?: { [id
     ...(options || {}),
   });
 }
-
 
 /**WarnInfo */
 

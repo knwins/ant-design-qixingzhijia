@@ -1,18 +1,13 @@
-import { queryPCDList } from '@/pages/Asset/service';
 import { pagination } from '@/pages/Setting/data';
-import { queryUserSelect } from '@/pages/User/service';
-import ProForm, {
-  ModalForm,
-  ProFormDependency,
-  ProFormDigit,
-  ProFormSelect,
-  ProFormText,
-} from '@ant-design/pro-form';
+import AddressModel from '@/pages/User/components/AddressModel';
+import { ActionType } from '@ant-design/pro-components';
+import ProForm, { ModalForm, ProFormDigit, ProFormSelect, ProFormText } from '@ant-design/pro-form';
 import { useIntl } from '@umijs/max';
-import type { FC } from 'react';
+import { Button, message } from 'antd';
+import { FC, useRef, useState } from 'react';
 
-import { BusinessParams, StoreItem } from '../data';
-import { queryBusinessSelect } from '../service';
+import { AddressItem, AddressParams, BusinessParams, StoreGroupParams, StoreItem } from '../data';
+import { addAddress, queryAddressSelect, queryBusinessSelect, queryStoreGroupSelect, updateAddress } from '../service';
 
 type StoreModelProps = {
   done: boolean;
@@ -23,12 +18,128 @@ type StoreModelProps = {
 };
 
 const StoreModel: FC<StoreModelProps> = (props) => {
+  const actionRef = useRef<ActionType>();
   const { done, visible, current, onDone, onSubmit, children } = props;
+  const [addressVisible, setAddressVisible] = useState<boolean>(false);
   const intl = useIntl();
 
   if (!visible) {
     return null;
   }
+
+  const handleDone = () => {
+    setAddressVisible(false);
+  };
+
+
+
+  const handleStoreGroupSelect = async (businessId?: any, keywords?: any) => {
+    if (businessId === '') {
+      return;
+    }
+    const pagination: pagination = {
+      current: 1,
+      pageSize: 10,
+      total: 100,
+    };
+    const options: StoreGroupParams = {
+      businessId:businessId,
+      keywords: keywords,
+    };
+    const { data: storeGroupData } = await queryStoreGroupSelect({
+      ...pagination,
+      ...options,
+    });
+    const storeGroupListOptions = [];
+    if (storeGroupData) {
+      for (let i = 0; i < storeGroupData.length; i += 1) {
+        const item = storeGroupData[i];
+        if (item) {
+          storeGroupListOptions.push({
+            label: item.label,
+            value: item.value,
+          });
+        }
+      }
+    }
+    return storeGroupListOptions;
+  };
+
+
+  const handleAddressSelect = async ( keywords?: any) => {
+  
+    const pagination: pagination = {
+      current: 1,
+      pageSize: 50,
+      total: 100,
+    };
+    const options: AddressParams = {
+      keywords: keywords,
+    };
+    const { data: addressData } = await queryAddressSelect({
+      ...pagination,
+      ...options,
+    });
+    const addressListOptions = [];
+    if (addressData) {
+      for (let i = 0; i < addressData.length; i += 1) {
+        const item = addressData[i];
+        if (item) {
+          addressListOptions.push({
+            label: item.label,
+            value: item.value,
+          });
+        }
+      }
+    }
+    return addressListOptions;
+  };
+
+  const handleAction = async (fields: AddressItem) => {
+    const loadingHidde = message.loading(
+      intl.formatMessage({
+        id: 'pages.tip.loading',
+      }),
+    );
+    loadingHidde();
+    try {
+      if (fields.id != null) {
+        const { success } = await updateAddress({
+          ...fields,
+        });
+
+        if (success) {
+          message.success(
+            intl.formatMessage({
+              id: 'pages.tip.success',
+            }),
+          );
+          return true;
+        }
+      } else {
+        const { success } = await addAddress({
+          ...fields,
+        });
+        if (success) {
+          message.success(
+            intl.formatMessage({
+              id: 'pages.tip.success',
+            }),
+          );
+          return true;
+        }
+      }
+      return false;
+    } catch (error) {
+      console.log(error);
+      message.error(
+        intl.formatMessage({
+          id: 'pages.tip.error',
+        }),
+      );
+      return false;
+    }
+  };
 
   const handleBusinessSelect = async (key?: any, keywords?: any) => {
     if (key === '') {
@@ -69,14 +180,15 @@ const StoreModel: FC<StoreModelProps> = (props) => {
       title={
         done
           ? null
-          : `${current?.id
-            ? intl.formatMessage({
-              id: 'pages.edit',
-            })
-            : intl.formatMessage({
-              id: 'pages.new',
-            })
-          }`
+          : `${
+              current?.id
+                ? intl.formatMessage({
+                    id: 'pages.edit',
+                  })
+                : intl.formatMessage({
+                    id: 'pages.new',
+                  })
+            }`
       }
       width={640}
       onFinish={async (values) => {
@@ -95,7 +207,51 @@ const StoreModel: FC<StoreModelProps> = (props) => {
     >
       <>
         <ProFormDigit name="id" hidden />
-        <ProFormDigit name="businessId" hidden />
+        
+
+
+        <ProForm.Group title="选择运营商">
+          <ProFormSelect
+            name="business"
+            width="md"
+            showSearch
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+            fieldProps={{
+              labelInValue: true,
+            }}
+            
+            request={async (params) => {
+              return handleBusinessSelect(params.keyWords);
+            }}
+          />
+  
+        </ProForm.Group>
+        
+        <ProForm.Group title="选择站点分组">
+          <ProFormSelect
+            name="storeGroup"
+            width="md"
+            showSearch
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+            fieldProps={{
+              labelInValue: true,
+            }}
+            dependencies={['business']}
+            request={async (params) => {
+              return handleStoreGroupSelect(params.business.value,params.keyWords);
+            }}
+          />
+        </ProForm.Group>
+
+        
         <ProFormText
           name="name"
           label={intl.formatMessage({
@@ -132,7 +288,6 @@ const StoreModel: FC<StoreModelProps> = (props) => {
           options={[
             { label: '仓库', value: 'STORE' },
             { label: '站点', value: 'SITE' },
-            { label: '地址', value: 'ADDRESS' },
           ]}
         />
         <ProFormSelect
@@ -168,7 +323,7 @@ const StoreModel: FC<StoreModelProps> = (props) => {
             },
           ]}
           label="业务类型"
-          width="lg"
+          width="md"
           placeholder="请选择业务类型"
           initialValue={current?.categoryArr}
           options={[
@@ -181,184 +336,45 @@ const StoreModel: FC<StoreModelProps> = (props) => {
           ]}
         />
 
-        {current?.id ? (
+        <ProForm.Group title="选择站点地址">
           <ProFormSelect
-            name="user"
-            label={intl.formatMessage({
-              id: 'pages.store.user.name',
-            })}
-            readonly
+            name="address"
             width="md"
-          />
-        ) : (
-          ''
-        )}
-
-        <ProForm.Group title="所在省市区" size={8}>
-          <ProFormSelect
-            rules={[
-              {
-                required: true,
-                message: '请输入您的所在省!',
-              },
-            ]}
-            width="xs"
+            showSearch
             fieldProps={{
               labelInValue: true,
             }}
-            name="province"
-            request={async () => {
-              return queryPCDList({ parentId: '0', current: 1, pageSize: 1000 }).then(
-                ({ data }) => {
-                  return data.map((item) => {
-                    return {
-                      label: item.label,
-                      value: item.value,
-                    };
-                  });
-                },
-              );
+            rules={[{ required: true }]}
+            request={async (params) => {
+              return handleAddressSelect(params.keyWords);
             }}
           />
-
-          <ProFormDependency name={['province']}>
-            {({ province }) => {
-              return (
-                <ProFormSelect
-                  params={{
-                    key: province,
-                  }}
-                  fieldProps={{
-                    labelInValue: true,
-                  }}
-                  name="city"
-                  width="xs"
-                  rules={[
-                    {
-                      required: true,
-                      message: '请输入您的所在城市!',
-                    },
-                  ]}
-                  disabled={!province}
-                  request={async () => {
-                    if (!province?.value) {
-                      return [];
-                    }
-                    return queryPCDList({
-                      parentId: province.value,
-                      current: 1,
-                      pageSize: 1000,
-                    }).then(({ data }) => {
-                      return data.map((item) => {
-                        return {
-                          label: item.label,
-                          value: item.value,
-                        };
-                      });
-                    });
-                  }}
-                />
-              );
+          <Button
+            size="middle"
+            style={{ marginTop: '0px' }}
+            onClick={() => {
+              setAddressVisible(true);
             }}
-          </ProFormDependency>
-
-          <ProFormDependency name={['city']}>
-            {({ city }) => {
-              return (
-                <ProFormSelect
-                  params={{
-                    key: city,
-                  }}
-                  fieldProps={{
-                    labelInValue: true,
-                  }}
-                  name="district"
-                  width="xs"
-                  rules={[
-                    {
-                      required: true,
-                      message: '请输入您的所在区县!',
-                    },
-                  ]}
-                  disabled={!city}
-                  request={async () => {
-                    if (!city?.value) {
-                      return [];
-                    }
-                    return queryPCDList({ parentId: city.value, current: 1, pageSize: 1000 }).then(
-                      ({ data }) => {
-                        return data.map((item) => {
-                          return {
-                            label: item.label,
-                            value: item.value,
-                          };
-                        });
-                      },
-                    );
-                  }}
-                />
-              );
-            }}
-          </ProFormDependency>
+          > 新增地址
+          </Button>
         </ProForm.Group>
 
-        <ProFormText
-          name="address"
-          label={intl.formatMessage({
-            id: 'pages.store.address',
-          })}
-          width="md"
-          rules={[
-            {
-              required: true,
-              message: intl.formatMessage({
-                id: 'pages.store.address.required',
-              }),
-            },
-          ]}
-          placeholder={intl.formatMessage({
-            id: 'pages.store.address.placeholder',
-          })}
-        />
 
-        <ProFormSelect
-          name="business"
-          width="lg"
-          fieldProps={{
-            labelInValue: true,
+       
+
+        <AddressModel
+          done={done}
+          visible={addressVisible}
+          onDone={handleDone}
+          onSubmit={async (value) => {
+            const success = await handleAction(value as AddressItem);
+            if (success) {
+              setAddressVisible(false);
+              if (actionRef.current) {
+                actionRef.current.reload();
+              }
+            }
           }}
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-          label="运营商"
-          dependencies={['type']}
-          request={async (params) => {
-            return handleBusinessSelect(params.keyWords);
-          }}
-        />
-
-        <ProFormText
-          name="longitude"
-          label={intl.formatMessage({
-            id: 'pages.store.longitude',
-          })}
-          width="sm"
-          placeholder={intl.formatMessage({
-            id: 'pages.store.longitude.placeholder',
-          })}
-        />
-
-        <ProFormText
-          name="latitude"
-          label={intl.formatMessage({
-            id: 'pages.store.latitude',
-          })}
-          width="sm"
-          placeholder={intl.formatMessage({
-            id: 'pages.store.latitude.placeholder',
-          })}
         />
       </>
     </ModalForm>

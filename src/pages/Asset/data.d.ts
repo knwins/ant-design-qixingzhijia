@@ -17,9 +17,9 @@ export type ProductItem = {
   weight: string;
   material: string;
   updateTime?: Date;
-  gpsTime?: Date;
-  exchangeTime?:Date;
-  exchangeContent?:string;
+  exchangeTime?: Date;
+  locationTime?: Date;
+  exchangeContent?: string;
   createTime: Date;
   store: StoreItem;
   action: string;
@@ -29,19 +29,15 @@ export type ProductItem = {
   state?: string;
   batteryDetail?: BatteryDetailItem;
   gpsAddress?: string;
-  label?:string;
-  value?:string;
+  label?: string;
+  value?: string;
 };
 
-
 export type ProductParams = {
-  pageSize?:number;
+  pageSize?: number;
   filter?: Record<string, any[]>;
   sorter?: Record<string, any>;
 } & Partial<ProductItem>;
-
-
-
 
 export type ProductLogItem = {
   id: string;
@@ -88,8 +84,8 @@ export type ProvinceCityDistrictItem = {
   areacode: string;
   pinyin: string;
   sort: number;
-  label?:string;
-  value?:string;
+  label?: string;
+  value?: string;
 };
 
 export type BatteryDetailItem = {
@@ -117,10 +113,9 @@ export type BatteryDetailItem = {
   dischargeTime?: string;
   cycleNumbers?: string;
   updateTime: Date;
-  locationTime?: Date;
   runningDays?: string;
-  abnormalDays?:string;
-  exchangeTotal?:string;
+  abnormalDays?: string;
+  exchangeTotal?: string;
   chargeState?: string;
   disChargeState?: string;
   averageMileage?: string;

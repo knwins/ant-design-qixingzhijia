@@ -7,6 +7,27 @@ export type Pagination = {
   current: number;
 };
 
+
+export type StoreGroupItem = {
+  id: string;
+  name: string;
+  user: UserItem;
+  Business:BusinessItem;
+  userId?: string;
+  businessId:string;
+  label?:string;
+  value?:string;
+};
+
+export type StoreGroupParams = {
+  businessId?:string;
+  userId?:string;
+  keywords?: string;
+  filter?: Record<string, any[]>;
+  sorter?: Record<string, any>;
+} & Partial<StoreItem>;
+
+
 export type StoreItem = {
   id: string;
   name: string;
@@ -15,13 +36,11 @@ export type StoreItem = {
   address?: string;
   user: UserItem;
   userId?: string;
-  province: ProvinceCityDistrictItem;
-  city: ProvinceCityDistrictItem;
-  district: ProvinceCityDistrictItem;
-  latitude?:string;
-  longitude?:string;
   label?:string;
   value?:string;
+  storeGroup?:StoreGroupItem;
+  address?:AddressItem;
+  business?:BusinessItem;
 };
 
 export type StoreParams = {
@@ -34,9 +53,31 @@ export type StoreParams = {
 } & Partial<StoreItem>;
 
 
+export type AddressItem = {
+  id: string;
+  detail?: string;
+  province: ProvinceCityDistrictItem;
+  city: ProvinceCityDistrictItem;
+  district: ProvinceCityDistrictItem;
+  latitude?:string;
+  longitude?:string;
+  label?:string;
+  value?:string;
+};
+
+export type AddressParams = {
+  keywords?: string;
+  filter?: Record<string, any[]>;
+  sorter?: Record<string, any>;
+} & Partial<AddressItem>;
+
+
+
 export type BusinessItem = {
   id: string;
   name: string;
+  label:?string;
+  value:?string;
 };
 
 export type BusinessParams = {

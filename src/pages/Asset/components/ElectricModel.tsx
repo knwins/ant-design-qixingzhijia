@@ -130,6 +130,7 @@ const ProductModel: FC<ProductModelProps> = (props) => {
               value: 'LOSS',
             },
             { label: '维修', value: 'MAINTENANCE' },
+            { label: '处理中', value: 'PROCESSING' },
             { label: '租赁中', value: 'LEASE' },
           ]}
         />

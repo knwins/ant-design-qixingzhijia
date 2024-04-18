@@ -14,7 +14,7 @@ export default {
   },
   pre: {
     '/api/': {
-      target: 'https//api.fans365.net:8083',
+      target: 'https://qixingzhijia.szqws.com:8081',
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },

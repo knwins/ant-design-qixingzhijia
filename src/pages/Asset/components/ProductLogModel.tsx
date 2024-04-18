@@ -1,4 +1,5 @@
-import { StoreParams } from '@/pages/Operation/data';
+import { BusinessParams, StoreParams } from '@/pages/Operation/data';
+import { pagination } from '@/pages/Setting/data';
 import {
   ModalForm,
   ProFormDigit,
@@ -8,7 +9,7 @@ import {
 } from '@ant-design/pro-form';
 import { useIntl } from '@umijs/max';
 import type { FC } from 'react';
-import { queryStoreSelect } from '../../Operation/service';
+import { queryBusinessSelect, queryStoreSelect } from '../../Operation/service';
 import { Pagination, ProductItem } from '../data';
 
 type ProductLogModelProps = {
@@ -23,7 +24,45 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
   const { done, visible, current, onDone, onSubmit, children } = props;
   const intl = useIntl();
 
-  const handleStoreSelect = async (type?: any,category?: any, businessId?: any, keywords?: any) => {
+  const handleBusinessSelect = async (key?: any, keywords?: any) => {
+    if (key === '') {
+      return;
+    }
+    const pagination: pagination = {
+      current: 1,
+      pageSize: 10,
+      total: 100,
+    };
+    const options: BusinessParams = {
+      keywords: keywords,
+    };
+    //读取仓库数据
+    const { data: businessData } = await queryBusinessSelect({
+      ...pagination,
+      ...options,
+    });
+
+    const businessListOptions = [];
+    if (businessData) {
+      for (let i = 0; i < businessData.length; i += 1) {
+        const item = businessData[i];
+        if (item) {
+          businessListOptions.push({
+            label: item.label,
+            value: item.id,
+          });
+        }
+      }
+    }
+    return businessListOptions;
+  };
+
+  const handleStoreSelect = async (
+    type?: any,
+    category?: any,
+    businessId?: any,
+    keywords?: any,
+  ) => {
     if (type === '') {
       return;
     }
@@ -33,7 +72,7 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
     };
     const options: StoreParams = {
       type: type,
-      category:category,
+      category: category,
       businessId: businessId,
       keywords: keywords,
     };
@@ -162,6 +201,25 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
           initialValue={current ? current?.store?.name : ''}
           disabled
         />
+
+        <ProFormSelect
+          name="business"
+          width="md"
+          placeholder="请选择运营商"
+          fieldProps={{
+            labelInValue: true,
+          }}
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          label="运营商"
+          request={async (params) => {
+            return handleBusinessSelect(params.keyWords);
+          }}
+        />
+
         <ProFormSelect
           name="storeId"
           width="md"
@@ -174,7 +232,7 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
           label={intl.formatMessage({
             id: 'pages.product.log.int.store',
           })}
-          dependencies={['type']}
+          dependencies={['type', 'business']}
           request={async (params) => {
             let type = '';
             //当前为仓库时
@@ -193,7 +251,12 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
                 type = 'STORE';
               }
             }
-            return handleStoreSelect(type,current?.category, current?.business?.id, params.keyWords);
+            return handleStoreSelect(
+              type,
+              current?.category,
+              params.business.value,
+              params.keyWords,
+            );
           }}
         />
         <ProFormText

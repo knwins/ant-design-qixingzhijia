@@ -78,17 +78,21 @@ export async function queryProductSelect(
   });
 }
 
-export async function getProduct(data: { [id: string]: any }, options?: { [id: string]: any }) {
+export async function getProductDetail(
+  data: { [id: string]: any },
+  options?: { [id: string]: any },
+) {
   return request<{
     data: ProductItem;
     success?: boolean;
-    errorMessage?: number;
-  }>(host.api + 'api/manage/product/get', {
+    errorMessage?: string;
+  }>(host.api + 'api/manage/product/detail', {
     data,
     method: 'POST',
     ...(options || {}),
   });
 }
+
 
 export async function updateProduct(data: { [id: string]: any }, options?: { [id: string]: any }) {
   return request<{
@@ -206,6 +210,7 @@ export async function batchCreateProductLog(
 ) {
   return request<{
     success?: boolean;
+    data?:String;
     errorMessage?: string;
   }>(host.api + 'api/manage/product/batch_create_product_log', {
     data,

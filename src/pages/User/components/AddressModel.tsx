@@ -1,5 +1,5 @@
 import { queryPCDList } from '@/pages/Asset/service';
-import { StoreItem } from '@/pages/Operation/data';
+import { AddressItem, StoreItem } from '@/pages/Operation/data';
 import ProForm, {
   ModalForm,
   ProFormDependency,
@@ -14,7 +14,7 @@ type AddressModelProps = {
   done: boolean;
   visible: boolean;
   onDone: () => void;
-  onSubmit: (values: StoreItem) => void;
+  onSubmit: (values: AddressItem) => void;
 };
 
 const AddressModel: FC<AddressModelProps> = (props) => {
@@ -26,7 +26,7 @@ const AddressModel: FC<AddressModelProps> = (props) => {
   }
 
   return (
-    <ModalForm<StoreItem>
+    <ModalForm<AddressItem>
       visible={visible}
       title="添加地址"
       width={640}
@@ -45,24 +45,6 @@ const AddressModel: FC<AddressModelProps> = (props) => {
     >
       <>
         <ProFormDigit name="id" hidden />
-        <ProFormDigit name="businessId" hidden />
-        <ProFormText
-          name="name"
-          label={intl.formatMessage({
-            id: 'pages.store.name',
-          })}
-          width="md"
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-          placeholder={intl.formatMessage({
-            id: 'pages.store.name.placeholder',
-          })}
-        />
-        <ProFormSelect name="type" initialValue="ADDRESS" hidden />
-        <ProFormSelect name="state" initialValue="NORMAL" hidden />
         <ProForm.Group title="所在省市区" size={8}>
           <ProFormSelect
             rules={[
@@ -172,7 +154,7 @@ const AddressModel: FC<AddressModelProps> = (props) => {
         </ProForm.Group>
 
         <ProFormText
-          name="address"
+          name="detail"
           label={intl.formatMessage({
             id: 'pages.store.address',
           })}
@@ -190,7 +172,7 @@ const AddressModel: FC<AddressModelProps> = (props) => {
           })}
         />
 
-        <ProFormText
+        {/* <ProFormText
           name="longitude"
           label={intl.formatMessage({
             id: 'pages.store.longitude',
@@ -210,7 +192,7 @@ const AddressModel: FC<AddressModelProps> = (props) => {
           placeholder={intl.formatMessage({
             id: 'pages.store.latitude.placeholder',
           })}
-        />
+        /> */}
       </>
     </ModalForm>
   );
