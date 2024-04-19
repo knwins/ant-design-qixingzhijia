@@ -579,7 +579,7 @@ const Cell: React.FC = () => {
       hideInTable: true,
       hideInDescriptions: true,
       valueEnum: brandListOptions,
-      hideInSearch:true,
+      hideInSearch: true,
       ellipsis: true,
     },
 
@@ -758,7 +758,7 @@ const Cell: React.FC = () => {
       hideInForm: true,
       hideInSearch: true,
       hideInTable: true,
-      hideInDescriptions:true,
+      hideInDescriptions: true,
       valueEnum: {
         SITE: {
           text: '站点',
@@ -1168,6 +1168,19 @@ const Cell: React.FC = () => {
               pagination={paginationProps}
               options={false}
               params={cparams}
+              toolBarRender={() => [
+                <Button
+                  type="primary"
+                  key="primary"
+                  size="small"
+                  onClick={() => {
+                    //setCurrentRow(item);
+                    setLogsVisible(true);
+                  }}
+                >
+                  <PlusOutlined /> <FormattedMessage id="pages.new" />
+                </Button>,
+              ]}
               rowKey={(record) => record.id}
               request={queryProductLogList}
               columns={tcolumns}
