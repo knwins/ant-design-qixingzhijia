@@ -621,6 +621,7 @@ const Cell: React.FC = () => {
       dataIndex: ['brand', 'name'],
       valueType: 'text',
       hideInForm: true,
+      hideInTable:true,
       width: 'sm',
       hideInSearch: true,
       ellipsis: true,
