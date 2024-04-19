@@ -433,6 +433,10 @@ const Cell: React.FC = () => {
     setShowBatteryDetail(false);
   };
 
+  const handleLogsDone = () => {
+    setLogsVisible(false);
+  };
+
   //导出数据
   const exportExcel = async () => {
     const loadingHidde = message.loading(
@@ -1112,7 +1116,7 @@ const Cell: React.FC = () => {
         done={done}
         visible={logsVisible}
         productId={currentRow?.id || ''}
-        onDone={handleDone}
+        onDone={handleLogsDone}
         onSubmit={async (value) => {
           const success = await handleProductLogsAction(value as ProductLogItem);
           if (success) {
