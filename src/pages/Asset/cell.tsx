@@ -595,7 +595,7 @@ const Cell: React.FC = () => {
     },
 
     {
-      title: '位置',
+      title: '网点位置',
       dataIndex: ['address', 'fullAddress'],
       valueType: 'text',
       hideInForm: true,
