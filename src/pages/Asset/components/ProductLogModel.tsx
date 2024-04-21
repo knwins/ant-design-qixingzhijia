@@ -100,7 +100,6 @@ const ProductLogModel: FC<ProductLogModelProps> = (props) => {
   const handleStoreType = async (key?: any) => {
     console.log('key:' + key);
     const storeTypeListOptions = [];
-
     if (key.includes('STORE')) {
       storeTypeListOptions.push({
         label: '调拨',

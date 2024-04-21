@@ -10,9 +10,11 @@ import { StoreItem } from './data';
 import {
   addStore,
   queryBusinessSelect,
+  queryStoreGroupSelect,
   queryStoreList,
   removeStore,
   removeStoreByIds,
+  syncFNJStoreList,
   updateStore,
 } from './service';
 
@@ -47,6 +49,58 @@ const Spot: React.FC = () => {
       businessListData[item.id] = item.name;
     });
   }
+
+
+  //读取属性数据
+  const { data: storeGroupData } = useRequest(() => {
+    return queryStoreGroupSelect({
+      current: 1,
+      pageSize: 100000,
+    });
+  });
+
+  const storeGroupListOptions = {};
+  //Execl导出数据使用
+  const storeGroupDataList = {};
+  if (storeGroupData) {
+    storeGroupData.map((item) => {
+      storeGroupListOptions[item.id] = {
+        text: item.name,
+        value: item.id,
+      };
+      storeGroupDataList[item.id] = item.name;
+    });
+  }
+
+  const handleSyncFNJStore = async () => {
+    const loadingHidde = message.loading(
+      intl.formatMessage({
+        id: 'pages.tip.loading',
+      }),
+    );
+
+    try {
+      let fnjToken =
+        'eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIyNjM0IiwiaWF0IjoxNzEwOTAxOTA2LCJzdWIiOiJhbGwiLCJpc3MiOiJ3ZXRvb2wifQ.b7i0Xsd8n8hTmXKzq96iHYnD2RoOc8pUp9dF095H0ME';
+      const { success, data } = await syncFNJStoreList({
+        fnjToken: fnjToken,
+      });
+      if (success) {
+        loadingHidde();
+        message.success(data);
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.log(error);
+      message.error(
+        intl.formatMessage({
+          id: 'pages.tip.error',
+        }),
+      );
+      return false;
+    }
+  };
 
   const handleAction = async (fields: StoreItem) => {
     const loadingHidde = message.loading(
@@ -170,6 +224,17 @@ const Spot: React.FC = () => {
     },
 
     {
+      title: <FormattedMessage id="pages.store.search.keywords" />,
+      dataIndex: 'keywords',
+      hideInForm: true,
+      hideInTable: true,
+      valueType: 'text',
+      fieldProps: {
+        placeholder: intl.formatMessage({ id: 'pages.store.search.keywords.placeholder' }),
+      },
+    },
+
+    {
       title: <FormattedMessage id="pages.product.business" />,
       dataIndex: 'businessId',
       valueType: 'select',
@@ -182,26 +247,30 @@ const Spot: React.FC = () => {
     },
 
     {
-      title: <FormattedMessage id="pages.store.search.keywords" />,
-      dataIndex: 'keywords',
+      title: "站点分组",
+      dataIndex: 'storeGroupId',
+      valueType: 'select',
       hideInForm: true,
       hideInTable: true,
-      valueType: 'text',
-      fieldProps: {
-        placeholder: intl.formatMessage({ id: 'pages.store.search.keywords.placeholder' }),
-      },
+      fieldProps: { width: '60px' },
+      hideInDescriptions: true,
+      valueEnum: storeGroupListOptions,
+      hideInSearch: roleGroup == 'SystemUser' ? false : true,
     },
+
     {
-      title:"分组",
+      title: '分组',
       dataIndex: ['storeGroup', 'name'],
       hideInSearch: true,
       valueType: 'text',
     },
+
     {
       title: <FormattedMessage id="pages.store.user.name" />,
       dataIndex: ['user', 'username'],
       hideInSearch: true,
       valueType: 'text',
+      hideInTable: true,
     },
     {
       title: <FormattedMessage id="pages.store.type" />,
@@ -218,19 +287,15 @@ const Spot: React.FC = () => {
           text: '站点',
           type: 'SITE',
         },
-        ADDRESS: {
-          text: '地址',
-          type: 'ADDRESS',
-        },
       },
     },
 
-  
     {
       title: <FormattedMessage id="pages.store.state" />,
       dataIndex: 'state',
       valueType: 'select',
       hideInForm: true,
+      hideInSearch:true,
       valueEnum: {
         APPLICATION: {
           text: '申请中',
@@ -383,7 +448,7 @@ const Spot: React.FC = () => {
                   type="primary"
                   size="small"
                   onClick={() => {
-                   // exportExcel();
+                    // exportExcel();
                   }}
                 >
                   <ExportOutlined />
@@ -412,6 +477,21 @@ const Spot: React.FC = () => {
               }}
             >
               <PlusOutlined /> <FormattedMessage id="pages.new" />
+            </Button>,
+            <Button
+              type="primary"
+              key="primary"
+              size="small"
+              onClick={async () => {
+                const success = await handleSyncFNJStore();
+                if (success) {
+                  if (actionRef.current) {
+                    actionRef.current.reload();
+                  }
+                }
+              }}
+            >
+              <PlusOutlined /> 同步菲尼基站点数据
             </Button>,
           ]}
         />

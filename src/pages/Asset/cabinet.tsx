@@ -41,7 +41,6 @@ import {
   submitProductLog,
   updateProduct,
 } from './service';
-import success from '../result/success';
 
 const Cabinet: React.FC = () => {
   //const inpRef = useRef();
@@ -133,14 +132,36 @@ const Cabinet: React.FC = () => {
       pageSize: 100000,
     });
   });
-  // const storeListOptions = {};
+  const storeListOptions = {};
   const storeListData = {};
   const storeData = store || [];
   if (storeData) {
     storeData.map((item) => {
+      storeListOptions[item.id] = {
+        text: item.name,
+        value: item.id,
+      };
       storeListData[item.id] = item.name;
     });
   }
+
+  // fieldNames: {
+  //   children: 'language',
+  //   label: 'field',
+  // },
+
+  const cascaderOptions = [
+    {
+      field: '东莞顺丰你想换电',
+      value: '24555',
+      store: [
+        {
+          field: 'JSSSSSSS',
+          value: '212122',
+        },
+      ],
+    },
+  ];
 
   const handleProductLogsAction = async (fields: ProductLogItem) => {
     const loadingHidde = message.loading(
@@ -472,25 +493,25 @@ const Cabinet: React.FC = () => {
       },
     },
 
-    {
-      title: '类型',
-      dataIndex: 'storeType',
-      valueType: 'select',
-      width: 'sm',
-      hideInForm: true,
-      hideInTable: true,
-      hideInDescriptions: true,
-      valueEnum: {
-        SITE: {
-          text: '站点',
-          state: 'SITE',
-        },
-        STORE: {
-          text: '仓库',
-          state: 'STORE',
-        },
-      },
-    },
+    // {
+    //   title: '类型',
+    //   dataIndex: 'storeType',
+    //   valueType: 'select',
+    //   width: 'sm',
+    //   hideInForm: true,
+    //   hideInTable: true,
+    //   hideInDescriptions: true,
+    //   valueEnum: {
+    //     SITE: {
+    //       text: '站点',
+    //       state: 'SITE',
+    //     },
+    //     STORE: {
+    //       text: '仓库',
+    //       state: 'STORE',
+    //     },
+    //   },
+    // },
     {
       title: <FormattedMessage id="pages.product.number" />,
       dataIndex: 'number',
@@ -501,15 +522,16 @@ const Cabinet: React.FC = () => {
       ellipsis: true,
       render: (dom, entity) => {
         return (
-          <a onClick={async () => {
-            const { success, data } = await getProductDetail({
-              id: entity.id,
-            });
-            if (success) {
-              setCurrentRow(data);
-              setShowDetail(true);
-            }
-          }}
+          <a
+            onClick={async () => {
+              const { success, data } = await getProductDetail({
+                id: entity.id,
+              });
+              if (success) {
+                setCurrentRow(data);
+                setShowDetail(true);
+              }
+            }}
           >
             {dom}
           </a>
@@ -542,7 +564,7 @@ const Cabinet: React.FC = () => {
     },
 
     {
-      title: '位置',
+      title: '网点位置',
       dataIndex: ['address', 'fullAddress'],
       valueType: 'text',
       hideInForm: true,
@@ -583,6 +605,28 @@ const Cabinet: React.FC = () => {
       fieldProps: { width: '60px' },
       hideInSearch: true,
     },
+    // {
+    //   title: '选择站点',
+    //   key: 'searchStoreIds',
+    //   dataIndex: 'searchStoreIds',
+    //   hideInDescriptions:true,
+    //   hideInTable:true,
+    //   // request: async () => cascaderOptions,
+    //   fieldProps: {
+    //     options: cascaderOptions,
+    //     placeholder: '请选择站点',
+    //     fieldNames: {
+    //       children: 'store',
+    //       label: 'field',
+    //     },
+    //     showSearch: true,
+    //     filterTreeNode: true,
+    //     multiple: true,
+    //     treeNodeFilterProp: 'field',
+    //   },
+    //   valueType: 'treeSelect',
+    // },
+
 
     {
       title: <FormattedMessage id="pages.product.business" />,
@@ -595,6 +639,24 @@ const Cabinet: React.FC = () => {
       hideInSearch: roleGroup == 'SystemUser' ? false : true,
       valueEnum: businessListOptions,
     },
+
+
+    
+    {
+      title: '选择站点',
+      dataIndex: 'storeIds',
+      valueType: 'select',
+      width: '80px',
+      hideInForm: true,
+      hideInTable: true,
+      hideInDescriptions: true,
+      hideInSearch: roleGroup == 'SystemUser' ? false : true,
+      valueEnum: storeListOptions,
+    },
+
+
+ 
+   
 
     {
       title: <FormattedMessage id="pages.product.business" />,
@@ -718,10 +780,6 @@ const Cabinet: React.FC = () => {
             <a
               key="detail"
               onClick={async () => {
-
-
-
-
                 const { data } = await getCabinetDetail({
                   id: record.detailId,
                 });
@@ -735,9 +793,14 @@ const Cabinet: React.FC = () => {
             </a>,
             <a
               key="create"
-              onClick={() => {
-                setCurrentRow(record);
-                setLogVisible(true);
+              onClick={async () => {
+                const { data } = await getProductDetail({
+                  id: record.id,
+                });
+                if (data) {
+                  setCurrentRow(data);
+                  setLogVisible(true);
+                }
               }}
             >
               <FormattedMessage id="pages.product.log.create" />
@@ -801,67 +864,29 @@ const Cabinet: React.FC = () => {
     },
   ];
 
-  // const token = localStorage.getItem('token');
-  // const uploadProps: UploadProps = {
-  //   name: 'file',
-  //   multiple: true,
-  //   action: `${host.api}api/manage/product/import`,
-  //   headers: {
-  //     // 'Content-Type': 'multipart/form-data',
-  //     token: `${token}`,
-  //     authorization: 'authorization-text',
-  //   },
-  //   withCredentials: true,
-  //   maxCount: 1, // 文件最大上传个数
-  //   // 限制类型
-  //   accept: '.xls,.xlsx', // 限制只能上传表格文件
-  //   showUploadList: false,
-  //   beforeUpload: (file) => {
-  //     const isXlSXOrXLS =
-  //       file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
-  //       file.type === 'application/vnd.ms-excel';
-  //     if (!isXlSXOrXLS) {
-  //       message.error('只允许上传XLSS/XLS格式文件!');
-  //       return;
-  //     }
-  //     const isLt2M = file.size / 1024 / 1024 < 5;
-  //     if (!isLt2M) {
-  //       message.error('只允许上传最大5MB文件');
-  //       return;
-  //     }
-  //     message.loading('正在导入中...');
-  //     return isXlSXOrXLS && isLt2M;
-  //   },
-  //   onChange: (info) => {
-  //     if (info.file.status !== 'uploading') {
-  //       console.log('onChange', info, info.fileList);
-  //     }
-  //     if (info.file.status === 'done') {
-  //       message.loading('正在处理中...');
-  //       if (!info.file.response.success) {
-  //         message.error(info.file.response.errorMessage);
-  //       } else {
-  //         message.success(info.file.response.data);
-  //         actionRef.current?.reloadAndRest;
-  //       }
-  //     } else if (info.file.status === 'error') {
-  //       message.error(`您没有权限访问`);
-  //     }
-  //     return false;
-  //   },
-  // };
-
   //更多
   const MoreBtn: React.FC<{
     item: ProductItem;
   }> = ({ item }) => (
     <Dropdown
+      key="Dropdown"
       overlay={
         <Menu
           onClick={async ({ key }) => {
             if (key == 'edit') {
-              setCurrentRow(item);
-              setVisible(true);
+              const { success, data } = await getProductDetail({
+                id: item.id,
+              });
+              const loadingHidde = message.loading(
+                intl.formatMessage({
+                  id: 'pages.tip.loading',
+                }),
+              );
+              if (success) {
+                loadingHidde();
+                setCurrentRow(data);
+                setVisible(true);
+              }
             } else if (key == 'submitProductLog') {
               handleSubmitProductLog(item);
             } else if (key == 'delete') {

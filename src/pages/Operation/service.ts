@@ -302,6 +302,18 @@ export async function removeStore(data: { [id: string]: any }, options?: { [id: 
   });
 }
 
+export async function syncFNJStoreList(data: { [id: string]: any }, options?: { [id: string]: any }) {
+  return request<{
+    data?: string;
+    success?: boolean;
+    errorMessage?: string;
+  }>(host.api + 'api/manage/store/sync_fnj_site_list', {
+    data,
+    method: 'POST',
+    ...(options || {}),
+  });
+}
+
 export async function removeStoreByIds(
   data: { [ids: string]: any },
   options?: { [ids: string]: any },

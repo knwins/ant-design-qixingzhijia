@@ -35,7 +35,6 @@ export default [
         component: './Asset/pile',
       },
 
-
       {
         name: 'electric',
         icon: 'smile',
@@ -68,11 +67,19 @@ export default [
         path: '/operation',
         redirect: '/operation/store',
       },
+
       {
         name: 'store',
         icon: 'smile',
         path: '/operation/store',
         component: './Operation/store',
+      },
+
+      {
+        name: 'storeGroup',
+        icon: 'smile',
+        path: '/operation/store/group',
+        component: './Operation/storeGroup',
       },
       {
         name: 'check',
@@ -91,6 +98,20 @@ export default [
         icon: 'smile',
         path: '/operation/business',
         component: './Operation/business',
+      },
+
+      {
+        name: 'partner',
+        icon: 'smile',
+        path: '/operation/partner',
+        component: './Operation/partner',
+      },
+
+      {
+        name: 'warninfo',
+        icon: 'smile',
+        path: '/operation/warninfo',
+        component: './Operation/warninfo',
       },
     ],
   },

@@ -41,6 +41,7 @@ export type StoreItem = {
   storeGroup?:StoreGroupItem;
   address?:AddressItem;
   business?:BusinessItem;
+  fnjToken?:string;
 };
 
 export type StoreParams = {

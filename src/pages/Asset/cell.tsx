@@ -475,8 +475,20 @@ const Cell: React.FC = () => {
         <Menu
           onClick={async ({ key }) => {
             if (key == 'edit') {
-              setCurrentRow(item);
-              setVisible(true);
+              const { success, data } = await getProductDetail({
+                id: item.id,
+              });
+
+              const loadingHidde = message.loading(
+                intl.formatMessage({
+                  id: 'pages.tip.loading',
+                }),
+              );
+              if (success) {
+                loadingHidde();
+                setCurrentRow(data);
+                setVisible(true);
+              }
             } else if (key == 'submitProductLog') {
               handleSubmitProductLog(item);
             } else if (key == 'delete') {
@@ -553,21 +565,22 @@ const Cell: React.FC = () => {
       valueType: 'text',
       render: (dom, entity) => {
         return (
-          <a onClick={async () => {
-            const { success, data } = await getProductDetail({
-              id: entity.id,
-            });
-            const loadingHidde = message.loading(
-              intl.formatMessage({
-                id: 'pages.tip.loading',
-              }),
-            );
-            if (success) {
-              loadingHidde();
-              setCurrentRow(data);
-              setShowDetail(true);
-            }
-          }}
+          <a
+            onClick={async () => {
+              const { success, data } = await getProductDetail({
+                id: entity.id,
+              });
+              const loadingHidde = message.loading(
+                intl.formatMessage({
+                  id: 'pages.tip.loading',
+                }),
+              );
+              if (success) {
+                loadingHidde();
+                setCurrentRow(data);
+                setShowDetail(true);
+              }
+            }}
           >
             {dom}
           </a>
@@ -597,18 +610,6 @@ const Cell: React.FC = () => {
       width: 'lg',
       ellipsis: true,
     },
-
-    {
-      title: '网点位置',
-      dataIndex: ['address', 'fullAddress'],
-      valueType: 'text',
-      hideInForm: true,
-      hideInSearch: true,
-      ellipsis: true,
-      hideInTable: true,
-      width: 'lg',
-    },
-
     {
       title: 'GPS位置',
       dataIndex: 'gpsAddress',
@@ -853,13 +854,19 @@ const Cell: React.FC = () => {
           </a>,
           <a
             key="create"
-            onClick={() => {
-              setCurrentRow(record);
-              setLogVisible(true);
+            onClick={async () => {
+              const { data } = await getProductDetail({
+                id: record.id,
+              });
+              if (data) {
+                setCurrentRow(data);
+                setLogVisible(true);
+              }
             }}
           >
             <FormattedMessage id="pages.product.log.create" />
           </a>,
+
           <MoreBtn key="more" item={record} />,
         ];
       },

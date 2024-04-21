@@ -110,25 +110,6 @@ const ProductLogAllModel: FC<ProductLogAllModelProps> = (props) => {
           ]}
           width="md"
         />
-        {/* <ProFormSelect
-          name="beforeStoreId"
-          showSearch
-          tooltip="只有资产所在当前{调出网点}的才能执行"
-          width="md"
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-          label={intl.formatMessage({
-            id: 'pages.product.log.out.store',
-          })}
-          dependencies={['storeType']}
-          request={async (params) => {
-            //console.log("params",params);
-            return handleStoreSelect(params.storeType, params.keyWords);
-          }}
-        /> */}
 
         <ProFormSelect
           name="laterStoreId"
